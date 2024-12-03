@@ -161,7 +161,7 @@ export function ResourceRoute(props: {
           <Link
             className="w-full sm:w-[33%]"
             href={AppUrl.resourcePage({
-              slug: props.resource.slug,
+              slug: props.resource.id,
               page: props.doc.previousPage.id,
             })}
             size="4"
@@ -188,7 +188,7 @@ export function ResourceRoute(props: {
           <Link
             className="w-full sm:w-[33%]"
             href={AppUrl.resourcePage({
-              slug: props.resource.slug,
+              slug: props.resource.id,
               page: props.doc.nextPage.id,
             })}
             size="4"
@@ -221,7 +221,7 @@ export function ResourceRoute(props: {
         <Flex justify={"end"}>
           <Link
             href={AppUrl.githubResource({
-              slug: props.resource.slug,
+              slug: props.resource.id,
               page: props.doc.currentPage?.gitHubId || "",
             })}
           >
@@ -253,7 +253,7 @@ export function ResourceRoute(props: {
             <MDXH3>{props.resource.data.name}</MDXH3>
             <Link
               href={AppUrl.creator({
-                slug: props.creator.slug,
+                slug: props.creator.id,
               })}
               color="gray"
               className="hover:text-[--accent-12]"
@@ -277,7 +277,7 @@ export function ResourceRoute(props: {
                 </Heading>
                 {props.doc.sidebar.categories[category].map((item) => {
                   const itemPatname = AppUrl.resourcePage({
-                    slug: props.resource.slug,
+                    slug: props.resource.id,
                     page: item.id,
                   });
                   const isFirstPage =
@@ -302,7 +302,7 @@ export function ResourceRoute(props: {
           })}
           {props.doc.sidebar.root.map((item) => {
             const itemPatname = AppUrl.resourcePage({
-              slug: props.resource.slug,
+              slug: props.resource.id,
               page: item.id,
             });
             const isFirstPage =
@@ -330,7 +330,7 @@ export function ResourceRoute(props: {
                 slug: [
                   props.resource.data._slugWithoutLocale,
                   newLocale === "en" ? "" : newLocale,
-                ].join("/") as CollectionEntry<"resources">["slug"],
+                ].join("/") as CollectionEntry<"resources">["id"],
                 page: "",
               });
             }}

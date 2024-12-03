@@ -6,6 +6,7 @@ import type {
 } from "astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
 import {
   MDXWrapper,
   getMdxComponents,
@@ -26,15 +27,15 @@ const { creator } = await DLAstro.getCreator({ slug: params.creatorSlug });
 const { game } = await DLAstro.getGame({
   slug: (params.creatorSlug +
     "/" +
-    params.gameSlug) as CollectionEntry<"games">["slug"],
+    params.gameSlug) as CollectionEntry<"games">["id"],
 });
 const { assets } = await DLAstro.getAssetsForGame({
   slug: (params.creatorSlug +
     "/" +
-    params.gameSlug) as CollectionEntry<"games">["slug"],
+    params.gameSlug) as CollectionEntry<"games">["id"],
 });
 
-const { Content } = await game.render();
+const { Content } = await render(game);
 
 const theme = getTheme({
   theme: {
@@ -47,8 +48,8 @@ export async function getStaticPaths() {
   return games.map((item) => {
     return {
       params: {
-        creatorSlug: item.creator.slug,
-        gameSlug: item.game.slug.split("/").pop(),
+        creatorSlug: item.creator.id,
+        gameSlug: item.game.id.split("/").pop(),
       },
     } satisfies GetStaticPathsItem;
   });

@@ -7,7 +7,7 @@ export const DLAstro = {
     return { creators };
   },
   async getCreator(props: {
-    slug: CollectionEntry<"creators">["slug"];
+    slug: CollectionEntry<"creators">["id"];
     includeGames?: boolean;
     includeResources?: boolean;
   }) {
@@ -17,18 +17,18 @@ export const DLAstro = {
     let resources: Array<CollectionEntry<"resources">> = [];
     if (props.includeGames) {
       games = await getCollection("games", (item) => {
-        return item.data.creator.slug === creator.slug;
+        return item.data.creator.id === creator.id;
       });
     }
     if (props.includeResources) {
       resources = await getCollection("resources", (item) => {
-        const isTranslation = item.slug.split("/").length === 3;
+        const isTranslation = item.id.split("/").length === 3;
 
         if (isTranslation) {
           return false;
         }
 
-        return item.data.creator.slug === creator.slug;
+        return item.data.creator.id === creator.id;
       });
     }
 
@@ -41,13 +41,13 @@ export const DLAstro = {
     return { games };
   },
   async getGame(props: {
-    slug: CollectionEntry<"games">["slug"];
+    slug: CollectionEntry<"games">["id"];
     includeCreator?: boolean;
   }) {
     const game = await getEntry("games", props.slug);
 
     if (props.includeCreator) {
-      const creator = await getEntry("creators", game.data.creator.slug);
+      const creator = await getEntry("creators", game.data.creator.id);
       return { game, creator };
     }
 
@@ -58,11 +58,11 @@ export const DLAstro = {
 
     const gamesWithCreators = await Promise.all(
       games.map(async (game) => {
-        const creator = await getEntry("creators", game.data.creator.slug);
+        const creator = await getEntry("creators", game.data.creator.id);
 
         const assets = props.includeAssets
           ? await getCollection("assets", (item) => {
-              return item.data.game.slug === game.slug;
+              return item.data.game.id === game.id;
             })
           : [];
 
@@ -78,7 +78,7 @@ export const DLAstro = {
   },
   // ASSET
   async getAssetWithGameAndCreator(props: {
-    slug: CollectionEntry<"assets">["slug"];
+    slug: CollectionEntry<"assets">["id"];
   }) {
     const asset = await getEntry("assets", props.slug);
 
@@ -90,16 +90,16 @@ export const DLAstro = {
       creator: creator!,
     };
   },
-  async getAssetsForGame(props: { slug: CollectionEntry<"games">["slug"] }) {
+  async getAssetsForGame(props: { slug: CollectionEntry<"games">["id"] }) {
     const assets = await getCollection("assets", ({ data }) => {
-      return data.game.slug === props.slug;
+      return data.game.id === props.slug;
     });
 
     return { assets };
   },
   // RESOURCE
   async getResource(props: {
-    slug: CollectionEntry<"resources">["slug"];
+    slug: CollectionEntry<"resources">["id"];
     includeCreator?: boolean;
   }) {
     const [creatorSlug, resourceSlug, locale] = props.slug.split("/");
@@ -107,12 +107,12 @@ export const DLAstro = {
     const currentLocale = locale || "en";
     const resource = await getEntry("resources", props.slug);
     const translations = await getCollection("resources", (element) => {
-      return element.slug.startsWith(slugWithoutLocale);
+      return element.id.startsWith(slugWithoutLocale);
     });
 
     const locales = translations
       .map((element) => {
-        const language = element.slug
+        const language = element.id
           .replace(slugWithoutLocale, "")
           .replace("/", "");
         return language || "en";
@@ -132,7 +132,7 @@ export const DLAstro = {
     resource.data._slugWithoutLocale = slugWithoutLocale;
 
     if (props.includeCreator) {
-      const creator = await getEntry("creators", resource.data.creator.slug);
+      const creator = await getEntry("creators", resource.data.creator.id);
       return { resource, creator, locales };
     }
 
@@ -140,7 +140,7 @@ export const DLAstro = {
   },
   async getAllResourcesWithCreator(props: { includeTranslations?: boolean }) {
     const resources = await getCollection("resources", (resource) => {
-      const isTranslation = resource.slug.split("/").length === 3;
+      const isTranslation = resource.id.split("/").length === 3;
 
       if (isTranslation && !props.includeTranslations) {
         return false;
@@ -151,7 +151,7 @@ export const DLAstro = {
 
     const resourcesWithCreators = await Promise.all(
       resources.map(async (resource) => {
-        const creator = await getEntry("creators", resource.data.creator.slug);
+        const creator = await getEntry("creators", resource.data.creator.id);
 
         return {
           resource,

@@ -21,7 +21,7 @@ const params = Astro.params as Params;
 const resourceSlug = [
   params.creatorSlug,
   ...params.resourceSlug.split("."),
-].join("/") as CollectionEntry<"resources">["slug"];
+].join("/") as CollectionEntry<"resources">["id"];
 
 const { creator, resource, locales } = await DLAstro.getResource({
   slug: resourceSlug,
@@ -35,7 +35,7 @@ const theme = getTheme({
 });
 
 const parser = new DocParser({
-  markdown: resource.body,
+  markdown: resource.body!,
 });
 const doc = parser.getDoc();
 
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
   });
   return resources.map((item) => {
     const [creatorSegment, resourceSegment, languageSegment] =
-      item.resource.slug.split("/");
+      item.resource.id.split("/");
 
     const resourceSlug = languageSegment
       ? `${resourceSegment}.${languageSegment}`
@@ -53,7 +53,7 @@ export async function getStaticPaths() {
 
     return {
       params: {
-        creatorSlug: item.creator.slug,
+        creatorSlug: item.creator.id,
         resourceSlug: resourceSlug,
       },
     } satisfies GetStaticPathsItem;

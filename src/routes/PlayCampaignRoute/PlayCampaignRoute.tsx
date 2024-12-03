@@ -113,7 +113,7 @@ function Game(props: {
   const selectedAssetSlug =
     campaignAssets[campaignManager.selectedAssetId!]?.slug;
   const selectedCampaignAsset = props.assets.find(
-    (asset) => asset.slug === selectedAssetSlug,
+    (asset) => asset.id === selectedAssetSlug,
   );
 
   useEffect(() => {
@@ -130,7 +130,7 @@ function Game(props: {
   async function handleAddAsset(p: { asset: CollectionEntry<"assets"> }) {
     setAddingAssetId(p.asset.id);
     await wait();
-    campaignManager.addAsset({ slug: p.asset.slug });
+    campaignManager.addAsset({ slug: p.asset.id });
     setTab("assets");
     setAddingAssetId(undefined);
   }
@@ -278,7 +278,7 @@ function Game(props: {
                       {campaignAssetIds.map((assetId, i) => {
                         const assetSlug = campaignAssets[assetId].slug;
                         const asset = props.assets.find(
-                          (asset) => asset.slug === assetSlug,
+                          (asset) => asset.id === assetSlug,
                         )!;
                         const isSelected =
                           assetId === campaignManager.selectedAssetId;

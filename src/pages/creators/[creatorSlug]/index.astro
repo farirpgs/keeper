@@ -58,7 +58,7 @@ export async function getStaticPaths() {
   const { creators } = await DLAstro.getAllCreators();
   return creators.map((creator) => {
     return {
-      params: { creatorSlug: creator.slug },
+      params: { creatorSlug: creator.id },
     } satisfies GetStaticPathsItem;
   });
 }

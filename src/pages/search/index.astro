@@ -26,7 +26,7 @@ for (const item of games) {
     imageSrc: "",
     type: "games",
     href: AppUrl.game({
-      slug: item.game.slug,
+      slug: item.game.id,
     }),
     weight: item.game.data.weight,
   });
@@ -45,7 +45,7 @@ for (const item of resources) {
     imageSrc: "",
     type: "resources",
     href: AppUrl.resource({
-      slug: item.resource.slug,
+      slug: item.resource.id,
     }),
     weight: item.resource.data.weight,
   });

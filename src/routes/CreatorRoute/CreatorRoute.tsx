@@ -18,7 +18,7 @@ export function CreatorRoute(props: {
   resources: Array<CollectionEntry<"resources">>;
 }) {
   const Content = evaluateMdxSync({
-    mdx: props.creator.body,
+    mdx: props.creator.body!,
   });
 
   return (
@@ -53,8 +53,8 @@ export function CreatorRoute(props: {
             >
               {props.resources.map((resource) => (
                 <Card
-                  key={resource.slug}
-                  href={AppUrl.resource({ slug: resource.slug })}
+                  key={resource.id}
+                  href={AppUrl.resource({ slug: resource.id })}
                   title={resource.data.name}
                   subtitle={props.creator.data.name}
                   accentColor={
@@ -105,8 +105,8 @@ export function CreatorRoute(props: {
             >
               {props.games.map((game) => (
                 <Card
-                  key={game.slug}
-                  href={AppUrl.game({ slug: game.slug })}
+                  key={game.id}
+                  href={AppUrl.game({ slug: game.id })}
                   title={game.data.name}
                   subtitle={props.creator.data.name}
                   accentColor={

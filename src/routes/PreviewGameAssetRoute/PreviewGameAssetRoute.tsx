@@ -31,7 +31,7 @@ export function PreviewGameAssetRoute(props: {
   });
   const MDXContent = props.currentAsset
     ? evaluateMdxSync({
-        mdx: props.currentAsset.body,
+        mdx: props.currentAsset.body!,
       })
     : null;
 
@@ -71,7 +71,7 @@ export function PreviewGameAssetRoute(props: {
         <MDXH5 className="mt-[-0.5rem]">
           <Link
             href={AppUrl.game({
-              slug: props.game.slug,
+              slug: props.game.id,
             })}
             color="gray"
             className="hover:text-[--accent-12]"

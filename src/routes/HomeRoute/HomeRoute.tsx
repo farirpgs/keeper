@@ -126,9 +126,9 @@ export function HomeRoute(props: {
           {props.topResources.map((item) => {
             return (
               <Card
-                key={item.resource.slug}
+                key={item.resource.id}
                 href={AppUrl.resource({
-                  slug: item.resource.slug,
+                  slug: item.resource.id,
                 })}
                 title={item.resource.data.name}
                 subtitle={item.creator.data.name}
@@ -193,9 +193,9 @@ export function HomeRoute(props: {
           {props.topGames.map((item) => {
             return (
               <Card
-                key={item.game.slug}
+                key={item.game.id}
                 href={AppUrl.game({
-                  slug: item.game.slug,
+                  slug: item.game.id,
                 })}
                 title={item.game.data.name}
                 subtitle={item.creator.data.name}

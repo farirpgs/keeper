@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   return games.map((game) => {
     return {
       params: {
-        path: game.slug,
+        path: game.id,
       },
     };
   });

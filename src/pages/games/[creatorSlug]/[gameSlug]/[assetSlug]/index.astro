@@ -24,8 +24,7 @@ const theme = getTheme({
 
 const currentAsset = props.assets.find((asset) => {
   return (
-    asset.slug ===
-    `${params.creatorSlug}/${params.gameSlug}/${params.assetSlug}`
+    asset.id === `${params.creatorSlug}/${params.gameSlug}/${params.assetSlug}`
   );
 });
 
@@ -38,9 +37,9 @@ export async function getStaticPaths() {
     return item.assets.map((asset) => {
       return {
         params: {
-          creatorSlug: item.creator.slug,
-          gameSlug: item.game.slug.split("/").pop(),
-          assetSlug: asset.slug.split("/").pop(),
+          creatorSlug: item.creator.id,
+          gameSlug: item.game.id.split("/").pop(),
+          assetSlug: asset.id.split("/").pop(),
         },
         props: {
           game: item.game,

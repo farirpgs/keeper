@@ -172,7 +172,7 @@ function GameCard(props: {
             >
               <img
                 loading="eager"
-                src={props.gameImages[gameWithCreator.game.slug]}
+                src={props.gameImages[gameWithCreator.game.id]}
                 alt={gameWithCreator.game.data.name}
                 style={{
                   position: "absolute",

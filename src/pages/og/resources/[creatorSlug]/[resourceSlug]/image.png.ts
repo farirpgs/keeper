@@ -8,7 +8,7 @@ import { renderOgImage } from "../../../../../domains/og-image/renderOgImage";
 export const prerender = false;
 
 export type Params = {
-  creatorSlug: CollectionEntry<"creators">["slug"];
+  creatorSlug: CollectionEntry<"creators">["id"];
   resourceSlug: string;
 };
 
@@ -21,7 +21,7 @@ export const GET: APIRoute = async (ctx) => {
   });
 
   const parser = new DocParser({
-    markdown: resource.body,
+    markdown: resource.body!,
   });
   const doc = parser.getDoc();
 

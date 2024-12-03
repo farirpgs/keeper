@@ -23,7 +23,7 @@ export function GameAsset(props: {
     async function main() {
       try {
         const mdxContent = await evaluateMdx({
-          mdx: props.asset.body,
+          mdx: props.asset.body!,
         });
         setMDXContent(() => mdxContent);
       } catch (error) {

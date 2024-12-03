@@ -7,7 +7,7 @@ import { renderOgImage } from "../../../../../domains/og-image/renderOgImage";
 export const prerender = false;
 
 export type Params = {
-  creatorSlug: CollectionEntry<"creators">["slug"];
+  creatorSlug: CollectionEntry<"creators">["id"];
   gameSlug: string;
 };
 

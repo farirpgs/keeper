@@ -20,17 +20,17 @@ export const AppUrl = {
   patreon() {
     return "https://www.patreon.com/bePatron?u=43408921";
   },
-  creator(props: { slug: CollectionEntry<"creators">["slug"] }) {
+  creator(props: { slug: CollectionEntry<"creators">["id"] }) {
     return `/creators/${props.slug}/`;
   },
-  game(props: { slug: CollectionEntry<"games">["slug"] }) {
+  game(props: { slug: CollectionEntry<"games">["id"] }) {
     return `/games/${props.slug}/`;
   },
-  resource(props: { slug: CollectionEntry<"resources">["slug"] }) {
+  resource(props: { slug: CollectionEntry<"resources">["id"] }) {
     return `/resources/${props.slug}/`;
   },
   resourcePage(props: {
-    slug: CollectionEntry<"resources">["slug"];
+    slug: CollectionEntry<"resources">["id"];
     page: string;
   }) {
     const [creatorSegment, resourceSegment, languageSegment] =
@@ -42,7 +42,7 @@ export const AppUrl = {
     }
     return `/resources/${props.slug}/${pageSegment}`;
   },
-  asset(props: { slug: CollectionEntry<"assets">["slug"] }) {
+  asset(props: { slug: CollectionEntry<"assets">["id"] }) {
     return `/games/${props.slug}/`;
   },
   search(props: { query?: string; type?: SearchType }) {
@@ -56,7 +56,7 @@ export const AppUrl = {
     return `/search/?${searchParams.toString()}`;
   },
   githubResource(props: {
-    slug: CollectionEntry<"resources">["slug"];
+    slug: CollectionEntry<"resources">["id"];
     page: string;
   }) {
     return `https://github.com/farirpgs/keeper/tree/main/src/content/resources/${props.slug}/index.mdx#${props.page}/`;
