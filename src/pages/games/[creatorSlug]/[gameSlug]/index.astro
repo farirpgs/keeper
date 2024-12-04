@@ -23,14 +23,14 @@ export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const props = Astro.props as Props;
 const params = Astro.params as Params;
 
-const { creator } = await DLAstro.getCreator({ slug: params.creatorSlug });
+const { creator } = await DLAstro.getCreator({ id: params.creatorSlug });
 const { game } = await DLAstro.getGame({
-  slug: (params.creatorSlug +
+  id: (params.creatorSlug +
     "/" +
     params.gameSlug) as CollectionEntry<"games">["id"],
 });
 const { assets } = await DLAstro.getAssetsForGame({
-  slug: (params.creatorSlug +
+  id: (params.creatorSlug +
     "/" +
     params.gameSlug) as CollectionEntry<"games">["id"],
 });

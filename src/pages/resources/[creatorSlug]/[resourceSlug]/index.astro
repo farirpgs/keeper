@@ -24,7 +24,7 @@ const resourceSlug = [
 ].join("/") as CollectionEntry<"resources">["id"];
 
 const { creator, resource, locales } = await DLAstro.getResource({
-  slug: resourceSlug,
+  id: resourceSlug,
   includeCreator: true,
 });
 

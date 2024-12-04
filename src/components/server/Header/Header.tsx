@@ -108,22 +108,24 @@ export function Header(props: { theme?: ThemeType }) {
           <Box className="hidden sm:inline-block">
             <DiceRoller theme={props.theme} />
           </Box>
-          <Tooltip content="Documentation">
-            <Button
-              radius="full"
-              size="3"
-              variant="ghost"
-              className="m-0 hidden md:inline-block"
-              style={{
-                fontFamily,
-              }}
-              asChild
-            >
-              <a href={AppUrl.docs()} aria-label="Documentation">
-                <ReaderIcon className="h-[24px] w-[24px]" />
-              </a>
-            </Button>
-          </Tooltip>
+          {false && (
+            <Tooltip content="Documentation">
+              <Button
+                radius="full"
+                size="3"
+                variant="ghost"
+                className="m-0 hidden md:inline-block"
+                style={{
+                  fontFamily,
+                }}
+                asChild
+              >
+                <a href={AppUrl.docs()} aria-label="Documentation">
+                  <ReaderIcon className="h-[24px] w-[24px]" />
+                </a>
+              </Button>
+            </Tooltip>
+          )}
           <Tooltip content="Search">
             <Button
               radius="full"
@@ -212,9 +214,11 @@ export function Header(props: { theme?: ThemeType }) {
                   <Link href={AppUrl.dice()} color="gray">
                     Dice Roller
                   </Link>
-                  <Link href={AppUrl.docs()} color="gray">
-                    Documentation
-                  </Link>
+                  {false && (
+                    <Link href={AppUrl.docs()} color="gray">
+                      Documentation
+                    </Link>
+                  )}
                   <Link href={AppUrl.search({})} color="gray">
                     Search
                   </Link>

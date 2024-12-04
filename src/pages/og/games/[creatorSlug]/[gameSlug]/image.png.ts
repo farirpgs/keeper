@@ -14,9 +14,9 @@ export type Params = {
 export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
-  const { creator } = await DLAstro.getCreator({ slug: params.creatorSlug });
+  const { creator } = await DLAstro.getCreator({ id: params.creatorSlug });
   const { game } = await DLAstro.getGame({
-    slug: `${params.creatorSlug}/${params.gameSlug}` as any,
+    id: `${params.creatorSlug}/${params.gameSlug}` as any,
   });
 
   const backgroundImage = await getImage({

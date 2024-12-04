@@ -13,7 +13,7 @@ export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
   const { creator } = await DLAstro.getCreator({
-    slug: params.creatorSlug,
+    id: params.creatorSlug,
   });
 
   return await renderOgImage({

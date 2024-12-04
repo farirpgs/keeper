@@ -128,7 +128,7 @@ export function HomeRoute(props: {
               <Card
                 key={item.resource.id}
                 href={AppUrl.resource({
-                  slug: item.resource.id,
+                  id: item.resource.id,
                 })}
                 title={item.resource.data.name}
                 subtitle={item.creator.data.name}
@@ -195,7 +195,7 @@ export function HomeRoute(props: {
               <Card
                 key={item.game.id}
                 href={AppUrl.game({
-                  slug: item.game.id,
+                  id: item.game.id,
                 })}
                 title={item.game.data.name}
                 subtitle={item.creator.data.name}

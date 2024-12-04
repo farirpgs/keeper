@@ -71,7 +71,7 @@ export function PreviewGameAssetRoute(props: {
         <MDXH5 className="mt-[-0.5rem]">
           <Link
             href={AppUrl.game({
-              slug: props.game.id,
+              id: props.game.id,
             })}
             color="gray"
             className="hover:text-[--accent-12]"

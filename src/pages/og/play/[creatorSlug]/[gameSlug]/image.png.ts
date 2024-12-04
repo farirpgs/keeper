@@ -14,7 +14,7 @@ export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
   const { game, creator } = await DLAstro.getGame({
-    slug: `${params.creatorSlug}/${params.gameSlug}` as any,
+    id: `${params.creatorSlug}/${params.gameSlug}` as any,
     includeCreator: true,
   });
 

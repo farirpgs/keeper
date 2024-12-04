@@ -15,7 +15,7 @@ export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
   const { asset, game, creator } = await DLAstro.getAssetWithGameAndCreator({
-    slug: `${params.creatorSlug}/${params.gameSlug}/${params.assetSlug}` as any,
+    id: `${params.creatorSlug}/${params.gameSlug}/${params.assetSlug}` as any,
   });
 
   const backgroundImage = await getImage({
