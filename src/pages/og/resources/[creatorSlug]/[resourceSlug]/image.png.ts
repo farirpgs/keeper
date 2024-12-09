@@ -16,7 +16,7 @@ export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
   const { creator, resource } = await DLAstro.getResource({
-    slug: `${params.creatorSlug}/${params.resourceSlug}` as any,
+    id: `${params.creatorSlug}/${params.resourceSlug}` as any,
     includeCreator: true,
   });
 

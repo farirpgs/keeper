@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DLStorage } from "../../../domains/dl/DLStorage";
 import { wait } from "../../../domains/utils/wait";
 
-export function CreateNewCampaignButton(props: { gameSlug: string }) {
+export function CreateNewCampaignButton(props: { gameId: string }) {
   const [ready, setReady] = useState(true);
   const [adding, setAdding] = useState(false);
   useEffect(() => {
@@ -20,10 +20,10 @@ export function CreateNewCampaignButton(props: { gameSlug: string }) {
     setAdding(true);
     await wait();
     const id = DLStorage.addCampaign({
-      slug: props.gameSlug,
+      slug: props.gameId,
     });
 
-    location.href = `/play/${props.gameSlug}?id=${id}`;
+    location.href = `/play/${props.gameId}?id=${id}`;
 
     setAdding(false);
   }

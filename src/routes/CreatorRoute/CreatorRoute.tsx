@@ -54,7 +54,7 @@ export function CreatorRoute(props: {
               {props.resources.map((resource) => (
                 <Card
                   key={resource.id}
-                  href={AppUrl.resource({ slug: resource.id })}
+                  href={AppUrl.resource({ id: resource.id })}
                   title={resource.data.name}
                   subtitle={props.creator.data.name}
                   accentColor={
@@ -106,7 +106,7 @@ export function CreatorRoute(props: {
               {props.games.map((game) => (
                 <Card
                   key={game.id}
-                  href={AppUrl.game({ slug: game.id })}
+                  href={AppUrl.game({ id: game.id })}
                   title={game.data.name}
                   subtitle={props.creator.data.name}
                   accentColor={

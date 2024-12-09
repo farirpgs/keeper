@@ -12,7 +12,7 @@ export const GET: APIRoute = async ({ params, request }) => {
     .parse(params) as Params;
 
   const game = await DLAstro.getGame({
-    slug: parsedParams.path,
+    id: parsedParams.path,
     includeCreator: true,
   });
 

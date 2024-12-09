@@ -276,9 +276,9 @@ function Game(props: {
                         </>
                       )}
                       {campaignAssetIds.map((assetId, i) => {
-                        const assetSlug = campaignAssets[assetId].slug;
+                        const id = campaignAssets[assetId].slug;
                         const asset = props.assets.find(
-                          (asset) => asset.id === assetSlug,
+                          (asset) => asset.id === id,
                         )!;
                         const isSelected =
                           assetId === campaignManager.selectedAssetId;

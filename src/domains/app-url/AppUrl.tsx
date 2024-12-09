@@ -20,30 +20,30 @@ export const AppUrl = {
   patreon() {
     return "https://www.patreon.com/bePatron?u=43408921";
   },
-  creator(props: { slug: CollectionEntry<"creators">["id"] }) {
-    return `/creators/${props.slug}/`;
+  creator(props: { id: CollectionEntry<"creators">["id"] }) {
+    return `/creators/${props.id}/`;
   },
-  game(props: { slug: CollectionEntry<"games">["id"] }) {
-    return `/games/${props.slug}/`;
+  game(props: { id: CollectionEntry<"games">["id"] }) {
+    return `/games/${props.id}/`;
   },
-  resource(props: { slug: CollectionEntry<"resources">["id"] }) {
-    return `/resources/${props.slug}/`;
+  resource(props: { id: CollectionEntry<"resources">["id"] }) {
+    return `/resources/${props.id}/`;
   },
   resourcePage(props: {
-    slug: CollectionEntry<"resources">["id"];
+    id: CollectionEntry<"resources">["id"];
     page: string;
   }) {
     const [creatorSegment, resourceSegment, languageSegment] =
-      props.slug.split("/");
+      props.id.split("/");
 
     const pageSegment = props.page ? `${props.page}/` : "";
     if (languageSegment) {
       return `/resources/${creatorSegment}/${resourceSegment}.${languageSegment}/${pageSegment}`;
     }
-    return `/resources/${props.slug}/${pageSegment}`;
+    return `/resources/${props.id}/${pageSegment}`;
   },
-  asset(props: { slug: CollectionEntry<"assets">["id"] }) {
-    return `/games/${props.slug}/`;
+  asset(props: { id: CollectionEntry<"assets">["id"] }) {
+    return `/games/${props.id}/`;
   },
   search(props: { query?: string; type?: SearchType }) {
     const searchParams = new URLSearchParams();
@@ -56,9 +56,9 @@ export const AppUrl = {
     return `/search/?${searchParams.toString()}`;
   },
   githubResource(props: {
-    slug: CollectionEntry<"resources">["id"];
+    id: CollectionEntry<"resources">["id"];
     page: string;
   }) {
-    return `https://github.com/farirpgs/keeper/tree/main/src/content/resources/${props.slug}/index.mdx#${props.page}/`;
+    return `https://github.com/farirpgs/keeper/tree/main/src/content/resources/${props.id}/index.mdx#${props.page}/`;
   },
 };

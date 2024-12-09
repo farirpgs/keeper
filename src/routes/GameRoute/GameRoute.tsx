@@ -48,7 +48,7 @@ export function GameRoute(props: {
                 <MDXH4 className="mt-[-.5rem]">
                   <Link
                     href={AppUrl.creator({
-                      slug: props.creator.id,
+                      id: props.creator.id,
                     })}
                     color="gray"
                     className="hover:text-[--accent-12]"
@@ -71,7 +71,7 @@ export function GameRoute(props: {
                   <Card>
                     <Flex gap="4" direction="column">
                       {props.gameCover}
-                      <CreateNewCampaignButton gameSlug={props.game.id} />
+                      <CreateNewCampaignButton gameId={props.game.id} />
                       <Text align="center"> — OR — </Text>
                       <Card variant="surface">
                         <Flex gap="4" direction={"column"}>
@@ -95,7 +95,7 @@ export function GameRoute(props: {
                           >
                             {props.assets.map((asset) => (
                               <Box key={asset.id}>
-                                <a href={AppUrl.asset({ slug: asset.id })}>
+                                <a href={AppUrl.asset({ id: asset.id })}>
                                   <Button
                                     size="2"
                                     className={clsx(
