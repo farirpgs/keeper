@@ -22,6 +22,7 @@ import LogoSrc from "../components/server/Header/logo.png";
 import { Colors } from "../domains/colors/colors";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import "./index.css";
+import { DLAstro } from "../domains/dl/DLAstro";
 
 type Props = {
   title: Array<string> | undefined;
@@ -48,7 +49,10 @@ const description =
 const headingFont = props.headingFont;
 const bodyFont = props.bodyFont;
 
-const songsAndSagas = await getEntry("games", "fari-rpgs/songs-and-sagas");
+// const songsAndSagas = await getEntry("games", "fari-rpgs/songs-and-sagas");
+const songsAndSagas = await DLAstro.getGame({
+  id: "fari-rpgs/songs-and-sagas",
+});
 
 const fontsAsString = [headingFont, bodyFont]
   .filter((font) => font !== undefined)
@@ -166,7 +170,7 @@ const ogImageUrl = props.withOgImage
         <Header client:load theme={themeProps} />
         {
           props.withDefaultBanner && (
-            <Banner src={songsAndSagas.data.image!} alt={"Background"} />
+            <Banner src={songsAndSagas.game.data.image!} alt={"Background"} />
           )
         }
       </Container>

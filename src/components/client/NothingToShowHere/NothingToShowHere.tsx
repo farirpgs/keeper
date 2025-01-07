@@ -1,5 +1,6 @@
 import { Container, Flex, Text } from "@radix-ui/themes";
 import { CircleOff } from "lucide-react";
+import type { JSX } from "react";
 import { MDXH1 } from "../MDX/MDX";
 
 export function NothingToShowHere(props: {
