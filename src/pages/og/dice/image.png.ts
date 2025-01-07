@@ -10,7 +10,7 @@ export const GET: APIRoute = async (ctx) => {
 
   return await renderOgImage({
     title: "Keeper Dice Roller",
-    description: "Roll any types of dice using this fair dice roller.",
+    description: "Roll any types of dice!",
     ctx: ctx,
   });
 };
