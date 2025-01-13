@@ -144,7 +144,7 @@ export function DiceRoller(props: { theme?: ThemeType; button?: boolean }) {
   return (
     <Theme {...props.theme} hasBackground={false} asChild>
       {renderButton ? (
-        <>
+        <div>
           <Dialog.Root
             open={open}
             onOpenChange={(isOpen) => {
@@ -182,9 +182,9 @@ export function DiceRoller(props: { theme?: ThemeType; button?: boolean }) {
               {renderDialogContent()}
             </Dialog.Content>
           </Dialog.Root>
-        </>
+        </div>
       ) : (
-        <>{renderDialogContent()}</>
+        <div>{renderDialogContent()}</div>
       )}
     </Theme>
   );

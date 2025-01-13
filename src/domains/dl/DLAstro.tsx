@@ -13,6 +13,10 @@ export const DLAstro = {
   }) {
     const creator = await getEntry("creators", props.id);
 
+    if (!creator) {
+      throw new Error("DLAstro.getCreator: Creator not found");
+    }
+
     let games: Array<CollectionEntry<"games">> = [];
     let resources: Array<CollectionEntry<"resources">> = [];
     if (props.includeGames) {
@@ -46,6 +50,10 @@ export const DLAstro = {
   }) {
     const game = await getEntry("games", props.id);
 
+    if (!game) {
+      throw new Error("DLAstro.getGame: Game not found");
+    }
+
     if (props.includeCreator) {
       const creator = await getEntry("creators", game.data.creator.id);
       return { game, creator };
@@ -59,6 +67,10 @@ export const DLAstro = {
     const gamesWithCreators = await Promise.all(
       games.map(async (game) => {
         const creator = await getEntry("creators", game.data.creator.id);
+
+        if (!creator) {
+          throw new Error("DLAstro.getAllGamesWithCreator: Creator not found");
+        }
 
         const assets = props.includeAssets
           ? await getCollection("assets", (item) => {
@@ -81,6 +93,10 @@ export const DLAstro = {
     id: CollectionEntry<"assets">["id"];
   }) {
     const asset = await getEntry("assets", props.id);
+
+    if (!asset) {
+      throw new Error("DLAstro.getAssetWithGameAndCreator: Asset not found");
+    }
 
     const game = await getEntry(asset.data.game);
     const creator = await getEntry(game.data.creator);
@@ -109,6 +125,10 @@ export const DLAstro = {
     const translations = await getCollection("resources", (element) => {
       return element.id.startsWith(idWithoutLocale);
     });
+
+    if (!resource) {
+      throw new Error("DLAstro.getResource: Resource not found");
+    }
 
     const locales = translations
       .map((element) => {
@@ -152,6 +172,12 @@ export const DLAstro = {
     const resourcesWithCreators = await Promise.all(
       resources.map(async (resource) => {
         const creator = await getEntry("creators", resource.data.creator.id);
+
+        if (!creator) {
+          throw new Error(
+            "DLAstro.getAllResourcesWithCreator: Creator not found",
+          );
+        }
 
         return {
           resource,
