@@ -1,6 +1,9 @@
 import { glob } from "astro/loaders";
 import { defineCollection, reference, z } from "astro:content";
 
+import { docsLoader } from "@astrojs/starlight/loaders";
+import { docsSchema } from "@astrojs/starlight/schema";
+
 import { Colors } from "./domains/colors/colors";
 
 const themeSchema = z
@@ -76,5 +79,5 @@ export const collections = {
         _locale: z.string().optional(),
       }),
   }),
-  // docs: defineCollection({ schema: docsSchema() }),
+  docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
 };
