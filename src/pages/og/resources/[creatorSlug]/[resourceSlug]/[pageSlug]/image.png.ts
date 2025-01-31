@@ -16,8 +16,13 @@ export type Params = {
 export const GET: APIRoute = async (ctx) => {
   const params = ctx.params as Params;
 
+  const resourceSlug = [
+    params.creatorSlug,
+    ...params.resourceSlug.split("."),
+  ].join("/") as CollectionEntry<"resources">["id"];
+
   const { creator, resource } = await DLAstro.getResource({
-    id: `${params.creatorSlug}/${params.resourceSlug}` as any,
+    id: resourceSlug,
     includeCreator: true,
   });
 
