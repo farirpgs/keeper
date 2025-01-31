@@ -30,4 +30,3 @@ bun dev
 ```
 
 You can then access the project at http://localhost:4321.
-.
