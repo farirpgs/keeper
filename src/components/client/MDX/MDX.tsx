@@ -41,7 +41,7 @@ export function MDXWrapper(props: { children: React.ReactNode }) {
 }
 
 export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
-  const allowH1s = arg.allowH1s ?? false;
+  const allowH1s = arg.allowH1s ?? true;
   return {
     h1: allowH1s ? (MDXH1 as any) : (MDXH2 as any),
     h2: allowH1s ? (MDXH2 as any) : (MDXH3 as any),
@@ -95,7 +95,11 @@ export function MDXH1(props: HeadingProps) {
         sm: "9",
       }}
       {...props}
-      className={clsx("relative", props.className)}
+      className={clsx(
+        "relative",
+        // 'mb-6 mt-8',
+        props.className,
+      )}
     >
       {props.id ? (
         <>
@@ -118,7 +122,7 @@ export function MDXH2(props: HeadingProps) {
         sm: "8",
       }}
       {...props}
-      className={clsx("relative", "mt-4", props.className)}
+      className={clsx("relative mt-5", props.className)}
     >
       {props.id ? (
         <>
@@ -141,7 +145,7 @@ export function MDXH3(props: HeadingProps) {
         sm: "7",
       }}
       {...props}
-      className={clsx("relative", props.className)}
+      className={clsx("relative mt-4", props.className)}
     >
       {props.id ? (
         <>
@@ -164,7 +168,7 @@ export function MDXH4(props: HeadingProps) {
         sm: "6",
       }}
       {...props}
-      className={clsx("relative", props.className)}
+      className={clsx("relative mt-3", props.className)}
     >
       {props.id ? (
         <>
@@ -187,7 +191,7 @@ export function MDXH5(props: HeadingProps) {
         sm: "5",
       }}
       {...props}
-      className={clsx("relative", props.className)}
+      className={clsx("relative mt-2", props.className)}
     >
       {props.id ? (
         <>
@@ -210,7 +214,7 @@ function MDXH6(props: HeadingProps) {
         sm: "4",
       }}
       {...props}
-      className={clsx("relative", props.className)}
+      className={clsx("relative mt-1", props.className)}
     >
       {props.id ? (
         <>

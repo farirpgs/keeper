@@ -11,6 +11,7 @@ import {
   Select,
   Text,
   Theme,
+  Tooltip,
 } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
@@ -70,8 +71,10 @@ export function ResourceRoute(props: {
           </div>
           <div className="block w-full">
             <MDXWrapper>
-              <MDXH1 mb="1">{props.doc.currentPage?.title || ""}</MDXH1>
-              <MDXH4 color="gray" className="mt-[-.5rem]" size="6" mb="4">
+              <MDXH1 className="mb-0 mt-0">
+                {props.doc.currentPage?.title || ""}
+              </MDXH1>
+              <MDXH4 color="gray" className="mb-0 mt-0" size="6">
                 {props.resource.data.name}
               </MDXH4>
               {props.children}
@@ -158,58 +161,62 @@ export function ResourceRoute(props: {
         }
       >
         {props.doc.previousPage && (
-          <Link
-            className="w-full sm:w-[33%]"
-            href={AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.previousPage.id,
-            })}
-            size="4"
-          >
-            <Flex
-              gap="2"
-              direction="column"
-              className="rounded-md border border-[--border] p-4"
-              style={
-                {
-                  "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                } as React.CSSProperties
-              }
+          <Tooltip content={props.doc.previousPage.title}>
+            <Link
+              className="w-full sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.previousPage.id,
+              })}
+              size="4"
             >
-              <Text size="2" color="gray" className="no-underline">
-                Previous
-              </Text>
+              <Flex
+                gap="2"
+                direction="column"
+                className="rounded-md border border-[--border] p-4"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <Text size="2" color="gray" className="no-underline">
+                  Previous
+                </Text>
 
-              {props.doc.previousPage.title}
-            </Flex>
-          </Link>
+                <Text truncate>{props.doc.previousPage.title}</Text>
+              </Flex>
+            </Link>
+          </Tooltip>
         )}
         {props.doc.nextPage && (
-          <Link
-            className="w-full sm:w-[33%]"
-            href={AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.nextPage.id,
-            })}
-            size="4"
-          >
-            <Flex
-              gap="2"
-              direction="column"
-              className="rounded-md border border-[--border] p-4 text-right"
-              style={
-                {
-                  "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                } as React.CSSProperties
-              }
+          <Tooltip content={props.doc.nextPage.title}>
+            <Link
+              className="w-full sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.nextPage.id,
+              })}
+              size="4"
             >
-              <Text size="2" color="gray" className="">
-                Next
-              </Text>
+              <Flex
+                gap="2"
+                direction="column"
+                className="rounded-md border border-[--border] p-4 text-right"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <Text size="2" color="gray" className="">
+                  Next
+                </Text>
 
-              {props.doc.nextPage.title}
-            </Flex>
-          </Link>
+                <Text truncate>{props.doc.nextPage.title}</Text>
+              </Flex>
+            </Link>
+          </Tooltip>
         )}
       </Flex>
     );
@@ -275,31 +282,48 @@ export function ResourceRoute(props: {
                 >
                   {category}
                 </Heading>
-                {props.doc.sidebar.categories[category].map((item) => {
-                  const itemPatname = AppUrl.resourcePage({
-                    id: props.resource.id,
-                    page: item.id,
-                  });
-                  const isFirstPage =
-                    !props.doc.previousPage &&
-                    props.doc.currentPage?.id === item.id;
-                  const isCurrent =
-                    itemPatname === props.pathname || isFirstPage;
+                <Flex direction="column">
+                  {props.doc.sidebar.categories[category].map((item) => {
+                    const itemPatname = AppUrl.resourcePage({
+                      id: props.resource.id,
+                      page: item.id,
+                    });
+                    const isFirstPage =
+                      !props.doc.previousPage &&
+                      props.doc.currentPage?.id === item.id;
+                    const isCurrent =
+                      itemPatname === props.pathname || isFirstPage;
 
-                  return (
-                    <React.Fragment key={item.id}>
-                      {renderLink({
-                        isCurrent,
-                        href: itemPatname,
-                        title: item.title,
-                      })}
-                      {isCurrent && renderToc()}
-                    </React.Fragment>
-                  );
-                })}
+                    return (
+                      <React.Fragment key={item.id}>
+                        {renderLink({
+                          isCurrent,
+                          href: itemPatname,
+                          title: item.title,
+                        })}
+                        {isCurrent && renderToc()}
+                      </React.Fragment>
+                    );
+                  })}
+                </Flex>
               </React.Fragment>
             );
           })}
+          {Object.keys(props.doc.sidebar.categories).length === 0 ? (
+            <>
+              <Heading
+                size="1"
+                mt="3"
+                mb="1"
+                className="uppercase"
+                color="gray"
+              >
+                Chapters
+              </Heading>
+            </>
+          ) : (
+            <></>
+          )}
           {props.doc.sidebar.root.map((item) => {
             const itemPatname = AppUrl.resourcePage({
               id: props.resource.id,
@@ -390,6 +414,9 @@ export function ResourceRoute(props: {
         : p.isToc
           ? "var(--gray-11)"
           : "var(--gray-12)";
+
+    const level = p.level ? p.level : 1;
+
     return (
       <>
         <Link
@@ -403,16 +430,17 @@ export function ResourceRoute(props: {
             setMobileMenuOpen(false);
           }}
         >
-          <Box
-            pl={p.level ? (p.level + 2).toString() : "2"}
+          <Flex
             className={clsx(
-              "border-l-solid border-l-[1px] border-l-[--border-item] hover:border-l-[--border-current]",
+              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-[--border-item] py-[.25rem] hover:border-l-[--border-current]",
+              `pl-[calc(var(--level)*.5rem)]`,
               {
                 "m-[0px]": p.isCurrent,
               },
             )}
             style={
               {
+                "--level": level,
                 "--border-current": Colors.getDarkColor(
                   props.theme.accentColor,
                   9,
@@ -420,14 +448,18 @@ export function ResourceRoute(props: {
                 "--border-item":
                   p.isCurrent || p.isToc
                     ? Colors.getDarkColor(props.theme.accentColor, 9)
-                    : Colors.getDarkColor("gray", 6),
+                    : Colors.getDarkColor("gray", 12),
               } as React.CSSProperties
             }
           >
-            <Text className={clsx({ "font-bold": p.isCurrent })} size="2">
+            <Text
+              className={clsx({ "font-bold": p.isCurrent })}
+              size="2"
+              truncate
+            >
               {p.title}
             </Text>
-          </Box>
+          </Flex>
         </Link>
       </>
     );
