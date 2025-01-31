@@ -11,6 +11,7 @@ import {
   Select,
   Text,
   Theme,
+  Tooltip,
 } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
@@ -70,8 +71,10 @@ export function ResourceRoute(props: {
           </div>
           <div className="block w-full">
             <MDXWrapper>
-              <MDXH1 mb="1">{props.doc.currentPage?.title || ""}</MDXH1>
-              <MDXH4 color="gray" className="mt-[-.5rem]" size="6" mb="4">
+              <MDXH1 className="mb-0 mt-0">
+                {props.doc.currentPage?.title || ""}
+              </MDXH1>
+              <MDXH4 color="gray" className="mb-0 mt-0" size="6">
                 {props.resource.data.name}
               </MDXH4>
               {props.children}
@@ -158,58 +161,62 @@ export function ResourceRoute(props: {
         }
       >
         {props.doc.previousPage && (
-          <Link
-            className="w-full sm:w-[33%]"
-            href={AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.previousPage.id,
-            })}
-            size="4"
-          >
-            <Flex
-              gap="2"
-              direction="column"
-              className="rounded-md border border-[--border] p-4"
-              style={
-                {
-                  "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                } as React.CSSProperties
-              }
+          <Tooltip content={props.doc.previousPage.title}>
+            <Link
+              className="w-full sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.previousPage.id,
+              })}
+              size="4"
             >
-              <Text size="2" color="gray" className="no-underline">
-                Previous
-              </Text>
+              <Flex
+                gap="2"
+                direction="column"
+                className="rounded-md border border-[--border] p-4"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <Text size="2" color="gray" className="no-underline">
+                  Previous
+                </Text>
 
-              {props.doc.previousPage.title}
-            </Flex>
-          </Link>
+                <Text truncate>{props.doc.previousPage.title}</Text>
+              </Flex>
+            </Link>
+          </Tooltip>
         )}
         {props.doc.nextPage && (
-          <Link
-            className="w-full sm:w-[33%]"
-            href={AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.nextPage.id,
-            })}
-            size="4"
-          >
-            <Flex
-              gap="2"
-              direction="column"
-              className="rounded-md border border-[--border] p-4 text-right"
-              style={
-                {
-                  "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                } as React.CSSProperties
-              }
+          <Tooltip content={props.doc.nextPage.title}>
+            <Link
+              className="w-full sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.nextPage.id,
+              })}
+              size="4"
             >
-              <Text size="2" color="gray" className="">
-                Next
-              </Text>
+              <Flex
+                gap="2"
+                direction="column"
+                className="rounded-md border border-[--border] p-4 text-right"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <Text size="2" color="gray" className="">
+                  Next
+                </Text>
 
-              {props.doc.nextPage.title}
-            </Flex>
-          </Link>
+                <Text truncate>{props.doc.nextPage.title}</Text>
+              </Flex>
+            </Link>
+          </Tooltip>
         )}
       </Flex>
     );

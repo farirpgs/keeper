@@ -44,8 +44,8 @@ export function GameRoute(props: {
               }}
             >
               <Flex direction="column" gap="4">
-                <MDXH1>{props.game.data.name}</MDXH1>
-                <MDXH4 className="mt-[-.5rem]">
+                <MDXH1 className="mb-0 mt-0">{props.game.data.name}</MDXH1>
+                <MDXH4 color="gray" className="mb-0 mt-0" size="6">
                   <Link
                     href={AppUrl.creator({
                       id: props.creator.id,
