@@ -112,8 +112,8 @@ export function MDXRollingTable(p: Props) {
                     size="2"
                     key={index}
                     className={clsx(
-                      isLatest && "font-bold text-[--accent-11]",
-                      !isLatest && "text-[--gray-9]",
+                      isLatest && "font-bold text-(--accent-11)",
+                      !isLatest && "text-([)--gray-9)",
                     )}
                   >
                     {index + 1}

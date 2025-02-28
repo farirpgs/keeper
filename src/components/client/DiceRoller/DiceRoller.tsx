@@ -223,7 +223,7 @@ export function DiceRoller(props: { theme?: ThemeType; button?: boolean }) {
       <Flex direction="row" gap="2" wrap={"wrap"} justify={"center"}>
         {results.length === 0 && (
           <Text color="gray">
-            <CircleOff size="6rem" className="text-[--accent-5]"></CircleOff>
+            <CircleOff size="6rem" className="text-(--accent-5)"></CircleOff>
           </Text>
         )}
         {results.map((result, index) => {
@@ -270,7 +270,7 @@ export function DiceRoller(props: { theme?: ThemeType; button?: boolean }) {
 
   function renderResultsText() {
     return (
-      <Text color="gray" size={"1"} className="text-center text-[--accent-11]">
+      <Text color="gray" size={"1"} className="text-center text-(--accent-11)">
         Click on a result to reroll it.
         <br />
         Right click on a result to add it to highlight it.
@@ -376,7 +376,7 @@ export function DiceRoller(props: { theme?: ThemeType; button?: boolean }) {
 
   function renderCloseButton() {
     return (
-      <Flex gap="3" justify="end" className="absolute right-0 top-0">
+      <Flex gap="3" justify="end" className="absolute top-0 right-0">
         <Dialog.Close>
           <Button
             variant="ghost"

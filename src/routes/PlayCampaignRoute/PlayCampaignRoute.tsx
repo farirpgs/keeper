@@ -206,7 +206,7 @@ function Game(props: {
               style={{
                 ...getSurfaceStyle(),
               }}
-              className="min-w-[272px] max-w-[272px] rounded-[--radius-2] p-4"
+              className="max-w-[272px] min-w-[272px] rounded-(--radius-2) p-4"
             >
               <Tabs.Root value={tab}>
                 <Tabs.List size="2" justify={"center"}>

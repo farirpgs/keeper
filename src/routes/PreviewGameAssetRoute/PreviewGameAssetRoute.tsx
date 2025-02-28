@@ -5,7 +5,7 @@ import { Smartphone } from "lucide-react";
 import {
   MDXH1,
   MDXH5,
-  MDXWrapper,
+  MDXSheetWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
@@ -74,20 +74,20 @@ export function PreviewGameAssetRoute(props: {
               id: props.game.id,
             })}
             color="gray"
-            className="hover:text-[--accent-12]"
+            className="hover:text-(--accent-12)"
           >
             For {props.game.data.name}
           </Link>
         </MDXH5>
         <Container size={"1"}>
           {MDXContent && (
-            <MDXWrapper>
+            <MDXSheetWrapper>
               <MDXContent
                 components={{
                   ...getMdxComponents({}),
                 }}
               ></MDXContent>
-            </MDXWrapper>
+            </MDXSheetWrapper>
           )}
         </Container>
       </Flex>

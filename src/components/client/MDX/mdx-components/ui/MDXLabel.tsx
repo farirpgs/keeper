@@ -22,7 +22,7 @@ export function MDXLabel(p: Props) {
       data-mdx-type="label"
       size={"5"}
       weight={"bold"}
-      className={clsx("text-[--accent-11]", {
+      className={clsx("text-(--accent-11)", {
         "w-full": props.fullWidth,
       })}
     >

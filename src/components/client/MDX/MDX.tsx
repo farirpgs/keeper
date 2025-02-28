@@ -34,7 +34,16 @@ export const TEXT_CLASSES = "text-[1.2rem] leading-[1.5em] tracking-normal";
 
 export function MDXWrapper(props: { children: React.ReactNode }) {
   return (
-    <Flex gap="3" direction="column">
+    <div className="prose prose-xl dark:prose-invert">{props.children}</div>
+  );
+}
+export function MDXSheetWrapper(props: { children: React.ReactNode }) {
+  return (
+    <Flex
+      gap="3"
+      direction="column"
+      className="prose prose-xl dark:prose-invert"
+    >
       {props.children}
     </Flex>
   );
@@ -43,29 +52,29 @@ export function MDXWrapper(props: { children: React.ReactNode }) {
 export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
   const allowH1s = arg.allowH1s ?? true;
   return {
-    h1: allowH1s ? (MDXH1 as any) : (MDXH2 as any),
-    h2: allowH1s ? (MDXH2 as any) : (MDXH3 as any),
-    h3: allowH1s ? (MDXH3 as any) : (MDXH4 as any),
-    h4: allowH1s ? (MDXH4 as any) : (MDXH5 as any),
-    h5: allowH1s ? (MDXH5 as any) : (MDXH6 as any),
-    h6: allowH1s ? (MDXH6 as any) : (MDXH6 as any),
-    a: MDXA as any,
-    blockquote: MDXBlockquote as any,
-    em: MDXEm as any,
-    strong: MDXStrong as any,
-    pre: MDXPre as any,
-    ul: MDXUl as any,
-    ol: MDXOl as any,
-    li: MDXLi as any,
-    code: MDXCode as any,
-    p: MDXP as any,
-    table: MDXTable as any,
-    thead: MDXTHead as any,
-    tbody: MDXTBody as any,
-    tr: MDXTr as any,
-    th: MDXTh as any,
-    td: MDXTd as any,
-    hr: MDXDivider as any,
+    // h1: allowH1s ? (MDXH1 as any) : (MDXH2 as any),
+    // h2: allowH1s ? (MDXH2 as any) : (MDXH3 as any),
+    // h3: allowH1s ? (MDXH3 as any) : (MDXH4 as any),
+    // h4: allowH1s ? (MDXH4 as any) : (MDXH5 as any),
+    // h5: allowH1s ? (MDXH5 as any) : (MDXH6 as any),
+    // h6: allowH1s ? (MDXH6 as any) : (MDXH6 as any),
+    // a: MDXA as any,
+    // blockquote: MDXBlockquote as any,
+    // em: MDXEm as any,
+    // strong: MDXStrong as any,
+    // pre: MDXPre as any,
+    // ul: MDXUl as any,
+    // ol: MDXOl as any,
+    // li: MDXLi as any,
+    // code: MDXCode as any,
+    // p: MDXP as any,
+    // table: MDXTable as any,
+    // thead: MDXTHead as any,
+    // tbody: MDXTBody as any,
+    // tr: MDXTr as any,
+    // th: MDXTh as any,
+    // td: MDXTd as any,
+    // hr: MDXDivider as any,
     Divider: MDXDivider as any,
     Row: MDXRow as any,
     Columns: MDXColumns as any,

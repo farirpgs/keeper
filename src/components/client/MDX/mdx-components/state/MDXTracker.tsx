@@ -85,10 +85,10 @@ export function MDXTracker(p: Props) {
                 variant={value ? "soft" : "soft"}
                 className={clsx(
                   {
-                    "bg-[--accent-7]": value,
-                    "bg-[--accent-4]": !value,
+                    "bg-(--accent-7)": value,
+                    "bg-(--accent-4)": !value,
                   },
-                  "hover:bg-[--accent-5]",
+                  "hover:bg-(--accent-5)",
                 )}
                 key={i}
                 disabled={campaignManager.readonly}

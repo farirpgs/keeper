@@ -1,0 +1,89 @@
+@import "tailwindcss" important;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+  --spacing-9: 64px;
+
+  --breakpoint-xs: 520px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1640px;
+  --breakpoint-2xl: 1920px;
+  --breakpoint-3xl: 2560px;
+  --breakpoint-4xl: 3840px;
+
+  --animate-blur: blur 2s linear alternate infinite;
+  @keyframes blur {
+    0% {
+      filter: blur(48px);
+    }
+    100% {
+      filter: blur(128px);
+    }
+  }
+}
+
+:root {
+}
+
+/* GLOBAL TAGS */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  position: relative;
+}
+/* ASTRO DEBUG */
+.astro-debug {
+  background: none !important;
+}
+
+.astro-code {
+  border: none !important;
+}
+
+html.dark {
+  --pagefind-ui-primary: #eeeeee;
+  --pagefind-ui-text: #eeeeee;
+  --pagefind-ui-background: #152028;
+  --pagefind-ui-border: #152028;
+  --pagefind-ui-tag: #152028;
+}
+
+.icon.icon-link {
+  color: #000;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  transition: color 0.3s;
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: red;
+  top: calc(50% - 0.75rem);
+  display: inline-block;
+}
+
+.sun {
+  display: block;
+}
+.moon {
+  display: none;
+}
+.dark .sun {
+  display: none;
+}
+.dark .moon {
+  display: block;
+}

@@ -65,7 +65,7 @@ export function Header(props: { theme?: ThemeType }) {
         justify={"between"}
         align={"center"}
         columns="3"
-        className="my-9 items-center rounded-[--radius-2] border-b border-l border-r border-t border-[--accent-4] px-6 py-5 initial:my-6 initial:mb-[3rem] print:hidden"
+        className="initial:my-6 initial:mb-[3rem] my-9 items-center rounded-(--radius-2) border-t border-r border-b border-l border-(--accent-4) px-6 py-5 print:hidden"
         style={{
           ...getSurfaceStyle(),
         }}
@@ -190,7 +190,7 @@ export function Header(props: { theme?: ThemeType }) {
                   <Flex
                     gap="3"
                     justify="end"
-                    className="absolute right-0 top-0"
+                    className="absolute top-0 right-0"
                   >
                     <Dialog.Close>
                       <Button

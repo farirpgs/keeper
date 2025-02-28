@@ -3,23 +3,27 @@ import netlify from "@astrojs/netlify";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
 import { constants } from "./src/domains/utils/constants";
 
 import partytown from "@astrojs/partytown";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://keeper.farirpgs.com",
   output: "static",
+
   prefetch: {
     prefetchAll: true,
   },
+
   site: constants.site({
     localhost: process.env.NODE_ENV === "development",
   }),
+
   integrations: [
     starlight({
       title: "Keeper Documentation",
@@ -43,7 +47,6 @@ export default defineConfig({
       },
     }),
     react(),
-    tailwind(),
     mdx(),
     sitemap(),
     partytown({
@@ -52,8 +55,14 @@ export default defineConfig({
       },
     }),
   ],
+
   experimental: {
     contentIntellisense: true,
   },
+
   adapter: netlify(),
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

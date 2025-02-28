@@ -44,14 +44,14 @@ export function GameRoute(props: {
               }}
             >
               <Flex direction="column" gap="4">
-                <MDXH1 className="mb-0 mt-0">{props.game.data.name}</MDXH1>
-                <MDXH4 color="gray" className="mb-0 mt-0" size="6">
+                <MDXH1 className="mt-0 mb-0">{props.game.data.name}</MDXH1>
+                <MDXH4 color="gray" className="mt-0 mb-0" size="6">
                   <Link
                     href={AppUrl.creator({
                       id: props.creator.id,
                     })}
                     color="gray"
-                    className="hover:text-[--accent-12]"
+                    className="hover:text-(--accent-12)"
                   >
                     By {props.creator.data.name}
                   </Link>
