@@ -365,6 +365,7 @@ export function ResourceRoute(props: {
                   es: "Español",
                   fr: "Français",
                   it: "Italiano",
+                  ua: "Українська",
                 };
                 return (
                   <Select.Item key={locale} value={locale}>
