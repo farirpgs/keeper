@@ -69,14 +69,13 @@ export async function getStaticPaths() {
       <Banner src={props.game.data.image} alt={props.game.data.name} />
     )
   }
-  <div class="w-[800px]">
-    <PreviewGameAssetRoute
-      client:load
-      theme={theme}
-      game={props.game}
-      creator={props.creator}
-      assets={props.assets}
-      currentAsset={currentAsset}
-    />
-  </div>
+
+  <PreviewGameAssetRoute
+    client:load
+    theme={theme}
+    game={props.game}
+    creator={props.creator}
+    assets={props.assets}
+    currentAsset={currentAsset}
+  />
 </Layout>

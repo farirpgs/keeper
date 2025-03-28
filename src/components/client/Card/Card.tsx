@@ -87,7 +87,7 @@ export function Card(props: {
             }}
           />
           {props.badge && (
-            <Box className="absolute right-4 top-4">{props.badge}</Box>
+            <Box className="absolute top-4 right-4">{props.badge}</Box>
           )}
 
           <Box position={"absolute"} className="bottom-0 left-0 w-full">
@@ -116,7 +116,7 @@ export function Card(props: {
                     weight="bold"
                     truncate
                     color="gray"
-                    className="dark text-[--accent-a12]"
+                    className="dark text-(--accent-a12)"
                   >
                     {props.title}
                   </Text>
@@ -128,7 +128,7 @@ export function Card(props: {
                     size="5"
                     color="gray"
                     truncate
-                    className="dark text-[--accent-a11]"
+                    className="dark text-(--accent-a11)"
                   >
                     {props.subtitle}
                   </Text>

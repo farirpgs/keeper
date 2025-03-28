@@ -20,7 +20,7 @@ export function NothingToShowHere(props: {
       <div className="py-[10vh]">
         <Flex direction="column" gap="4" align="center">
           {Icon && <Icon size="20vh" className="mb-[2rem]"></Icon>}
-          <MDXH1 as="h3" align={"center"}>
+          <MDXH1 as="h3" align={"center"} size="6">
             {props.title}
           </MDXH1>
           <Text align={"center"}>{props.description}</Text>

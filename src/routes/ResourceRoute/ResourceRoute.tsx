@@ -70,11 +70,9 @@ export function ResourceRoute(props: {
             </Box>
           </div>
           <div className="block w-full">
-            <MDXWrapper>
-              <MDXH1 className="mb-0 mt-0">
-                {props.doc.currentPage?.title || ""}
-              </MDXH1>
-              <MDXH4 color="gray" className="mb-0 mt-0" size="6">
+            <div>
+              <MDXH1 className="">{props.doc.currentPage?.title || ""}</MDXH1>
+              <MDXH4 color="gray" className="mb-8" size="6">
                 {props.resource.data.name}
               </MDXH4>
               {props.children}
@@ -89,7 +87,7 @@ export function ResourceRoute(props: {
               )}
               {renderPreviousAndNextButtons()}
               {renderEditButton()}
-            </MDXWrapper>
+            </div>
           </div>
         </div>
         <Dialog.Root
@@ -98,7 +96,7 @@ export function ResourceRoute(props: {
             return setMobileMenuOpen(open);
           }}
         >
-          <Box className="fixed bottom-0 left-0 right-0 w-full bg-black lg:hidden">
+          <Box className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
             <Dialog.Trigger
               onClick={() => {
                 return setMobileMenuOpen((prev) => !prev);
@@ -106,10 +104,10 @@ export function ResourceRoute(props: {
             >
               <IconButton
                 variant="solid"
-                // color="gray"
+                color="gray"
                 size="4"
                 radius="full"
-                className="fixed bottom-4 right-4 h-[4rem] w-[4rem] lg:hidden"
+                className="fixed right-4 bottom-4 h-[4rem] w-[4rem] lg:hidden"
               >
                 <HamburgerMenuIcon
                   width={"2rem"}
@@ -173,7 +171,7 @@ export function ResourceRoute(props: {
               <Flex
                 gap="2"
                 direction="column"
-                className="rounded-md border border-[--border] p-4"
+                className="rounded-md border border-(--border) p-4"
                 style={
                   {
                     "--border": Colors.getDarkColor(props.theme.accentColor, 7),
@@ -202,7 +200,7 @@ export function ResourceRoute(props: {
               <Flex
                 gap="2"
                 direction="column"
-                className="rounded-md border border-[--border] p-4 text-right"
+                className="rounded-md border border-(--border) p-4 text-right"
                 style={
                   {
                     "--border": Colors.getDarkColor(props.theme.accentColor, 7),
@@ -263,7 +261,7 @@ export function ResourceRoute(props: {
                 id: props.creator.id,
               })}
               color="gray"
-              className="hover:text-[--accent-12]"
+              className="hover:text-(--accent-12)"
             >
               <Text size={"4"}>By {props.creator.data.name}</Text>
             </Link>
@@ -367,6 +365,7 @@ export function ResourceRoute(props: {
                   es: "Español",
                   fr: "Français",
                   it: "Italiano",
+                  ua: "Українська",
                 };
                 return (
                   <Select.Item key={locale} value={locale}>
@@ -432,7 +431,7 @@ export function ResourceRoute(props: {
         >
           <Flex
             className={clsx(
-              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-[--border-item] py-[.25rem] hover:border-l-[--border-current]",
+              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item) py-[.25rem] hover:border-l-(--border-current)",
               `pl-[calc(var(--level)*.5rem)]`,
               {
                 "m-[0px]": p.isCurrent,
@@ -448,7 +447,7 @@ export function ResourceRoute(props: {
                 "--border-item":
                   p.isCurrent || p.isToc
                     ? Colors.getDarkColor(props.theme.accentColor, 9)
-                    : Colors.getDarkColor("gray", 12),
+                    : Colors.getDarkColor("gray", 7),
               } as React.CSSProperties
             }
           >

@@ -47,7 +47,7 @@ export function HomeRoute(props: {
             }}
           >
             <Flex align="start" justify="center" gap="4" direction={"column"}>
-              <MDXH1 className="text-[2rem] leading-[normal] xs:text-[3rem] md:text-[4rem]">
+              <MDXH1 className="xs:text-[3rem] text-[2rem] leading-[normal] md:text-[4rem]">
                 The best TTRPG
                 <br />
                 <Blinker
@@ -87,10 +87,10 @@ export function HomeRoute(props: {
             width={"40%"}
             justify="center"
             align={"center"}
-            className="relative initial:hidden md:flex"
+            className="initial:hidden relative md:flex"
           >
             <Box
-              className="absolute z-[-1] hidden h-[calc(100%+2rem)] w-[calc(100%+2rem)] animate-blur rounded-lg opacity-60 dark:block"
+              className="animate-blur absolute z-[-1] hidden h-[calc(100%+4rem)] w-[calc(100%+4rem)] rounded-lg opacity-60 dark:block"
               style={{
                 backgroundImage:
                   "linear-gradient(to right top, var(--accent-10), var(--accent-7), var(--accent-8), var(--accent-9), var(--accent-11))",

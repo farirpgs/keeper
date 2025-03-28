@@ -9,20 +9,18 @@ import {
 import "@radix-ui/themes/styles.css";
 import { ViewTransitions, fade } from "astro:transitions";
 
-import { getImage } from "astro:assets";
 import { Debug } from "astro:components";
-import { getEntry } from "astro:content";
 import { Graphic } from "../components/client/Graphic/Graphic";
 import { MDXColumns } from "../components/client/MDX/mdx-components/ui/MDXColumns";
 import { MDXDivider } from "../components/client/MDX/mdx-components/ui/MDXDivider";
 import Banner from "../components/server/Banner/Banner.astro";
 import Footer from "../components/server/Footer/Footer.astro";
 import { Header } from "../components/server/Header/Header";
-import LogoSrc from "../components/server/Header/logo.png";
 import { Colors } from "../domains/colors/colors";
-import { getTheme, type ThemeType } from "../domains/utils/getTheme";
-import "./index.css";
 import { DLAstro } from "../domains/dl/DLAstro";
+import { getTheme, type ThemeType } from "../domains/utils/getTheme";
+
+import "../styles/global.css";
 
 type Props = {
   title: Array<string> | undefined;
@@ -238,31 +236,6 @@ const ogImageUrl = props.withOgImage
       </script>
     </body>
 
-    <style is:global>
-      /* GLOBAL TAGS */
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        position: relative;
-      }
-      /* ASTRO DEBUG */
-      .astro-debug {
-        background: none !important;
-      }
-
-      .astro-code {
-        border: none !important;
-      }
-
-      html.dark {
-        --pagefind-ui-primary: #eeeeee;
-        --pagefind-ui-text: #eeeeee;
-        --pagefind-ui-background: #152028;
-        --pagefind-ui-border: #152028;
-        --pagefind-ui-tag: #152028;
-      }
-    </style>
     <style
       is:global
       define:vars={{
@@ -270,9 +243,7 @@ const ogImageUrl = props.withOgImage
       }}
     >
       .radix-themes {
-        --heading-font-family: var(
-          --headingFont
-        ); /* Your custom font for <Heading> components */
+        --heading-font-family: var(--headingFont);
       }
     </style>
     <style

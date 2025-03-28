@@ -1,11 +1,19 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Box, Callout, Container, Flex, Link, Theme } from "@radix-ui/themes";
+import {
+  Box,
+  Callout,
+  Card,
+  Container,
+  Flex,
+  Link,
+  Theme,
+} from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { Smartphone } from "lucide-react";
 import {
   MDXH1,
   MDXH5,
-  MDXWrapper,
+  MDXSheetWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
@@ -38,19 +46,21 @@ export function PreviewGameAssetRoute(props: {
   return (
     <Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <Box className="hidden lg:block">{renderContent()}</Box>
-        <Box className="lg:hidden">
-          <NothingToShowHere
-            icon={Smartphone}
-            title={"Open on Desktop"}
-            description={
-              <>
-                This page is not meant to be viewed on mobile. Please make your
-                window bigger or open it in a desktop browser.
-              </>
-            }
-          ></NothingToShowHere>
-        </Box>
+        <Card className="mx-auto max-w-[800px] p-6">
+          <Box className="hidden lg:block">{renderContent()}</Box>
+          <Box className="lg:hidden">
+            <NothingToShowHere
+              icon={Smartphone}
+              title={"Open on Desktop"}
+              description={
+                <>
+                  This page is not meant to be viewed on mobile. Please make
+                  your window bigger or open it in a desktop browser.
+                </>
+              }
+            ></NothingToShowHere>
+          </Box>
+        </Card>
       </CampaignContext.Provider>
     </Theme>
   );
@@ -74,20 +84,22 @@ export function PreviewGameAssetRoute(props: {
               id: props.game.id,
             })}
             color="gray"
-            className="hover:text-[--accent-12]"
+            className="hover:text-(--accent-12)"
           >
             For {props.game.data.name}
           </Link>
         </MDXH5>
         <Container size={"1"}>
           {MDXContent && (
-            <MDXWrapper>
+            <MDXSheetWrapper>
               <MDXContent
                 components={{
-                  ...getMdxComponents({}),
+                  ...getMdxComponents({
+                    allowH1s: false,
+                  }),
                 }}
               ></MDXContent>
-            </MDXWrapper>
+            </MDXSheetWrapper>
           )}
         </Container>
       </Flex>

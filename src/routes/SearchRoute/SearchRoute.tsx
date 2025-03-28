@@ -190,7 +190,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
                         size="3"
                         variant="outline"
                         color="gray"
-                        className="bg-[--accent-2]"
+                        className="bg-(--accent-2)"
                       >
                         {item.type === "games" ? "Game" : "Resource"}
                       </Badge>

@@ -3,12 +3,13 @@ import netlify from "@astrojs/netlify";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import starlight from "@astrojs/starlight";
-import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 
 import { constants } from "./src/domains/utils/constants";
 
 import partytown from "@astrojs/partytown";
+
+import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,7 +44,6 @@ export default defineConfig({
       },
     }),
     react(),
-    tailwind(),
     mdx(),
     sitemap(),
     partytown({
@@ -56,4 +56,7 @@ export default defineConfig({
     contentIntellisense: true,
   },
   adapter: netlify(),
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

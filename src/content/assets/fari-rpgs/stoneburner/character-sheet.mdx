@@ -12,111 +12,196 @@ game: fari-rpgs/stoneburner
   <TextField name="kit">Kit</TextField>
 </Row>
 
----
-
 <Columns>
   <Stack>
-    <Heading>Skills</Heading>
-    <Row>
-      <Label fullWidth>Strength</Label>
-       <SelectField name="skills.strength.initial" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d4">Initial</SelectField>
-      <SelectField name="skills.strength.current" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d4">Current</SelectField>
-    </Row>
-    <Row>
-      <Label fullWidth>Dexterity</Label>
-      <SelectField name="skills.dexterity.initial" options={['d4', 'd6',   'd8', 'd10', 'd12']} defaultValue="d4">Initial</SelectField>
-      <SelectField name="skills.dexterity.current" options={['d4', 'd6',   'd8', 'd10', 'd12']} defaultValue="d4">Current</SelectField>
-    </Row>
-    <Row>
-      <Label fullWidth>Willpower</Label>
-      <SelectField name="skills.willpower.initial" options={['d4', 'd6',   'd8', 'd10', 'd12']} defaultValue="d4">Initial</SelectField>
-      <SelectField name="skills.willpower.current" options={['d4', 'd6',   'd8', 'd10', 'd12']} defaultValue="d4">Current</SelectField>
-    </Row>
-    <Row>
-      <Label fullWidth>Loot</Label>
-      <SelectField name="skills.loot.initial" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d12">Initial</SelectField>
-      <SelectField name="skills.loot.current" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d12">Current</SelectField>
-    </Row>
-    <Row>
-      <Label fullWidth>Grit</Label>
-      <SelectField name="skills.grit.initial" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d12">Initial</SelectField>
-      <SelectField name="skills.grit.current" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d12">Current</SelectField>
-    </Row>
-  
+    <Fields>
+      <Heading>Skills</Heading>
+      <Row>
+        <Label fullWidth>Strength</Label>
+        <SelectField
+          name="skills.strength.initial"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Initial
+        </SelectField>
+        <SelectField
+          name="skills.strength.current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Current
+        </SelectField>
+      </Row>
+      <Row>
+        <Label fullWidth>Dexterity</Label>
+        <SelectField
+          name="skills.dexterity.initial"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Initial
+        </SelectField>
+        <SelectField
+          name="skills.dexterity.current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Current
+        </SelectField>
+      </Row>
+      <Row>
+        <Label fullWidth>Willpower</Label>
+        <SelectField
+          name="skills.willpower.initial"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Initial
+        </SelectField>
+        <SelectField
+          name="skills.willpower.current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Current
+        </SelectField>
+      </Row>
+      <Row>
+        <Label fullWidth>Loot</Label>
+        <SelectField
+          name="skills.loot.initial"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d12"
+        >
+          Initial
+        </SelectField>
+        <SelectField
+          name="skills.loot.current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d12"
+        >
+          Current
+        </SelectField>
+      </Row>
+      <Row>
+        <Label fullWidth>Grit</Label>
+        <SelectField
+          name="skills.grit.initial"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d12"
+        >
+          Initial
+        </SelectField>
+        <SelectField
+          name="skills.grit.current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d12"
+        >
+          Current
+        </SelectField>
+      </Row>
+    </Fields>
   </Stack>
   <Stack>
-    <Heading>Vision of Glory</Heading>
-    <TextAreaField name="visionOfGlory" placeholder="Vision of glory..." />
-
-    <Heading>Resilience</Heading>
-    <Row>
-        <NumberField max={100} min={0} name="resilience.initial">Initial</NumberField>
-        <NumberField max={100}  min={0}name="resilience.current">Current</NumberField>
-    </Row>
-    <Heading>Credits</Heading>
-    <Row>
-        <NumberField max={100} min={0} name="credits.initial">Initial</NumberField>
-    </Row>
-
+    <Fields>
+      <Heading>Vision of Glory</Heading>
+      <TextAreaField name="visionOfGlory" placeholder="Vision of glory..." />
+    </Fields>
+    <Fields>
+      <Heading>Resilience</Heading>
+      <Row>
+        <NumberField max={100} min={0} name="resilience.initial">
+          Initial
+        </NumberField>
+        <NumberField max={100} min={0} name="resilience.current">
+          Current
+        </NumberField>
+      </Row>
+    </Fields>
+    <Fields>
+      <Heading>Credits</Heading>
+      <Row>
+        <NumberField max={100} min={0} name="credits.initial">
+          Initial
+        </NumberField>
+      </Row>
+    </Fields>
   </Stack>
 </Columns>
 
-<Heading>Items</Heading>
-<List max={5} name="items">
-  <Stack>
-    <Row>
-      <TextField name="name" placeholder="Item name...">
-        Item
-      </TextField>
-      <SelectField name="initial" options={["d4", "d6", "d8", "d10", "d12"]}>
-        Initial rating
-      </SelectField>
-      <SelectField name="current" options={["d4", "d6", "d8", "d10", "d12"]}>
-        Current rating
-      </SelectField>
-    </Row>
-  </Stack>
-</List>
-<Heading>Hindrances</Heading>
-<List name="hindrances">
-  <Stack>
-    <Row>
-      <TextField name="name" placeholder="Hindrance description...">
-        Hindrance
-      </TextField>
-    </Row>
-    <Row>
-      <Detail>Type</Detail>{" "}
-      <CheckboxField name="minor.checked">Minor</CheckboxField>
-      <CheckboxField name="major.checked">Major</CheckboxField>
-    </Row>
-  </Stack>
-</List>
-
- <Heading>Abilities</Heading>
-    <List  max={5} name="abilities">
+<Fields>
+  <Heading>Items</Heading>
+  <List max={5} name="items">
     <Stack>
-      <Row align='start'>
-      <TextAreaField name="name" placeholder="Ability description...">Description</TextAreaField>
-      <NumberField name="cost">Cost</NumberField>
+      <Row>
+        <TextField name="name" placeholder="Item name...">
+          Item
+        </TextField>
+        <SelectField name="initial" options={["d4", "d6", "d8", "d10", "d12"]}>
+          Initial rating
+        </SelectField>
+        <SelectField name="current" options={["d4", "d6", "d8", "d10", "d12"]}>
+          Current rating
+        </SelectField>
       </Row>
     </Stack>
+  </List>
+</Fields>
 
-    </List>
-
-    <Heading>Projects</Heading>
-    <List  max={3} name="projects">
-     <Stack>
-         <Row>
-          <TextField name="name" placeholder="Project description...">Description</TextField>
-          <SelectField name="current" options={['d4', 'd6',  'd8', 'd10', 'd12']} defaultValue="d4">Current rating</SelectField>
+<Fields>
+  <Heading>Hindrances</Heading>
+  <List name="hindrances">
+    <Stack>
+      <Row>
+        <TextField name="name" placeholder="Hindrance description...">
+          Hindrance
+        </TextField>
+      </Row>
+      <Row>
+        <Detail>Type</Detail>{" "}
+        <CheckboxField name="minor.checked">Minor</CheckboxField>
+        <CheckboxField name="major.checked">Major</CheckboxField>
       </Row>
     </Stack>
+  </List>
+</Fields>
 
+<Fields>
+  <Heading>Abilities</Heading>
+  <List max={5} name="abilities">
+    <Stack>
+      <Row align="start">
+        <TextAreaField name="name" placeholder="Ability description...">
+          Description
+        </TextAreaField>
+        <NumberField name="cost">Cost</NumberField>
+      </Row>
+    </Stack>
+  </List>
+</Fields>
 
-    </List>
+<Fields>
+  <Heading>Projects</Heading>
+  <List max={3} name="projects">
+    <Stack>
+      <Row>
+        <TextField name="name" placeholder="Project description...">
+          Description
+        </TextField>
+        <SelectField
+          name="current"
+          options={["d4", "d6", "d8", "d10", "d12"]}
+          defaultValue="d4"
+        >
+          Current rating
+        </SelectField>
+      </Row>
+    </Stack>
+  </List>
+</Fields>
 
----
-
-<Heading>Advancements</Heading>
-<TextField name="advancements" placeholder="Record your advancements..." />
+<Fields>
+  <Heading>Advancements</Heading>
+  <TextField name="advancements" placeholder="Record your advancements..." />
+</Fields>

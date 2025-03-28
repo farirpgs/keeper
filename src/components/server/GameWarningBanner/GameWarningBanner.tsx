@@ -4,7 +4,7 @@ import { Callout } from "@radix-ui/themes";
 export function GameWarningBanner() {
   return (
     <>
-      <Callout.Root>
+      <Callout.Root color="yellow">
         <Callout.Icon>
           <InfoCircledIcon />
         </Callout.Icon>
