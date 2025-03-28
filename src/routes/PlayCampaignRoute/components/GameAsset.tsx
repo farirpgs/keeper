@@ -37,7 +37,9 @@ export function GameAsset(props: {
       {MDXContent && (
         <MDXContent
           components={{
-            ...getMdxComponents({}),
+            ...getMdxComponents({
+              allowH1s: false,
+            }),
           }}
         />
       )}

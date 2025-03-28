@@ -3,6 +3,9 @@ name: Character Sheet
 game: fari-rpgs/songs-and-sagas
 ---
 
+<Fields>
+
+<Fields>
 <Heading>Details</Heading>
 <TextField name="name"> Name </TextField>
 <TextField name="pronouns"> Pronouns </TextField>
@@ -15,6 +18,9 @@ game: fari-rpgs/songs-and-sagas
 Vanori
 
 </SelectField>
+</Fields>
+
+<Fields>
 
 <Heading>Skills</Heading>
 <Row>
@@ -23,17 +29,21 @@ Vanori
   <NumberField name="skills.willpower">Willpower</NumberField>
   <NumberField name="skills.heart">Heart</NumberField>
 </Row>
+</Fields>
 
-<Heading>Resilience</Heading>
-<Row>
-  <NumberField min={0} name="resilience.initial">
-    Initial
-  </NumberField>
-  <NumberField min={0} name="resilience.current">
-    Current
-  </NumberField>
-</Row>
+<Fields>
+  <Heading>Resilience</Heading>
+  <Row>
+    <NumberField min={0} name="resilience.initial">
+      Initial
+    </NumberField>
+    <NumberField min={0} name="resilience.current">
+      Current
+    </NumberField>
+  </Row>
+</Fields>
 
+<Fields>
 <Heading>Armor</Heading>
 <Row>
 <TextField name="armor.name">Armor Name</TextField>
@@ -42,17 +52,28 @@ Vanori
   Type
 </SelectField>
 </Row>
+</Fields>
 
-<Heading>Inventory</Heading>
-<List max={5} name="inventory">
-  <TextField name="name" placeholder="Item name...">
-    Item
-  </TextField>
-</List>
+<Fields>
+  <Heading>Inventory</Heading>
+  <List max={5} name="inventory">
+    <TextField name="name" placeholder="Item name...">
+      Item
+    </TextField>
+  </List>
+</Fields>
 
+<Fields>
 <Heading>Experience</Heading>
 
 <Tracker name="experience" min={8} max={8} />
 
+</Fields>
+
+<Fields>
 <Heading>Notes</Heading>
 <TextAreaField name="notes" placeholder="Record your notes..." />
+
+</Fields>
+
+</Fields>

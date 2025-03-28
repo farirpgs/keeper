@@ -3,47 +3,49 @@ name: Character Sheet
 game: fistful-of-crits/afterglow
 ---
 
-<Label>Details</Label>
-<TextField name="name">Name</TextField>
-<TextField name="pronouns">Pronouns</TextField>
+<Fields>
+  <Label>Details</Label>
+  <TextField name="name">Name</TextField>
+  <TextField name="pronouns">Pronouns</TextField>
+</Fields>
+
 <Columns>
-<Stack>
-
-<Label>Appearance</Label>
-
-<TextAreaField name="appearance" rows={2} placeholder="Appearance..." />
-</Stack>
-<Stack>
-
-<Label>Ritual Artifacts</Label>
-<List name="ritual-artifacts" min={1} max={5}>
-    <TextField name="name" placeholder="Ritual Artifact name..."/>
-</List>
-</Stack>
+  <Stack>
+    <Fields>
+      <Label>Appearance</Label>
+      <TextAreaField name="appearance" rows={2} placeholder="Appearance..." />
+    </Fields>
+  </Stack>
+  <Stack>
+    <Fields>
+      <Label>Ritual Artifacts</Label>
+      <List name="ritual-artifacts" min={1} max={5}>
+        <TextField name="name" placeholder="Ritual Artifact name..." />
+      </List>
+    </Fields>
+  </Stack>
 </Columns>
 
-<Label>Stats</Label>
+<Fields>
+  <Label>Stats</Label>
+  <Columns cols={3}>
+    <NumberField name="stats.strong">Strong</NumberField>
+    <NumberField name="stats.fast">Fast</NumberField>
+    <NumberField name="stats.measured">Measured</NumberField>
+  </Columns>
+</Fields>
 
-<Columns cols={3}>
-  <NumberField name="stats.strong" >
-    Strong
-  </NumberField>
-  <NumberField name="stats.fast" >
-    Fast
-    </NumberField>
+<Fields>
+  <Label>Skills</Label>
+  <TextAreaField name="skills" rows={3} placeholder="Skills..." />
+</Fields>
 
-  <NumberField name="stats.measured">
-    Measured
-    </NumberField>
-</Columns>
+<Fields>
+  <Label>Offerings</Label>
+  <TextAreaField name="offerings" rows={3} placeholder="Offerings..." />
+</Fields>
 
-<Label>Skills</Label>
-
-<TextAreaField name="skills" rows={3} placeholder="Skills..." />
-<Label>Offerings</Label>
-
-<TextAreaField name="offerings" rows={3} placeholder="Offerings..." />
-
-<Label>Fatigue</Label>
-
-<Tracker name="fatigue" min={5} max={5} />
+<Fields>
+  <Label>Fatigue</Label>
+  <Tracker name="fatigue" min={5} max={5} />
+</Fields>

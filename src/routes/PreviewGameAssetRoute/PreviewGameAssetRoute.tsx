@@ -38,19 +38,21 @@ export function PreviewGameAssetRoute(props: {
   return (
     <Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <Box className="hidden lg:block">{renderContent()}</Box>
-        <Box className="lg:hidden">
-          <NothingToShowHere
-            icon={Smartphone}
-            title={"Open on Desktop"}
-            description={
-              <>
-                This page is not meant to be viewed on mobile. Please make your
-                window bigger or open it in a desktop browser.
-              </>
-            }
-          ></NothingToShowHere>
-        </Box>
+        <div className="">
+          <Box className="hidden lg:block">{renderContent()}</Box>
+          <Box className="lg:hidden">
+            <NothingToShowHere
+              icon={Smartphone}
+              title={"Open on Desktop"}
+              description={
+                <>
+                  This page is not meant to be viewed on mobile. Please make
+                  your window bigger or open it in a desktop browser.
+                </>
+              }
+            ></NothingToShowHere>
+          </Box>
+        </div>
       </CampaignContext.Provider>
     </Theme>
   );
@@ -84,7 +86,9 @@ export function PreviewGameAssetRoute(props: {
             <MDXSheetWrapper>
               <MDXContent
                 components={{
-                  ...getMdxComponents({}),
+                  ...getMdxComponents({
+                    allowH1s: false,
+                  }),
                 }}
               ></MDXContent>
             </MDXSheetWrapper>
