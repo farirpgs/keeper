@@ -1,5 +1,13 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Box, Callout, Container, Flex, Link, Theme } from "@radix-ui/themes";
+import {
+  Box,
+  Callout,
+  Card,
+  Container,
+  Flex,
+  Link,
+  Theme,
+} from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { Smartphone } from "lucide-react";
 import {
@@ -38,7 +46,7 @@ export function PreviewGameAssetRoute(props: {
   return (
     <Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <div className="">
+        <Card className="mx-auto max-w-[800px] p-6">
           <Box className="hidden lg:block">{renderContent()}</Box>
           <Box className="lg:hidden">
             <NothingToShowHere
@@ -52,7 +60,7 @@ export function PreviewGameAssetRoute(props: {
               }
             ></NothingToShowHere>
           </Box>
-        </div>
+        </Card>
       </CampaignContext.Provider>
     </Theme>
   );
