@@ -15,15 +15,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://keeper.farirpgs.com",
   output: "static",
-
   prefetch: {
     prefetchAll: true,
   },
-
   site: constants.site({
     localhost: process.env.NODE_ENV === "development",
   }),
-
   integrations: [
     starlight({
       title: "Keeper Documentation",
@@ -55,13 +52,10 @@ export default defineConfig({
       },
     }),
   ],
-
   experimental: {
     contentIntellisense: true,
   },
-
   adapter: netlify(),
-
   vite: {
     plugins: [tailwindcss()],
   },
