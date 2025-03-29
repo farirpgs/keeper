@@ -370,6 +370,13 @@ export function ResourceRoute(props: {
               fr: "Français",
               it: "Italiano",
               ua: "Українська",
+              "pt-br": "Português (Brasil)",
+              de: "Deutsch",
+              ru: "Русский",
+              zh: "中文",
+              ja: "日本語",
+              ko: "한국어",
+              pl: "Polski",
             };
             return (
               <Select.Item key={locale} value={locale}>
