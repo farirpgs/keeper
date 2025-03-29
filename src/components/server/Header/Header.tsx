@@ -111,7 +111,7 @@ export function Header(props: { theme?: ThemeType }) {
           </Box>
 
           <Tooltip content="Documentation">
-            <Link href={AppUrl.docs()} aria-label="Documentation" asChild>
+            <Link href={AppUrl.docs()} aria-label="Documentation">
               <Button
                 radius="full"
                 size="3"
@@ -126,7 +126,12 @@ export function Header(props: { theme?: ThemeType }) {
             </Link>
           </Tooltip>
           <Tooltip content="GitHub">
-            <Link href={AppUrl.github()} aria-label="GitHub" asChild>
+            <Link
+              href={AppUrl.github()}
+              aria-label="GitHub"
+              target="_blank"
+              rel="noreferrer"
+            >
               <Button
                 radius="full"
                 size="3"
@@ -145,7 +150,6 @@ export function Header(props: { theme?: ThemeType }) {
               href={AppUrl.search({})}
               aria-label="Search"
               className="hidden lg:inline-flex"
-              asChild
             >
               <Button radius="full" size="3" variant="ghost" className="m-0">
                 <MagnifyingGlassIcon className="h-[24px] w-[24px]" />
@@ -223,7 +227,12 @@ export function Header(props: { theme?: ThemeType }) {
                   <Link href={AppUrl.dice()} color="gray">
                     Dice Roller
                   </Link>
-                  <Link href={AppUrl.github()} color="gray">
+                  <Link
+                    href={AppUrl.github()}
+                    color="gray"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     GitHub
                   </Link>
                   <Link href={AppUrl.docs()} color="gray">
