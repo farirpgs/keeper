@@ -1,4 +1,5 @@
 import {
+  GitHubLogoIcon,
   HamburgerMenuIcon,
   MagnifyingGlassIcon,
   MoonIcon,
@@ -108,38 +109,48 @@ export function Header(props: { theme?: ThemeType }) {
           <Box className="hidden sm:inline-block">
             <DiceRoller theme={props.theme} />
           </Box>
+
           <Tooltip content="Documentation">
-            <Button
-              radius="full"
-              size="3"
-              variant="ghost"
-              className="m-0 hidden md:inline-block"
-              style={{
-                fontFamily,
-              }}
-              asChild
-            >
-              <a href={AppUrl.docs()} aria-label="Documentation">
+            <Link href={AppUrl.docs()} aria-label="Documentation" asChild>
+              <Button
+                radius="full"
+                size="3"
+                variant="ghost"
+                className="m-0 hidden md:inline-block"
+                style={{
+                  fontFamily,
+                }}
+              >
                 <ReaderIcon className="h-[24px] w-[24px]" />
-              </a>
-            </Button>
+              </Button>
+            </Link>
+          </Tooltip>
+          <Tooltip content="GitHub">
+            <Link href={AppUrl.github()} aria-label="GitHub" asChild>
+              <Button
+                radius="full"
+                size="3"
+                variant="ghost"
+                className="m-0 hidden md:inline-block"
+                style={{
+                  fontFamily,
+                }}
+              >
+                <GitHubLogoIcon className="h-[24px] w-[24px]" />
+              </Button>
+            </Link>
           </Tooltip>
           <Tooltip content="Search">
-            <Button
-              radius="full"
-              size="3"
-              variant="ghost"
-              className="m-0"
+            <Link
+              href={AppUrl.search({})}
+              aria-label="Search"
+              className="hidden lg:inline-flex"
               asChild
             >
-              <a
-                href={AppUrl.search({})}
-                aria-label="Search"
-                className="hidden lg:inline-flex"
-              >
+              <Button radius="full" size="3" variant="ghost" className="m-0">
                 <MagnifyingGlassIcon className="h-[24px] w-[24px]" />
-              </a>
-            </Button>
+              </Button>
+            </Link>
           </Tooltip>
 
           <Tooltip content="Change Theme">
@@ -212,11 +223,12 @@ export function Header(props: { theme?: ThemeType }) {
                   <Link href={AppUrl.dice()} color="gray">
                     Dice Roller
                   </Link>
-                  {false && (
-                    <Link href={AppUrl.docs()} color="gray">
-                      Documentation
-                    </Link>
-                  )}
+                  <Link href={AppUrl.github()} color="gray">
+                    GitHub
+                  </Link>
+                  <Link href={AppUrl.docs()} color="gray">
+                    Documentation
+                  </Link>
                   <Link href={AppUrl.search({})} color="gray">
                     Search
                   </Link>
@@ -259,19 +271,18 @@ export function Header(props: { theme?: ThemeType }) {
             <DropdownMenu.Item
               onClick={async () => {
                 await shootConfetti(2);
-                window.open(AppUrl.kofi(), "_blank");
-              }}
-            >
-              Buy a Coffee
-            </DropdownMenu.Item>
-
-            <DropdownMenu.Item
-              onClick={async () => {
-                await shootConfetti(2);
                 window.open(AppUrl.patreon(), "_blank");
               }}
             >
               Support on Patreon
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onClick={async () => {
+                await shootConfetti(2);
+                window.open(AppUrl.kofi(), "_blank");
+              }}
+            >
+              Buy a Coffee
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>

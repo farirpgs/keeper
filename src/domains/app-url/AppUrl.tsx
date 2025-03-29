@@ -55,6 +55,9 @@ export const AppUrl = {
     }
     return `/search/?${searchParams.toString()}`;
   },
+  github() {
+    return `https://github.com/farirpgs/keeper`;
+  },
   githubResource(props: {
     id: CollectionEntry<"resources">["id"];
     page: string;

@@ -72,20 +72,18 @@ export function GameRoute(props: {
                     <Flex gap="4" direction="column">
                       {props.gameCover}
                       <CreateNewCampaignButton gameId={props.game.id} />
-                      <Text align="center"> — OR — </Text>
                       <Card variant="surface">
                         <Flex gap="4" direction={"column"}>
-                          <Button
+                          <Text
                             size="4"
                             className={clsx(
                               "font-bold",
-                              "pointer-events-none w-full transition-all",
+                              "pointer-events-none w-full text-center transition-all",
                             )}
                             color="gray"
-                            variant="ghost"
                           >
-                            Preview an asset
-                          </Button>
+                            Include assets
+                          </Text>
 
                           <Flex
                             gap="2"

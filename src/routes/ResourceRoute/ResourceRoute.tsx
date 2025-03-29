@@ -161,7 +161,7 @@ export function ResourceRoute(props: {
         {props.doc.previousPage && (
           <Tooltip content={props.doc.previousPage.title}>
             <Link
-              className="w-full sm:w-[33%]"
+              className="w-full no-underline sm:w-[33%]"
               href={AppUrl.resourcePage({
                 id: props.resource.id,
                 page: props.doc.previousPage.id,
@@ -178,7 +178,7 @@ export function ResourceRoute(props: {
                   } as React.CSSProperties
                 }
               >
-                <Text size="2" color="gray" className="no-underline">
+                <Text size="2" color="gray" className="">
                   Previous
                 </Text>
 
@@ -190,7 +190,7 @@ export function ResourceRoute(props: {
         {props.doc.nextPage && (
           <Tooltip content={props.doc.nextPage.title}>
             <Link
-              className="w-full sm:w-[33%]"
+              className="w-full no-underline sm:w-[33%]"
               href={AppUrl.resourcePage({
                 id: props.resource.id,
                 page: props.doc.nextPage.id,
@@ -249,7 +249,12 @@ export function ResourceRoute(props: {
         <Flex direction={"column"} gap="2">
           {props.image && p.withImage && (
             <Box className="">
-              <Inset clip="padding-box" side="top" pb="current">
+              <Inset
+                clip="padding-box"
+                side="top"
+                pb="current"
+                className="rounded-md"
+              >
                 {props.image}
               </Inset>
             </Box>
