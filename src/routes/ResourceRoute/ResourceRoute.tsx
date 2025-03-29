@@ -19,7 +19,6 @@ import React from "react";
 import {
   getMdxComponents,
   MDXH1,
-  MDXH3,
   MDXH4,
   MDXWrapper,
 } from "../../components/client/MDX/MDX";
@@ -259,8 +258,11 @@ export function ResourceRoute(props: {
               </Inset>
             </Box>
           )}
+
           <Box>
-            <MDXH3>{props.resource.data.name}</MDXH3>
+            <Text size="5" weight={"bold"} className="mt-2 block">
+              {props.resource.data.name}
+            </Text>
             <Link
               href={AppUrl.creator({
                 id: props.creator.id,
@@ -268,21 +270,19 @@ export function ResourceRoute(props: {
               color="gray"
               className="hover:text-(--accent-12)"
             >
-              <Text size={"4"}>By {props.creator.data.name}</Text>
+              <Text size={"3"} className="block">
+                By {props.creator.data.name}
+              </Text>
             </Link>
           </Box>
         </Flex>
+        <Box>{renderLocalesDropdown()}</Box>
+
         <Box>
           {Object.keys(props.doc.sidebar.categories).map((category) => {
             return (
               <React.Fragment key={category}>
-                <Heading
-                  size="1"
-                  mt="3"
-                  mb="1"
-                  className="uppercase"
-                  color="gray"
-                >
+                <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
                   {category}
                 </Heading>
                 <Flex direction="column">
@@ -314,13 +314,7 @@ export function ResourceRoute(props: {
           })}
           {Object.keys(props.doc.sidebar.categories).length === 0 ? (
             <>
-              <Heading
-                size="1"
-                mt="3"
-                mb="1"
-                className="uppercase"
-                color="gray"
-              >
+              <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
                 Chapters
               </Heading>
             </>
@@ -348,40 +342,43 @@ export function ResourceRoute(props: {
             );
           })}
         </Box>
-        <Box>
-          <Select.Root
-            defaultValue={props.resource.data._locale}
-            size={"1"}
-            onValueChange={(newLocale) => {
-              location.href = AppUrl.resourcePage({
-                id: [
-                  props.resource.data._idWithoutLocale,
-                  newLocale === "en" ? "" : newLocale,
-                ].join("/") as CollectionEntry<"resources">["id"],
-                page: "",
-              });
-            }}
-          >
-            <Select.Trigger />
-            <Select.Content>
-              {props.locales.map((locale) => {
-                const codeToWord: Record<string, string> = {
-                  en: "English",
-                  es: "Español",
-                  fr: "Français",
-                  it: "Italiano",
-                  ua: "Українська",
-                };
-                return (
-                  <Select.Item key={locale} value={locale}>
-                    {codeToWord[locale]}
-                  </Select.Item>
-                );
-              })}
-            </Select.Content>
-          </Select.Root>
-        </Box>
       </Flex>
+    );
+  }
+
+  function renderLocalesDropdown() {
+    return (
+      <Select.Root
+        defaultValue={props.resource.data._locale}
+        size={"2"}
+        onValueChange={(newLocale) => {
+          location.href = AppUrl.resourcePage({
+            id: [
+              props.resource.data._idWithoutLocale,
+              newLocale === "en" ? "" : newLocale,
+            ].join("/") as CollectionEntry<"resources">["id"],
+            page: "",
+          });
+        }}
+      >
+        <Select.Trigger className="w-full" variant="surface" />
+        <Select.Content>
+          {props.locales.map((locale) => {
+            const codeToWord: Record<string, string> = {
+              en: "English",
+              es: "Español",
+              fr: "Français",
+              it: "Italiano",
+              ua: "Українська",
+            };
+            return (
+              <Select.Item key={locale} value={locale}>
+                {codeToWord[locale]}
+              </Select.Item>
+            );
+          })}
+        </Select.Content>
+      </Select.Root>
     );
   }
 

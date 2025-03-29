@@ -68,7 +68,7 @@ export function CampaignsRoute(props: {
               <Grid
                 columns={{
                   sm: "2",
-                  lg: "3",
+                  md: "3",
                 }}
                 gap="6"
                 width="auto"

@@ -132,13 +132,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
           </TextField.Slot>
         </TextField.Root>
         {shouldDisplayFilters && (
-          <SegmentedControl.Root
-            value={type}
-            size={{
-              initial: "1",
-              xs: "3",
-            }}
-          >
+          <SegmentedControl.Root value={type} size={"3"}>
             {Object.keys(searchTypes).map((key) => {
               return (
                 <SegmentedControl.Item
@@ -171,7 +165,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
           <Grid
             columns={{
               sm: "2",
-              lg: "3",
+              md: "3",
             }}
             gap="6"
             width="auto"
