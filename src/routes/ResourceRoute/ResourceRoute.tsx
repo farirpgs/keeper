@@ -366,17 +366,17 @@ export function ResourceRoute(props: {
           {props.locales.map((locale) => {
             const codeToWord: Record<string, string> = {
               en: "English",
+              zh: "中文",
               es: "Español",
               fr: "Français",
-              it: "Italiano",
-              ua: "Українська",
-              "pt-br": "Português (Brasil)",
               de: "Deutsch",
               ru: "Русский",
-              zh: "中文",
               ja: "日本語",
               ko: "한국어",
+              "pt-br": "Português (Brasil)",
+              it: "Italiano",
               pl: "Polski",
+              ua: "Українська",
             };
             return (
               <Select.Item key={locale} value={locale}>
