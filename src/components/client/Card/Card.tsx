@@ -112,7 +112,10 @@ export function Card(props: {
                   )}
                   <Text
                     as="div"
-                    size="6"
+                    size={{
+                      initial: "4",
+                      lg: "6",
+                    }}
                     weight="bold"
                     truncate
                     color="gray"
@@ -125,7 +128,10 @@ export function Card(props: {
                 {props.subtitle && (
                   <Text
                     as="div"
-                    size="5"
+                    size={{
+                      initial: "2",
+                      lg: "5",
+                    }}
                     color="gray"
                     truncate
                     className="dark text-(--accent-a11)"

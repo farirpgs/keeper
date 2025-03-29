@@ -66,7 +66,7 @@ export function Header(props: { theme?: ThemeType }) {
         justify={"between"}
         align={"center"}
         columns="3"
-        className="initial:my-6 initial:mb-[3rem] my-9 items-center rounded-(--radius-2) border-t border-r border-b border-l border-(--accent-4) px-6 py-5 print:hidden"
+        className="my-9 mb-[3rem] items-center rounded-(--radius-2) border-t border-r border-b border-l border-(--accent-4) px-6 py-5 print:hidden"
         style={{
           ...getSurfaceStyle(),
         }}

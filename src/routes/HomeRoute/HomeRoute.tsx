@@ -87,7 +87,7 @@ export function HomeRoute(props: {
             width={"40%"}
             justify="center"
             align={"center"}
-            className="initial:hidden relative md:flex"
+            className="relative hidden md:flex"
           >
             <Box
               className="animate-blur absolute z-[-1] hidden h-[calc(100%+4rem)] w-[calc(100%+4rem)] rounded-lg opacity-60 dark:block"
