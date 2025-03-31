@@ -134,6 +134,7 @@ export function Header(props: { theme?: ThemeType }) {
     return (
       <Tooltip content={params.label}>
         <Link
+          className="hidden md:inline-block"
           href={params.href}
           aria-label={params.label}
           target={external ? "_blank" : undefined}
@@ -143,7 +144,7 @@ export function Header(props: { theme?: ThemeType }) {
             radius="full"
             size="3"
             variant="ghost"
-            className="m-0 hidden md:inline-block"
+            className="m-0"
             style={{ fontFamily }}
           >
             {params.icon}
@@ -175,19 +176,21 @@ export function Header(props: { theme?: ThemeType }) {
   function renderMenuDialog() {
     return (
       <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Tooltip content="Menu">
-          <Dialog.Trigger>
-            <Button
-              radius="full"
-              size="3"
-              variant="ghost"
-              className="m-0 inline-flex lg:hidden"
-              aria-label="Menu"
-            >
-              <HamburgerMenuIcon className="h-[24px] w-[24px]" />
-            </Button>
-          </Dialog.Trigger>
-        </Tooltip>
+        <div className="block md:hidden">
+          <Tooltip content="Menu">
+            <Dialog.Trigger>
+              <Button
+                radius="full"
+                size="3"
+                variant="ghost"
+                className="m-0"
+                aria-label="Menu"
+              >
+                <HamburgerMenuIcon className="h-[24px] w-[24px]" />
+              </Button>
+            </Dialog.Trigger>
+          </Tooltip>
+        </div>
         <Dialog.Content size="3">
           <Dialog.Title className="relative">
             Menu
