@@ -124,18 +124,18 @@ export function Header(props: { theme?: ThemeType }) {
     );
   }
 
-  function renderNavButton(p: {
+  function renderNavButton(params: {
     href: string;
     icon: JSX.Element;
     label: string;
     external?: boolean;
   }) {
-    const external = p.external === undefined ? false : p.external;
+    const external = params.external === undefined ? false : params.external;
     return (
-      <Tooltip content={p.label}>
+      <Tooltip content={params.label}>
         <Link
-          href={p.href}
-          aria-label={p.label}
+          href={params.href}
+          aria-label={params.label}
           target={external ? "_blank" : undefined}
           rel={external ? "noreferrer" : undefined}
         >
@@ -146,7 +146,7 @@ export function Header(props: { theme?: ThemeType }) {
             className="m-0 hidden md:inline-block"
             style={{ fontFamily }}
           >
-            {p.icon}
+            {params.icon}
           </Button>
         </Link>
       </Tooltip>
@@ -227,20 +227,20 @@ export function Header(props: { theme?: ThemeType }) {
     );
   }
 
-  function renderMenuLink(p: {
+  function renderMenuLink(params: {
     href: string;
     label: string;
     external?: boolean;
   }) {
-    const external = p.external === undefined ? false : p.external;
+    const external = params.external === undefined ? false : params.external;
     return (
       <Link
-        href={p.href}
+        href={params.href}
         color="gray"
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer" : undefined}
       >
-        {p.label}
+        {params.label}
       </Link>
     );
   }
@@ -278,20 +278,20 @@ export function Header(props: { theme?: ThemeType }) {
     );
   }
 
-  function renderSupportMenuItem(p: { href: string; label: string }) {
+  function renderSupportMenuItem(params: { href: string; label: string }) {
     return (
       <DropdownMenu.Item
         onClick={async function handleClick() {
           await shootConfetti({ numberOfTimes: 2 });
-          window.open(p.href, "_blank");
+          window.open(params.href, "_blank");
         }}
       >
-        {p.label}
+        {params.label}
       </DropdownMenu.Item>
     );
   }
 
-  async function shootConfetti(p: { numberOfTimes: number }) {
+  async function shootConfetti(params: { numberOfTimes: number }) {
     const scalar = 5;
     const unicorn = confetti.shapeFromText({ text: "☕", scalar });
     const defaults = {
@@ -315,7 +315,7 @@ export function Header(props: { theme?: ThemeType }) {
       });
     }
 
-    for (let i = 0; i < p.numberOfTimes; i++) {
+    for (let i = 0; i < params.numberOfTimes; i++) {
       shoot();
       await wait(100);
       shoot();
