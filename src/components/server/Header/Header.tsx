@@ -203,6 +203,10 @@ export function Header(props: { theme?: ThemeType }) {
               </Dialog.Close>
             </Flex>
           </Dialog.Title>
+          <Dialog.Description className="hidden">
+            Site Navigation
+          </Dialog.Description>
+
           <Flex direction="column">
             {renderMenuLink({
               href: AppUrl.campaigns(),
