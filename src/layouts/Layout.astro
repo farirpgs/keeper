@@ -150,6 +150,20 @@ const ogImageUrl = props.withOgImage
   </head>
   <Theme {...themeProps} className="pb-[10rem]">
     <body>
+      <Header client:load theme={themeProps} />
+
+      <Graphic
+        accentColor={themeProps.accentColor}
+        style={{
+          zIndex: -1,
+          opacity: 0.25,
+        }}
+      />
+      {
+        props.withDefaultBanner && (
+          <Banner src={songsAndSagas.game.data.image!} alt={"Background"} />
+        )
+      }
       <Container
         px={{
           initial: "6",
@@ -157,21 +171,7 @@ const ogImageUrl = props.withOgImage
         }}
         size={props.size || "4"}
         maxWidth={props.maxWidth || undefined}
-      >
-        <Graphic
-          accentColor={themeProps.accentColor}
-          style={{
-            zIndex: -1,
-            opacity: 0.25,
-          }}
-        />
-        <Header client:load theme={themeProps} />
-        {
-          props.withDefaultBanner && (
-            <Banner src={songsAndSagas.game.data.image!} alt={"Background"} />
-          )
-        }
-      </Container>
+      />
       <Container
         px={{
           initial: "6",

@@ -118,6 +118,8 @@ export function ResourceRoute(props: {
 
           <Dialog.Content size={"3"}>
             <Flex gap={"3"} direction={"column"}>
+              <Dialog.Title className="hidden">Menu</Dialog.Title>
+              <Dialog.Description className="hidden">Menu</Dialog.Description>
               <Box>
                 {renderSidebar({
                   withImage: false,
