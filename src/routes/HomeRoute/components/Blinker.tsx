@@ -47,7 +47,7 @@ export function Blinker(props: { texts: Array<string> }) {
       setTyping(false);
       indexRef.current = nextIndex;
       switcher();
-    }, 1500);
+    }, 3000);
   }
 
   useEffect(() => {

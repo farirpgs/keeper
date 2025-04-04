@@ -150,7 +150,7 @@ const ogImageUrl = props.withOgImage
   </head>
   <Theme {...themeProps} className="pb-[10rem]">
     <body>
-      <Header client:load theme={themeProps} />
+      <Header client:load theme={themeProps} pathname={Astro.url.pathname} />
 
       <Graphic
         accentColor={themeProps.accentColor}
