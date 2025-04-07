@@ -9,7 +9,7 @@ export function DiceRoute() {
         e.preventDefault();
       }}
     >
-      <div className="flex flex-col gap-4 rounded-sm border border-gray-200 bg-gray-50 pt-6 dark:bg-gray-900 [body]:bg-gray-50">
+      <div className="flex flex-col gap-4 rounded-sm border border-(--gray-3) bg-(--gray-1) pt-6 dark:border-(--gray-6) dark:bg-(--gray-4)">
         <div className="px-6">
           <Heading>Dice Roller</Heading>
         </div>

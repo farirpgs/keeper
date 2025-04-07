@@ -103,8 +103,6 @@ export function ResourceRoute(props: {
             >
               <IconButton
                 variant="solid"
-                // color="gray"
-                // highContrast
                 size="4"
                 radius="full"
                 className="fixed right-4 bottom-4 h-[4rem] w-[4rem] lg:hidden"

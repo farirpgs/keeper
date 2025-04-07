@@ -2,7 +2,6 @@ import {
   Badge,
   Box,
   Button,
-  Card,
   Dialog,
   Flex,
   Heading,
@@ -183,10 +182,7 @@ export function DiceRoller(props: {
                 </Dialog.Trigger>
               </Tooltip>
 
-              <Dialog.Content
-                size={"4"}
-                className="bg-gray-50 p-0 dark:bg-gray-900"
-              >
+              <Dialog.Content size={"4"} className="bg-(--gray-1) p-0">
                 <div className="px-6 pt-6 pb-4">
                   <Dialog.Title className="relative m-0">
                     <Heading size="7" className="m-0">
@@ -241,13 +237,13 @@ export function DiceRoller(props: {
           </div>
           <div className="px-6">{renderDice()}</div>
         </div>
-        <div className="flex w-full flex-col gap-4 rounded-sm bg-white p-6 dark:bg-gray-800">
+        <div className="flex w-full flex-col gap-4 rounded-sm bg-white p-6 dark:bg-black">
           <Heading size="5" className="">
             Result
           </Heading>
-          <Card className="flex min-h-[150px] items-center justify-center bg-gray-50 p-3 dark:bg-gray-900">
+          <div className="flex min-h-[150px] items-center justify-center bg-(--gray-1) p-3">
             {renderResults()}
-          </Card>
+          </div>
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="w-full">{renderResultsStats()}</div>
             <div className="w-full">{renderResultActions()}</div>
@@ -264,7 +260,7 @@ export function DiceRoller(props: {
         {results.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-2 text-center">
             <Text color="gray" className="">
-              <CircleOff size="4rem" className="text-(--accent-5)"></CircleOff>
+              <CircleOff size="4rem" className=""></CircleOff>
             </Text>
             <Text color="gray" className="" size="3">
               Click on a dice to roll it.
@@ -280,7 +276,6 @@ export function DiceRoller(props: {
               size="3"
               className="flex h-auto flex-col items-center justify-center gap-2 p-4 font-mono"
               variant={selected ? "classic" : "surface"}
-              // color={selected ? undefined : "gray"}
               onClick={() => {
                 handleRerollIndex(index);
               }}
@@ -334,7 +329,7 @@ export function DiceRoller(props: {
       <div className="flex w-full justify-center gap-2">
         <Badge
           size="2"
-          className={clsx("block flex-grow p-3 text-center", {})}
+          className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
@@ -349,7 +344,7 @@ export function DiceRoller(props: {
         </Badge>
         <Badge
           size="2"
-          className={clsx("block flex-grow p-3 text-center", {})}
+          className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
@@ -364,7 +359,7 @@ export function DiceRoller(props: {
         </Badge>
         <Badge
           size="2"
-          className={clsx("block flex-grow p-3 text-center", {})}
+          className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
