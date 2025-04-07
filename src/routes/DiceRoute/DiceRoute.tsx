@@ -1,5 +1,8 @@
-import { Container, Heading } from "@radix-ui/themes";
+import { Card, Container, Heading } from "@radix-ui/themes";
 import { DiceRoller } from "../../components/client/DiceRoller/DiceRoller";
+import { getTheme } from "../../domains/utils/getTheme";
+
+const themeProps = getTheme({});
 
 export function DiceRoute() {
   return (
@@ -9,12 +12,14 @@ export function DiceRoute() {
         e.preventDefault();
       }}
     >
-      <div className="flex flex-col gap-4 rounded-sm border border-(--gray-3) bg-(--gray-1) pt-6 dark:border-(--gray-6) dark:bg-(--gray-4)">
-        <div className="px-6">
-          <Heading>Dice Roller</Heading>
+      <Card className="p-0">
+        <div className="flex flex-col gap-4 bg-(--gray-1)">
+          <div className="px-6 pt-6">
+            <Heading>Dice Roller</Heading>
+          </div>
+          <DiceRoller button={false} theme={themeProps} />
         </div>
-        <DiceRoller button={false} />
-      </div>
+      </Card>
     </Container>
   );
 }

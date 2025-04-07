@@ -22,7 +22,6 @@ export function HomeRoute(props: {
   return (
     <>
       {renderHeader()}
-
       {renderResources()}
       {renderGames()}
     </>
