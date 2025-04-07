@@ -20,7 +20,7 @@ import {
 } from "@radix-ui/themes";
 import confetti from "canvas-confetti";
 import clsx from "clsx";
-import { PartyPopperIcon, SquareLibrary, XIcon } from "lucide-react";
+import { Dices, PartyPopperIcon, SquareLibrary, XIcon } from "lucide-react";
 import { useEffect, useState, type JSX } from "react";
 import { AppUrl } from "../../../domains/app-url/AppUrl";
 import type { ThemeType } from "../../../domains/utils/getTheme";
@@ -32,7 +32,7 @@ import { NameLogo } from "./Logo";
 const fontFamily =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI (Custom)', Roboto, 'Helvetica Neue', 'Open Sans (Custom)', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'";
 
-export function Header(props: { theme?: ThemeType }) {
+export function Header(props: { theme?: ThemeType; pathname: string }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -54,11 +54,13 @@ export function Header(props: { theme?: ThemeType }) {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 
+  const shouldModalDiceRoller = props.pathname.startsWith("/play");
+
   return (
     <Theme {...props.theme} hasBackground={false} className="min-h-0">
       <div
         style={getSurfaceStyle()}
-        className="mb-9 rounded-(--radius-2) px-6 py-5 print:hidden"
+        className="mb-6 rounded-(--radius-2) px-6 py-5 print:hidden"
       >
         <Container>
           <Grid
@@ -77,7 +79,25 @@ export function Header(props: { theme?: ThemeType }) {
             </Flex>
             <Flex justify="end" gap="2" align="center">
               <Box className="hidden sm:inline-block">
-                <DiceRoller theme={props.theme} />
+                {shouldModalDiceRoller ? (
+                  <DiceRoller theme={props.theme}>
+                    <Button
+                      radius="full"
+                      size="3"
+                      variant="ghost"
+                      className="m-0"
+                      aria-label="Dice Roller"
+                    >
+                      <Dices />
+                    </Button>
+                  </DiceRoller>
+                ) : (
+                  renderNavButton({
+                    href: AppUrl.dice(),
+                    icon: <Dices />,
+                    label: "Dice Roller",
+                  })
+                )}
               </Box>
               {renderNavButton({
                 href: AppUrl.docs(),
