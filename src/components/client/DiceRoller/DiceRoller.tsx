@@ -241,14 +241,16 @@ export function DiceRoller(props: {
           <Heading size="5" className="">
             Result
           </Heading>
-          <div className="flex min-h-[150px] items-center justify-center bg-(--gray-1) p-3">
-            {renderResults()}
+          <div className="flex min-h-[180px] items-center justify-center bg-(--gray-1) p-3">
+            <div className="flex flex-col items-center justify-center gap-4">
+              {renderResults()}
+              {renderResultsText()}
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center">
             <div className="w-full">{renderResultsStats()}</div>
-            <div className="w-full">{renderResultActions()}</div>
-            <div className="w-full">{renderResultsText()}</div>
           </div>
+          <div className="mt-2 w-full">{renderResultActions()}</div>
         </div>
       </div>
     );
@@ -309,6 +311,10 @@ export function DiceRoller(props: {
   }
 
   function renderResultsText() {
+    if (results.length === 0) {
+      return null;
+    }
+
     return (
       <div className="flex w-full flex-col justify-center">
         <Text
@@ -316,9 +322,9 @@ export function DiceRoller(props: {
           size={"1"}
           className="text-center text-(--accent-11)"
         >
-          Click on a result to reroll it.
+          Click on a card to reroll it.
           <br />
-          Right click on a result to highlight it.
+          Right click on a card to highlight it.
         </Text>
       </div>
     );
