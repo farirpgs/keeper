@@ -58,7 +58,7 @@ export function ResourceRoute(props: {
         <div className="flex gap-9">
           <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
             <Box
-              className="sticky top-6 overflow-y-auto pb-9"
+              className="sticky top-6 overflow-y-auto pr-2 pb-9"
               style={{
                 maxHeight: "calc(100vh - 32px)",
               }}
