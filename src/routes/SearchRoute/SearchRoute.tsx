@@ -53,12 +53,12 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
   const queryString = new URLSearchParams(window.location.search);
   const queryParam = queryString?.get("query") as string;
   const typeParam = queryString?.get("type") as SearchType;
-  const shouldSetTypeParma =
+  const shouldSetTypeParam =
     typeParam && Object.keys(searchTypes).includes(typeParam);
 
   const [query, setQuery] = useState<string>(queryParam || "");
   const [type, setType] = useState<SearchType>(
-    shouldSetTypeParma ? typeParam : "all",
+    shouldSetTypeParam ? typeParam : "all",
   );
 
   const [results, setResults] = useState<Array<SearchIndexType>>([]);
@@ -93,7 +93,14 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
         newResults,
         currentDateOfTheMonth,
       );
-      const sortedResults = shuffledResults.sort((a, b) => {
+      const resourcesAndThenGames = [...shuffledResults].sort((a, b) => {
+        if (a.type === b.type) {
+          return 0;
+        }
+        return a.type === "resources" ? -1 : 1;
+      });
+
+      const sortedResults = resourcesAndThenGames.sort((a, b) => {
         return b.weight - a.weight;
       });
 
@@ -181,10 +188,12 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
                   badge={
                     <>
                       <Badge
-                        size="3"
-                        variant="outline"
+                        size="1"
+                        variant={
+                          item.type === "resources" ? "surface" : "surface"
+                        }
                         color="gray"
-                        className="bg-(--accent-2)"
+                        highContrast={true}
                       >
                         {item.type === "games" ? "Game" : "Resource"}
                       </Badge>

@@ -87,7 +87,7 @@ export function Card(props: {
             }}
           />
           {props.badge && (
-            <Box className="absolute top-4 right-4">{props.badge}</Box>
+            <Box className="absolute right-4 bottom-4">{props.badge}</Box>
           )}
 
           <Box position={"absolute"} className="bottom-0 left-0 w-full">
@@ -99,7 +99,7 @@ export function Card(props: {
               className="px-4 py-4"
             >
               <Box
-                className={clsx("w-full", {
+                className={clsx("flex w-full flex-col", {
                   "max-w-[75%]": hasSideContent,
                   "max-w-[100%]": !hasSideContent,
                 })}
@@ -113,8 +113,8 @@ export function Card(props: {
                   <Text
                     as="div"
                     size={{
-                      initial: "4",
-                      lg: "6",
+                      initial: "5",
+                      lg: "5",
                     }}
                     weight="bold"
                     truncate
@@ -130,7 +130,7 @@ export function Card(props: {
                     as="div"
                     size={{
                       initial: "2",
-                      lg: "5",
+                      lg: "2",
                     }}
                     color="gray"
                     truncate
