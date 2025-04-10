@@ -2,7 +2,6 @@ import { Box, Button, Container, Flex, Grid, Text } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { Card } from "../../components/client/Card/Card";
 import { MDXH1, MDXH2 } from "../../components/client/MDX/MDX";
-import { GameWarningBanner } from "../../components/server/GameWarningBanner/GameWarningBanner";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import { Colors, type ColorType } from "../../domains/colors/colors";
 import { getRandomElement } from "../../domains/utils/random";
@@ -112,7 +111,11 @@ export function HomeRoute(props: {
     return (
       <>
         <Box pt="4" id="get-started">
-          <MDXH2> Resources </MDXH2>
+          <MDXH2>Resources</MDXH2>
+          <Text color="gray" size="3" mb="4">
+            Explore list of free and open resources to use in your games or to
+            use to make your own.
+          </Text>
         </Box>
         <Grid
           columns={{
@@ -177,9 +180,11 @@ export function HomeRoute(props: {
     return (
       <>
         <Flex pt="4" id="get-started" gap="2" direction="column">
-          <MDXH2> Games </MDXH2>
-
-          <GameWarningBanner></GameWarningBanner>
+          <MDXH2>Games</MDXH2>
+          <Text color="gray" size="3" mb="4">
+            Play free TTRPGs and campaigns made using templates from the
+            community.
+          </Text>
         </Flex>
         <Grid
           columns={{

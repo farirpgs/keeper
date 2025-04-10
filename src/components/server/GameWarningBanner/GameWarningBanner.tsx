@@ -1,5 +1,5 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Callout } from "@radix-ui/themes";
+import { Callout, Link } from "@radix-ui/themes";
 
 export function GameWarningBanner() {
   return (
@@ -10,7 +10,8 @@ export function GameWarningBanner() {
         </Callout.Icon>
         <Callout.Text>
           Games, campaigns and the character keeper are currently alpha
-          features. Use at your own risks!
+          features. Please report any bugs or issues here on{" "}
+          <Link href="https://link.farirpgs.com/discord">Discord</Link>.
         </Callout.Text>
       </Callout.Root>
     </>
