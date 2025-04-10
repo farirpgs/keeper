@@ -68,6 +68,7 @@ html.dark {
   --pagefind-ui-background: #152028;
   --pagefind-ui-border: #152028;
   --pagefind-ui-tag: #152028;
+  color-scheme: dark;
 }
 
 .icon.icon-link {
