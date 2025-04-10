@@ -442,14 +442,13 @@ export function ResourceRoute(props: {
           <Flex
             className={clsx(
               "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item) py-[.25rem] hover:border-l-(--border-current)",
-              `pl-[calc(var(--level)*.5rem)]`,
               {
                 "m-[0px]": p.isCurrent,
               },
             )}
             style={
               {
-                "--level": level,
+                paddingLeft: `${level * 0.75}rem`,
                 "--border-current": Colors.getDarkColor(
                   props.theme.accentColor,
                   9,

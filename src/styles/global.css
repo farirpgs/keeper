@@ -35,7 +35,15 @@
   }
 }
 
-:root {
+/* Tailwind Typography */
+
+blockquote p:first-of-type::before {
+  content: "none" !important;
+  display: none;
+}
+blockquote p:first-of-type::after {
+  content: "none" !important;
+  display: none;
 }
 
 /* GLOBAL TAGS */
