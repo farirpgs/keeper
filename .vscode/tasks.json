@@ -2,11 +2,10 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "bun",
-      "script": "run build",
-      "problemMatcher": ["$tsc"],
+      "type": "shell",
       "label": "bun: build",
-      "detail": "bun build - package.json",
+      "command": "bun run build",
+      "problemMatcher": ["$tsc"],
       "group": {
         "kind": "build",
         "isDefault": true

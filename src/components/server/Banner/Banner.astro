@@ -15,7 +15,7 @@ const ratio = 4 / 1.2;
 <div
   class:list={[
     "absolute hidden dark:block",
-    "left-0 top-0 z-[-1] h-full w-full",
+    "top-0 left-0 z-[-1] h-full w-full",
     "pointer-events-none",
     "opacity-30",
     props.class,
@@ -28,7 +28,8 @@ const ratio = 4 / 1.2;
         quality={"low"}
         src={props.src}
         alt={props.alt}
-        class={"print:hidden"}
+        onload={"this.style.opacity = 1"}
+        class={"print:hidden transition-opacity duration-1000"}
         style={{
           position: "absolute",
           top: "0",
@@ -40,6 +41,7 @@ const ratio = 4 / 1.2;
           borderRadius: "var(--radius-2)",
           filter: "blur(50px)",
           zIndex: -1,
+          opacity: 0,
         }}
       />
     </AspectRatio>

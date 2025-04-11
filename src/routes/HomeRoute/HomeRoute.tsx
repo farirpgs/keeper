@@ -99,6 +99,7 @@ export function HomeRoute(props: {
               src={"/keeper/logo (bg-black).svg"}
               alt="Keeper"
               width={1000}
+              height={1000}
               className={"rounded-2xl"}
             />
           </Flex>
