@@ -7,7 +7,7 @@ import {
   type ContainerProps,
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { ViewTransitions, fade } from "astro:transitions";
+import { ClientRouter, fade } from "astro:transitions";
 
 import { Debug } from "astro:components";
 import { Graphic } from "../components/client/Graphic/Graphic";
@@ -19,7 +19,7 @@ import { Header } from "../components/server/Header/Header";
 import { Colors } from "../domains/colors/colors";
 import { DLAstro } from "../domains/dl/DLAstro";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
-
+import PostHog from "../components/server/PostHog/PostHog.astro";
 import "../styles/global.css";
 
 type Props = {
@@ -146,7 +146,7 @@ const ogImageUrl = props.withOgImage
     </script>
 
     <!-- Animation -->
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <Theme {...themeProps} className="pb-[10rem]">
     <body>
@@ -217,23 +217,8 @@ const ogImageUrl = props.withOgImage
           )
         }
       </Container>
-      <!-- Google tag (gtag.js) -->
-      <script
-        async
-        type="text/partytown"
-        src="https://www.googletagmanager.com/gtag/js?id=G-W0DMEETPF3"></script>
-      <script type="text/partytown">
-        // @ts-ignore
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          // @ts-ignore
-          dataLayer.push(arguments);
-        }
-        // @ts-ignore
-        gtag("js", new Date());
-        // @ts-ignore
-        gtag("config", "G-W0DMEETPF3");
-      </script>
+
+      <PostHog />
     </body>
 
     <style
