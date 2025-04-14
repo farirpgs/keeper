@@ -1,5 +1,5 @@
 import Bun, { Glob } from "bun";
-import { kebabCase } from "lodash";
+import kebabCase from "lodash/kebabCase";
 import startCase from "lodash/startCase";
 import path from "path";
 import prompts from "prompts";
