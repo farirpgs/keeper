@@ -6,6 +6,7 @@ import { renderToString } from "react-dom/server";
 import { Graphic } from "../../components/client/Graphic/Graphic";
 import { NameLogo } from "../../components/server/Header/Logo";
 import { Colors, type ColorType } from "../colors/colors";
+import { getISRHeaders } from "../headers/getISRHeaders";
 
 const debug = false;
 export async function renderOgImage(props: {
@@ -75,8 +76,9 @@ export async function renderOgImage(props: {
       ],
       debug: false,
       headers: {
-        "Cache-Control": "public, max-age=0, must-revalidate",
-        "Netlify-CDN-Cache-Control": `public, durable, s-maxage=${oneDay}, stale-while-revalidate=${oneWeek}`,
+        ...getISRHeaders({
+          profile: "weeks",
+        }),
       },
     },
   );
