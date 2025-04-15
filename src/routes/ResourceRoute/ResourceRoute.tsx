@@ -348,9 +348,25 @@ export function ResourceRoute(props: {
   }
 
   function renderLocalesDropdown() {
+    const codeToWord: Record<string, string> = {
+      en: "English",
+      zh: "中文",
+      es: "Español",
+      fr: "Français",
+      de: "Deutsch",
+      ru: "Русский",
+      ja: "日本語",
+      ko: "한국어",
+      "pt-br": "Português (Brasil)",
+      it: "Italiano",
+      pl: "Polski",
+      ua: "Українська",
+    };
+    const locale = props.resource.data._locale || "en";
+
     return (
       <Select.Root
-        defaultValue={props.resource.data._locale}
+        value={locale}
         size={"2"}
         onValueChange={(newLocale) => {
           location.href = AppUrl.resourcePage({
@@ -362,23 +378,11 @@ export function ResourceRoute(props: {
           });
         }}
       >
-        <Select.Trigger className="w-full" variant="surface" />
+        <Select.Trigger className="w-full" variant="surface">
+          {codeToWord[locale]}
+        </Select.Trigger>
         <Select.Content>
           {props.locales.map((locale) => {
-            const codeToWord: Record<string, string> = {
-              en: "English",
-              zh: "中文",
-              es: "Español",
-              fr: "Français",
-              de: "Deutsch",
-              ru: "Русский",
-              ja: "日本語",
-              ko: "한국어",
-              "pt-br": "Português (Brasil)",
-              it: "Italiano",
-              pl: "Polski",
-              ua: "Українська",
-            };
             return (
               <Select.Item key={locale} value={locale}>
                 {codeToWord[locale]}
