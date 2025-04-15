@@ -14,7 +14,7 @@ import { Graphic } from "../components/client/Graphic/Graphic";
 import { MDXColumns } from "../components/client/MDX/mdx-components/ui/MDXColumns";
 import { MDXDivider } from "../components/client/MDX/mdx-components/ui/MDXDivider";
 import Banner from "../components/server/Banner/Banner.astro";
-import Footer from "../components/server/Footer/Footer.astro";
+import { Footer } from "../components/server/Footer/Footer";
 import { Header } from "../components/server/Header/Header";
 import { Colors } from "../domains/colors/colors";
 import { DLAstro } from "../domains/dl/DLAstro";
@@ -115,17 +115,15 @@ const ogImageUrl = props.withOgImage
     <meta name="twitter:description" content={description} />
     {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
-    <!-- Meta Tags Generated via https://www.opengraph.xyz -->
-
     <!-- Theme -->
     <script is:inline>
       // get theme
       let theme = undefined;
       if (
         typeof localStorage !== "undefined" &&
-        localStorage.getItem("theme")
+        localStorage.getItem("keeper-theme")
       ) {
-        theme = localStorage.getItem("theme");
+        theme = localStorage.getItem("keeper-theme");
       } else {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
           theme = "dark";
@@ -133,7 +131,7 @@ const ogImageUrl = props.withOgImage
           theme = "light";
         }
       }
-      // update html + localStorage
+      // update html
       if (theme === "light") {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
@@ -141,8 +139,6 @@ const ogImageUrl = props.withOgImage
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
       }
-
-      window.localStorage.setItem("theme", theme);
     </script>
 
     <!-- Animation -->
@@ -181,9 +177,9 @@ const ogImageUrl = props.withOgImage
         maxWidth={props.maxWidth || undefined}
       >
         <main>
-          <Flex direction="column" gap="5">
+          <div class="flex flex-col gap-5">
             <slot />
-          </Flex>
+          </div>
         </main>
       </Container>
       <Container
@@ -194,7 +190,7 @@ const ogImageUrl = props.withOgImage
         size={props.size || "4"}
         maxWidth={props.maxWidth || undefined}
       >
-        <Footer ogImageUrl={ogImageUrl} />
+        <Footer client:load ogImageUrl={ogImageUrl} theme={props.theme} />
         {
           import.meta.env.DEV && (
             <Box>

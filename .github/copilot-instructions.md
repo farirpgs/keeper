@@ -25,10 +25,18 @@ This project uses the following technologies:
 - For 'sub render functions', they should use the props and context from the component as much as possible.
 - For 'sub render functions', specific parameters (if any) should be passed as an object named `params` but never be destructured.
 - For 'sub render functions', if a variable in the parent function scope is accessible, it should be used directly instead of passing it as a parameter.
+- React hooks should be used at the top level of the component function. Do not use hooks inside 'sub render functions' or any other nested functions.
+- Event handlers should be defined before the return statement and should be named according to their purpose. They should not be defined inline.
+- Always give useEffect a function name.
 
 ```tsx
 function MyComponent(props) {
+  const [state, setState] = useState(false);
   const someVariable = "some value";
+
+  useEffect(function handleEffect() {
+    // effect logic
+  }, []);
 
   return <div>{renderSubComponent({ someOtherVariable: 3 })}</div>;
 
@@ -37,16 +45,6 @@ function MyComponent(props) {
     console.log(params.someOtherVariable);
     return <div>Sub Component</div>;
   }
-}
-```
-
-- Use the function declaration syntax for the `useEffect` callback and always give those methods a good name.
-
-```tsx
-function MyComponent(props) {
-  useEffect(function handleEffect() {
-    // effect logic
-  }, []);
 }
 ```
 

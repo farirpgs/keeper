@@ -14,11 +14,17 @@ export const AppUrl = {
   docs() {
     return "/docs/";
   },
+  feedback() {
+    return "https://farirpgs.canny.io/keeper-feedback";
+  },
   kofi() {
     return "https://ko-fi.com/farirpgs";
   },
   patreon() {
     return "https://www.patreon.com/bePatron?u=43408921";
+  },
+  discord() {
+    return "https://link.farirpgs.com/discord";
   },
   creator(props: { id: CollectionEntry<"creators">["id"] }) {
     return `/creators/${props.id}/`;

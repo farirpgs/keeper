@@ -50,21 +50,25 @@ export type SearchIndexType = {
 };
 
 export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
-  const queryString = new URLSearchParams(window.location.search);
-  const queryParam = queryString?.get("query") as string;
-  const typeParam = queryString?.get("type") as SearchType;
-  const shouldSetTypeParam =
-    typeParam && Object.keys(searchTypes).includes(typeParam);
-
-  const [query, setQuery] = useState<string>(queryParam || "");
-  const [type, setType] = useState<SearchType>(
-    shouldSetTypeParam ? typeParam : "all",
-  );
+  const [query, setQuery] = useState<string>("");
+  const [type, setType] = useState<SearchType>("all");
+  const [shouldDisplayFilters, setShouldDisplayFilters] =
+    useState<boolean>(true);
 
   const [results, setResults] = useState<Array<SearchIndexType>>([]);
   const [searching, setSearching] = useState<boolean | null>(null);
   const timeout = useRef<Timer | null>(null);
-  const shouldDisplayFilters = !typeParam;
+
+  useEffect(function initializeQueryParams() {
+    const queryString = new URLSearchParams(window.location.search);
+    const queryParam = queryString?.get("query") as string;
+    const typeParam = queryString?.get("type") as SearchType;
+    const shouldSetTypeParam =
+      typeParam && Object.keys(searchTypes).includes(typeParam);
+    setShouldDisplayFilters(!typeParam);
+    setQuery(queryParam || "");
+    setType(shouldSetTypeParam ? typeParam : "all");
+  }, []);
 
   useEffect(() => {
     if (timeout.current) {
