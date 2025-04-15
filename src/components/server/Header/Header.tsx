@@ -74,7 +74,6 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
               {renderNavButton({
                 href: AppUrl.dice(),
                 label: "Dice",
-                external: true,
                 icon: <Dices className="h-[1.5rem] w-[1.5rem]" />,
               })}
               {renderNavButton({
