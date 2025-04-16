@@ -55,14 +55,14 @@ export const DiceCommands = {
       return d100[getRandomIndex(100)].toString();
     },
   },
-  _2d6: {
+  "2d6": {
     label: "2d6",
     roll() {
       const d6 = makeNormalDie(6);
       return (d6[getRandomIndex(6)] + d6[getRandomIndex(6)]).toString();
     },
   },
-  _4dF: {
+  "4dF": {
     label: "4dF",
     roll() {
       const fudge = [-1, 0, 1];
