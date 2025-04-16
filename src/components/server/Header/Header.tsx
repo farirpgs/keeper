@@ -49,11 +49,11 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
         className="mb-6 rounded-(--radius-2) px-6 py-5 print:hidden"
       >
         <Container>
-          <div className="coluitems-center flex flex-row">
+          <div className="flex flex-row">
             <div className="flex flex-1 flex-row items-center gap-4">
               {renderLogo()}
               {shouldShowSearch && (
-                <div className="hidden lg:flex">
+                <div className="hidden md:flex">
                   <TextField.Root
                     variant="soft"
                     className="bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
@@ -70,7 +70,7 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
                 </div>
               )}
             </div>
-            <div className="hidden flex-row gap-3 lg:flex">
+            <div className="hidden flex-row gap-3 md:flex">
               {renderNavButton({
                 href: AppUrl.dice(),
                 label: "Dice",

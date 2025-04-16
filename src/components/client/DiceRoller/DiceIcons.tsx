@@ -193,7 +193,7 @@ export const DiceIcons: Record<
       </svg>
     );
   },
-  _2d6(props: { className?: string }) {
+  "2d6": (props: { className?: string }) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@ export const DiceIcons: Record<
       </svg>
     );
   },
-  _4dF(props: { className?: string }) {
+  "4dF": (props: { className?: string }) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"

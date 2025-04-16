@@ -435,7 +435,7 @@ export function DiceRoller(props: {
     if (category === "standard") {
       filteredDiceCommands.push("d4", "d6", "d8", "d10", "d12", "d20");
     } else if (category === "misc") {
-      filteredDiceCommands.push("_4dF", "dF");
+      filteredDiceCommands.push("4dF", "dF");
       filteredDiceCommands.push("d100");
       filteredDiceCommands.push("coin");
     }

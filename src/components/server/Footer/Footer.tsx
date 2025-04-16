@@ -36,9 +36,28 @@ export function Footer(props: { ogImageUrl: string; theme?: ThemeType }) {
 
   useEffect(() => {
     function handleAstroNavigation() {
-      const isDark = localStorage.getItem("keeper-theme") === "dark";
-      document.documentElement.classList.toggle("dark", isDark);
-      document.documentElement.classList.toggle("light", !isDark);
+      // get theme
+      let theme = undefined;
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("keeper-theme")
+      ) {
+        theme = localStorage.getItem("keeper-theme");
+      } else {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          theme = "dark";
+        } else {
+          theme = "light";
+        }
+      }
+      // update html
+      if (theme === "light") {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      }
     }
 
     document.addEventListener("astro:after-swap", handleAstroNavigation);
