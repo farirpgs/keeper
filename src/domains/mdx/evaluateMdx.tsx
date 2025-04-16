@@ -14,7 +14,7 @@ export async function evaluateMdx(props: { mdx: string }) {
 
 export function evaluateMdxSync(props: { mdx: string | undefined }) {
   if (!props.mdx) {
-    return "";
+    return () => <></>;
   }
   const res = evaluateSync(props.mdx, {
     ...(runtime as any),
