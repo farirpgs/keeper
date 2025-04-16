@@ -49,17 +49,20 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
         className="mb-6 rounded-(--radius-2) px-6 py-5 print:hidden"
       >
         <Container>
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-8">
             <div className="flex flex-1 flex-row items-center gap-4">
               {renderLogo()}
               {shouldShowSearch && (
-                <div className="hidden md:flex">
+                <div className="hidden flex-1 md:flex">
                   <TextField.Root
                     variant="soft"
-                    className="bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
+                    size="3"
+                    className="w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
                     color="gray"
                     placeholder="Search resources..."
-                    onClick={(e) => {
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
                       location.href = AppUrl.search({});
                     }}
                   >

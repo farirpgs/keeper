@@ -66,6 +66,8 @@ export async function getStaticPaths() {
   description={doc.currentPage?.content}
   theme={theme}
   withOgImage
+  headingFont={resource.data.theme?.headingFont}
+  bodyFont={resource.data.theme?.bodyFont}
 >
   <ResourceRoute
     client:load

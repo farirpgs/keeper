@@ -38,10 +38,18 @@ export default defineConfig({
         },
       ],
       customCss: ["./src/styles/docs.css"],
-      social: {
-        discord: "https://farirpgs.com/discord",
-        github: "https://github.com/farirpgs/keeper",
-      },
+      social: [
+        {
+          icon: "discord",
+          href: "https://farirpgs.com/discord",
+          label: "Join our Discord",
+        },
+        {
+          icon: "github",
+          href: "https://github.com/farirpgs/keeper",
+          label: "View our GitHub",
+        },
+      ],
     }),
     react(),
     mdx(),

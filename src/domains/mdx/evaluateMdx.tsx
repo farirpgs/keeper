@@ -12,7 +12,10 @@ export async function evaluateMdx(props: { mdx: string }) {
   return res.default;
 }
 
-export function evaluateMdxSync(props: { mdx: string }) {
+export function evaluateMdxSync(props: { mdx: string | undefined }) {
+  if (!props.mdx) {
+    return () => <></>;
+  }
   const res = evaluateSync(props.mdx, {
     ...(runtime as any),
     remarkPlugins: [remarkGfm],

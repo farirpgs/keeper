@@ -6,13 +6,13 @@ import type {
 } from "astro";
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import { render } from "astro:content";
 import {
   MDXWrapper,
   getMdxComponents,
 } from "../../../../components/client/MDX/MDX";
 import Banner from "../../../../components/server/Banner/Banner.astro";
 import { DLAstro } from "../../../../domains/dl/DLAstro";
+import { evaluateMdxSync } from "../../../../domains/mdx/evaluateMdx";
 import { getTheme } from "../../../../domains/utils/getTheme";
 import Layout from "../../../../layouts/Layout.astro";
 import { GameRoute } from "../../../../routes/GameRoute/GameRoute";
@@ -35,7 +35,9 @@ const { assets } = await DLAstro.getAssetsForGame({
     params.gameSlug) as CollectionEntry<"games">["id"],
 });
 
-const { Content } = await render(game);
+const MDXContent = evaluateMdxSync({
+  mdx: game.body,
+});
 
 const theme = getTheme({
   theme: {
@@ -85,7 +87,7 @@ export async function getStaticPaths() {
       }
     </div>
     <MDXWrapper>
-      <Content
+      <MDXContent
         components={{
           ...getMdxComponents({}),
         }}

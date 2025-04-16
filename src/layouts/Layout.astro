@@ -94,7 +94,17 @@ const ogImageUrl = props.withOgImage
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    {googleFontUrl && <link href={googleFontUrl} rel="stylesheet" />}
+    {
+      googleFontUrl && (
+        <link
+          href={googleFontUrl}
+          rel="stylesheet"
+          rel="preload"
+          as="font"
+          crossorigin
+        />
+      )
+    }
 
     <!-- HTML Meta Tags -->
     <title>{title}</title>
@@ -221,33 +231,23 @@ const ogImageUrl = props.withOgImage
       is:global
       define:vars={{
         headingFont,
-      }}
-    >
-      .radix-themes {
-        --heading-font-family: var(--headingFont);
-      }
-    </style>
-    <style
-      is:global
-      define:vars={{
         bodyFont,
       }}
     >
       .radix-themes {
-        /* FONT  */
-        --default-font-family: var(--bodyFont); /* Your custom default font */
-        --code-font-family: var(
-          --bodyFont
-        ); /* Your custom font for <Code> components */
-        --strong-font-family: var(
-          --bodyFont
-        ); /* Your custom font for <Strong> components */
-        --em-font-family: var(
-          --bodyFont
-        ); /* Your custom font for <Em> components */
-        --quote-font-family: var(
-          --bodyFont
-        ); /* Your custom font for <Quote> components */
+        /* FONTS  */
+        /* Your custom heading font */
+        --heading-font-family: var(--headingFont);
+        /* Your custom default font */
+        --default-font-family: var(--bodyFont);
+        /* Your custom font for <Code> components */
+        --code-font-family: var(--bodyFont);
+        /* Your custom font for <Strong> components */
+        --strong-font-family: var(--bodyFont);
+        /* Your custom font for <Em> components */
+        --em-font-family: var(--bodyFont);
+        /* Your custom font for <Quote> components */
+        --quote-font-family: var(--bodyFont);
 
         /* CURSORS */
         --cursor-button: pointer;

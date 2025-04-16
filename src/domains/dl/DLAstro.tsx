@@ -118,12 +118,18 @@ export const DLAstro = {
     id: CollectionEntry<"resources">["id"];
     includeCreator?: boolean;
   }) {
-    const [creatorId, resourceId, locale] = props.id.split("/");
-    const idWithoutLocale = [creatorId, resourceId].join("/");
+    const [creatorSlug, resourceSlug, locale] = props.id.split("/");
+    const resourceIdWithoutLocale = [creatorSlug, resourceSlug].join("/");
     const currentLocale = locale || "en";
     const resource = await getEntry("resources", props.id);
     const translations = await getCollection("resources", (element) => {
-      return element.id.startsWith(idWithoutLocale);
+      const [elementCreatorSlug, elementResourceSlug, elementLocale] =
+        element.id.split("/");
+      const elementIdWithoutLocale = [
+        elementCreatorSlug,
+        elementResourceSlug,
+      ].join("/");
+      return elementIdWithoutLocale === resourceIdWithoutLocale;
     });
 
     if (!resource) {
@@ -133,7 +139,7 @@ export const DLAstro = {
     const locales = translations
       .map((element) => {
         const language = element.id
-          .replace(idWithoutLocale, "")
+          .replace(resourceIdWithoutLocale, "")
           .replace("/", "");
         return language || "en";
       })
@@ -149,7 +155,7 @@ export const DLAstro = {
       });
 
     resource.data._locale = currentLocale;
-    resource.data._idWithoutLocale = idWithoutLocale;
+    resource.data._idWithoutLocale = resourceIdWithoutLocale;
 
     if (props.includeCreator) {
       const creator = await getEntry("creators", resource.data.creator.id);
