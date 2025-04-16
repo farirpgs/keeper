@@ -59,7 +59,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
   const [results, setResults] = useState<Array<SearchIndexType>>(() => {
     return getSearchResults();
   });
-  const [searching, setSearching] = useState(false);
+  const [searching, setSearching] = useState(true);
 
   useEffect(function initializeQueryParams() {
     const queryString = new URLSearchParams(window.location.search);
@@ -76,6 +76,22 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
   function handleSearch() {
     const sortedResults = getSearchResults();
     setResults(sortedResults);
+    const queryStringParams = new URLSearchParams(window.location.search);
+    const queryParam = form.getFieldValue("query");
+    const typeParam = form.getFieldValue("type");
+    if (queryParam) {
+      queryStringParams.set("query", queryParam);
+    } else {
+      queryStringParams.delete("query");
+    }
+    if (typeParam) {
+      queryStringParams.set("type", typeParam);
+    } else {
+      queryStringParams.delete("type");
+    }
+    window.history.replaceState({}, "", `?${queryStringParams.toString()}`);
+
+    setSearching(false);
   }
 
   function getSearchResults() {
@@ -130,7 +146,6 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
             },
             onChangeAsync: () => {
               handleSearch();
-              setSearching(false);
             },
           }}
         >
