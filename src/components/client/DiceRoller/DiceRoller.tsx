@@ -21,6 +21,7 @@ export function DiceRoller(props: {
   theme?: ThemeType;
   button?: boolean;
   children?: React.ReactNode;
+  roll?: Array<DiceCommandsType>;
 }) {
   const renderButton = props.button ?? true;
   const [open, setOpen] = useState(false);
@@ -33,15 +34,33 @@ export function DiceRoller(props: {
   const [animatedResultIndexes, setAnimatedResultIndexes] = useState<
     Array<number>
   >([]);
-
   const [selectedResultIndexes, setSelectedResultIndexes] = useState<
     Array<number>
   >([]);
 
   const categories = ["standard", "misc"] as const;
   type CategoryType = (typeof categories)[number];
-
   const [category, setCategory] = useState<CategoryType>("standard");
+
+  useEffect(() => {
+    if (props.roll && props.roll.length > 0) {
+      const toRoll = props.roll;
+      setAnimatedResultIndexes((prev) => {
+        return [...prev, ...toRoll.map((_, i) => i)];
+      });
+      setResults((prev) => {
+        return [
+          ...prev,
+          ...toRoll.map((roll, i) => {
+            return {
+              value: DiceCommands[roll].roll(),
+              command: roll,
+            };
+          }),
+        ];
+      });
+    }
+  }, [props.roll]);
 
   function handleCategoryChange(params: { value: CategoryType }) {
     setCategory(params.value);
@@ -90,6 +109,9 @@ export function DiceRoller(props: {
 
   function handleDiceClick(diceCommand: DiceCommandsType) {
     const result = DiceCommands[diceCommand].roll();
+    setAnimatedResultIndexes((prev) => {
+      return [...prev, results.length];
+    });
     setResults((prev) => {
       return [
         ...prev,
@@ -101,7 +123,11 @@ export function DiceRoller(props: {
     });
   }
 
-  function handleRerollIndex(index: number) {
+  function handleReroll(index: number) {
+    setAnimatedResultIndexes((prev) => {
+      return [...prev, index];
+    });
+
     setResults((prev) => {
       return [
         ...prev.slice(0, index),
@@ -114,7 +140,7 @@ export function DiceRoller(props: {
     });
   }
 
-  function handleAddIndexSelectedResult(index: number) {
+  function handleSelect(index: number) {
     setSelectedResultIndexes((prev) => {
       if (prev.includes(index)) {
         return prev.filter((i) => i !== index);
@@ -124,9 +150,12 @@ export function DiceRoller(props: {
     });
   }
 
-  function handleReroll() {
+  function handleRerollAll() {
+    setAnimatedResultIndexes((prev) => {
+      return [...prev, ...results.map((_, i) => i)];
+    });
     setResults((prev) => {
-      return prev.map((result) => {
+      return prev.map((result, i) => {
         return {
           value: DiceCommands[result.command].roll(),
           command: result.command,
@@ -139,6 +168,7 @@ export function DiceRoller(props: {
   function handleClear() {
     setResults([]);
     setSelectedResultIndexes([]);
+    setAnimatedResultIndexes([]);
   }
 
   function handleCloseModal() {
@@ -147,13 +177,7 @@ export function DiceRoller(props: {
     setOpen(false);
   }
 
-  function addAnimatedResultIndex(index: number) {
-    setAnimatedResultIndexes((prev) => {
-      return [...prev, index];
-    });
-  }
-
-  function removeAnimatedResultIndex(index: number) {
+  function handleOnAnimationFinish(index: number) {
     setAnimatedResultIndexes((prev) => {
       return prev.filter((i) => i !== index);
     });
@@ -279,11 +303,11 @@ export function DiceRoller(props: {
               className="flex h-auto flex-col items-center justify-center gap-2 p-4 font-mono"
               variant={selected ? "classic" : "surface"}
               onClick={() => {
-                handleRerollIndex(index);
+                handleReroll(index);
               }}
               onContextMenu={(e) => {
                 e.preventDefault();
-                handleAddIndexSelectedResult(index);
+                handleSelect(index);
               }}
             >
               <Text>
@@ -291,12 +315,8 @@ export function DiceRoller(props: {
                   watch={result}
                   result={result.value}
                   animate={true}
-                  onAnimatingChange={(animating) => {
-                    if (animating) {
-                      addAnimatedResultIndex(index);
-                    } else {
-                      removeAnimatedResultIndex(index);
-                    }
+                  onAnimationFinish={() => {
+                    handleOnAnimationFinish(index);
                   }}
                 ></AnimatedResult>
               </Text>
@@ -390,7 +410,7 @@ export function DiceRoller(props: {
           size="3"
           disabled={results.length === 0}
           onClick={() => {
-            return handleReroll();
+            handleRerollAll();
           }}
         >
           Reroll all
@@ -476,7 +496,7 @@ function AnimatedResult(props: {
   result: string;
   animate: boolean;
   possibleResults?: Array<string>;
-  onAnimatingChange?: (animating: boolean) => void;
+  onAnimationFinish?(): void;
 }) {
   const possibleResults = props.possibleResults || [
     "▁",
@@ -494,14 +514,10 @@ function AnimatedResult(props: {
     "▃",
     "▁",
   ];
-  const [animating, setAnimating] = useState(false);
+  const [animating, setAnimating] = useState(true);
   const defaultResult = props.animate ? possibleResults[0] : props.result;
   const [visibleResult, setVisibleResult] = useState(defaultResult);
   const loadingIndexRef = useRef(0);
-
-  useEffect(() => {
-    props.onAnimatingChange?.(animating);
-  }, [animating]);
 
   useEffect(() => {
     let timeout: any;
@@ -513,6 +529,7 @@ function AnimatedResult(props: {
         if (count >= 15) {
           setVisibleResult(props.result);
           setAnimating(false);
+          props.onAnimationFinish?.();
           return;
         } else {
           count++;
