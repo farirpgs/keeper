@@ -18,7 +18,6 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
   },
-
   site: constants.site({
     localhost: process.env.NODE_ENV === "development",
   }),

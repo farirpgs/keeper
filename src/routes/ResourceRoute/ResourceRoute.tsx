@@ -385,7 +385,7 @@ export function ResourceRoute(props: {
           {props.locales.map((locale) => {
             return (
               <Select.Item key={locale} value={locale}>
-                {codeToWord[locale]}
+                {codeToWord[locale] || locale}
               </Select.Item>
             );
           })}
