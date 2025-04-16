@@ -58,7 +58,7 @@ export function ResourceRoute(props: {
         <div className="flex gap-9">
           <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
             <Box
-              className="sticky top-6 overflow-y-auto pr-2 pb-9"
+              className="sticky top-6 overflow-y-auto px-2 pb-9"
               style={{
                 maxHeight: "calc(100vh - 32px)",
               }}
@@ -71,7 +71,7 @@ export function ResourceRoute(props: {
           <div className="block w-full">
             <div>
               <MDXH1 className="">{props.doc.currentPage?.title || ""}</MDXH1>
-              <MDXH4 color="gray" className="mb-8" size="6">
+              <MDXH4 color="gray" className="mb-5" size="6">
                 {props.resource.data.name}
               </MDXH4>
               {props.children}
