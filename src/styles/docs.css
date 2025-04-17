@@ -2,34 +2,33 @@
 
 /* Dark mode colors. */
 :root {
-  --sl-color-accent-low: #002b22;
-  --sl-color-accent: #007c64;
-  --sl-color-accent-high: #88dcc3;
+  --sl-color-accent-low: #1e2041;
+  --sl-color-accent: #5655d0;
+  --sl-color-accent-high: #bfc5f1;
   --sl-color-white: #ffffff;
-  --sl-color-gray-1: #eaf0e8;
-  --sl-color-gray-2: #bdc4bb;
-  --sl-color-gray-3: #82907f;
-  --sl-color-gray-4: #4f5c4d;
-  --sl-color-gray-5: #303c2d;
-  --sl-color-gray-6: #1f2a1c;
-  --sl-color-black: #151a13;
+  --sl-color-gray-1: #ececfc;
+  --sl-color-gray-2: #c6c6d9;
+  --sl-color-gray-3: #a1a0c4;
+  --sl-color-gray-4: #555475;
+  --sl-color-gray-5: #363452;
+  --sl-color-gray-6: #25223f;
+  --sl-color-black: #171624;
 }
 /* Light mode colors. */
 :root[data-theme="light"] {
-  --sl-color-accent-low: #a9e6d3;
-  --sl-color-accent: #007e66;
-  --sl-color-accent-high: #003c2f;
-  --sl-color-white: #151a13;
-  --sl-color-gray-1: #1f2a1c;
-  --sl-color-gray-2: #303c2d;
-  --sl-color-gray-3: #4f5c4d;
-  --sl-color-gray-4: #82907f;
-  --sl-color-gray-5: #bdc4bb;
-  --sl-color-gray-6: #eaf0e8;
-  --sl-color-gray-7: #f4f7f3;
+  --sl-color-accent-low: #cfd5f6;
+  --sl-color-accent: #423bb4;
+  --sl-color-accent-high: #292b60;
+  --sl-color-white: #171624;
+  --sl-color-gray-1: #25223f;
+  --sl-color-gray-2: #363452;
+  --sl-color-gray-3: #555475;
+  --sl-color-gray-4: #8887ab;
+  --sl-color-gray-5: #c0c0d3;
+  --sl-color-gray-6: #ececfc;
+  --sl-color-gray-7: #f5f5fd;
   --sl-color-black: #ffffff;
 }
-
 /* Logo Style */
 
 .title-wrapper img {
