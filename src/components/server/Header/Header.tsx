@@ -52,26 +52,25 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
           <div className="flex flex-row gap-8">
             <div className="flex flex-1 flex-row items-center gap-4">
               {renderLogo()}
-              {shouldShowSearch && (
-                <div className="hidden flex-1 md:flex">
-                  <TextField.Root
-                    variant="soft"
-                    size="3"
-                    className="w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
-                    color="gray"
-                    placeholder="Search resources..."
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      location.href = AppUrl.search({});
-                    }}
-                  >
-                    <TextField.Slot>
-                      <MagnifyingGlassIcon height="16" width="16" />
-                    </TextField.Slot>
-                  </TextField.Root>
-                </div>
-              )}
+
+              <div className="hidden flex-1 md:flex">
+                <TextField.Root
+                  variant="soft"
+                  size="3"
+                  className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6) ${shouldShowSearch ? "" : "hidden"}`}
+                  color="gray"
+                  placeholder="Search resources..."
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    location.href = AppUrl.search({});
+                  }}
+                >
+                  <TextField.Slot>
+                    <MagnifyingGlassIcon height="16" width="16" />
+                  </TextField.Slot>
+                </TextField.Root>
+              </div>
             </div>
             <div className="hidden flex-row gap-3 md:flex">
               {renderNavButton({
