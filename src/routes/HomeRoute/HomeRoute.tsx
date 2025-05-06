@@ -1,8 +1,8 @@
-import { Box, Button, Container, Flex, Grid, Text } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { motion } from "motion/react";
-import { Card } from "../../components/client/Card/Card";
+import { Card } from "../../components/client/AppCard/AppCard";
 import { MDXH1, MDXH2 } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import { Colors, type ColorType } from "../../domains/colors/colors";
 import { getRandomElement } from "../../domains/utils/random";
@@ -36,8 +36,8 @@ export function HomeRoute(props: {
 
   function renderHeader() {
     return (
-      <Container size="4">
-        <Flex
+      <UI.Container size="4">
+        <UI.Flex
           direction={{
             initial: "column",
             md: "row",
@@ -46,13 +46,18 @@ export function HomeRoute(props: {
           className="my-3 lg:my-9"
           align={"center"}
         >
-          <Box
+          <UI.Box
             width={{
               initial: "100%",
               md: "70%",
             }}
           >
-            <Flex align="start" justify="center" gap="4" direction={"column"}>
+            <UI.Flex
+              align="start"
+              justify="center"
+              gap="4"
+              direction={"column"}
+            >
               <motion.div
                 initial={{ opacity: 0, filter: "blur(10px)" }}
                 animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -77,7 +82,7 @@ export function HomeRoute(props: {
                 animate={{ opacity: 1, filter: "blur(0px)" }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <Text
+                <UI.Text
                   color="gray"
                   size={{
                     initial: "3",
@@ -87,34 +92,34 @@ export function HomeRoute(props: {
                 >
                   Roll dice, store characters, and design your own worlds.
                   <br /> Accessible, fast, and free.
-                </Text>
+                </UI.Text>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, filter: "blur(10px)" }}
                 animate={{ opacity: 1, filter: "blur(0px)" }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <Flex gap="4" className="flex-col md:flex-row">
+                <UI.Flex gap="4" className="flex-col md:flex-row">
                   <a href="#get-started">
-                    <Button size="4" radius="full" className="">
+                    <UI.Button size="4" radius="full" className="">
                       Get Started
-                    </Button>
+                    </UI.Button>
                   </a>
                   <a href={AppUrl.search({})}>
-                    <Button
+                    <UI.Button
                       size="4"
                       radius="full"
                       variant="outline"
                       className=""
                     >
                       Search for content
-                    </Button>
+                    </UI.Button>
                   </a>
-                </Flex>
+                </UI.Flex>
               </motion.div>
-            </Flex>
-          </Box>
-          <Flex
+            </UI.Flex>
+          </UI.Box>
+          <UI.Flex
             width={"40%"}
             justify="center"
             align={"center"}
@@ -125,7 +130,7 @@ export function HomeRoute(props: {
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.5, delay: 0 }}
             >
-              <Box
+              <UI.Box
                 className="animate-blur absolute z-[-1] hidden h-[calc(100%+4rem)] w-[calc(100%+4rem)] rounded-lg opacity-60 dark:block"
                 style={{
                   backgroundImage:
@@ -141,23 +146,23 @@ export function HomeRoute(props: {
                 className={"rounded-2xl"}
               />
             </motion.div>
-          </Flex>
-        </Flex>
-      </Container>
+          </UI.Flex>
+        </UI.Flex>
+      </UI.Container>
     );
   }
 
   function renderResources() {
     return (
       <>
-        <Box pt="4" id="get-started">
+        <UI.Box pt="4" id="get-started">
           <MDXH2>Resources</MDXH2>
-          <Text color="gray" size="3" mb="4">
+          <UI.Text color="gray" size="3" mb="4">
             Explore list of free and open resources to use in your games or to
             use to make your own.
-          </Text>
-        </Box>
-        <Grid
+          </UI.Text>
+        </UI.Box>
+        <UI.Grid
           columns={{
             sm: "2",
             md: "3",
@@ -200,7 +205,7 @@ export function HomeRoute(props: {
               </Card>
             );
           })}
-        </Grid>
+        </UI.Grid>
 
         <a
           href={AppUrl.search({
@@ -208,9 +213,9 @@ export function HomeRoute(props: {
           })}
           className="flex justify-center align-middle"
         >
-          <Button size="4" className="">
+          <UI.Button size="4" className="">
             View all
-          </Button>
+          </UI.Button>
         </a>
       </>
     );
@@ -219,14 +224,14 @@ export function HomeRoute(props: {
   function renderGames() {
     return (
       <>
-        <Flex pt="4" id="get-started" gap="2" direction="column">
+        <UI.Flex pt="4" id="get-started" gap="2" direction="column">
           <MDXH2>Games</MDXH2>
-          <Text color="gray" size="3" mb="4">
+          <UI.Text color="gray" size="3" mb="4">
             Play free TTRPGs and campaigns made using templates from the
             community.
-          </Text>
-        </Flex>
-        <Grid
+          </UI.Text>
+        </UI.Flex>
+        <UI.Grid
           columns={{
             sm: "2",
             md: "3",
@@ -269,16 +274,16 @@ export function HomeRoute(props: {
               </Card>
             );
           })}
-        </Grid>
+        </UI.Grid>
         <a
           href={AppUrl.search({
             type: "games",
           })}
           className="flex justify-center align-middle"
         >
-          <Button size="4" className="">
+          <UI.Button size="4" className="">
             View all
-          </Button>
+          </UI.Button>
         </a>
       </>
     );

@@ -49,6 +49,7 @@ blockquote p:first-of-type::after {
 /* GLOBAL TAGS */
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 body {
   position: relative;

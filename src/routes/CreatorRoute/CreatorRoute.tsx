@@ -1,12 +1,12 @@
-import { Flex, Grid } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
-import { Card } from "../../components/client/Card/Card";
+import { Card } from "../../components/client/AppCard/AppCard";
 import {
   MDXH1,
   MDXH2,
   MDXWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import { type ColorType, Colors } from "../../domains/colors/colors";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
@@ -22,7 +22,7 @@ export function CreatorRoute(props: {
   });
 
   return (
-    <Flex direction="column" gap="5">
+    <UI.Flex direction="column" gap="5">
       <MDXH1>{props.creator.data.name}</MDXH1>
 
       <MDXWrapper>
@@ -34,7 +34,7 @@ export function CreatorRoute(props: {
       </MDXWrapper>
       {renderResources()}
       {renderGames()}
-    </Flex>
+    </UI.Flex>
   );
 
   function renderResources() {
@@ -43,7 +43,7 @@ export function CreatorRoute(props: {
         {props.resources.length > 0 && (
           <>
             <MDXH2>Resources</MDXH2>
-            <Grid
+            <UI.Grid
               columns={{
                 sm: "2",
                 md: "3",
@@ -82,7 +82,7 @@ export function CreatorRoute(props: {
                   )}
                 </Card>
               ))}
-            </Grid>
+            </UI.Grid>
           </>
         )}
       </>
@@ -95,7 +95,7 @@ export function CreatorRoute(props: {
         {props.games.length > 0 && (
           <>
             <MDXH2>Games</MDXH2>
-            <Grid
+            <UI.Grid
               columns={{
                 sm: "2",
                 lg: "3",
@@ -134,7 +134,7 @@ export function CreatorRoute(props: {
                   )}
                 </Card>
               ))}
-            </Grid>
+            </UI.Grid>
           </>
         )}
       </>

@@ -1,19 +1,8 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Dialog,
-  Flex,
-  Heading,
-  SegmentedControl,
-  Text,
-  Theme,
-  Tooltip,
-} from "@radix-ui/themes";
 import clsx from "clsx";
 import { CircleOff, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ThemeType } from "../../../domains/utils/getTheme";
+import { UI } from "../../ui/ui";
 import { DiceCommands, type DiceCommandsType } from "./DiceCommands";
 import { DiceIcons } from "./DiceIcons";
 
@@ -184,11 +173,11 @@ export function DiceRoller(props: {
   }
 
   return (
-    <Theme {...props.theme} hasBackground={false} asChild>
+    <UI.Theme {...props.theme} hasBackground={false} asChild>
       <div className="min-h-auto">
         {renderButton ? (
           <div>
-            <Dialog.Root
+            <UI.Dialog.Root
               open={open}
               onOpenChange={(isOpen) => {
                 if (!isOpen) {
@@ -196,37 +185,37 @@ export function DiceRoller(props: {
                 }
               }}
             >
-              <Tooltip content="Dice Roller">
-                <Dialog.Trigger
+              <UI.Tooltip content="Dice Roller">
+                <UI.Dialog.Trigger
                   onClick={() => {
                     return setOpen(true);
                   }}
                 >
                   {props.children}
-                </Dialog.Trigger>
-              </Tooltip>
+                </UI.Dialog.Trigger>
+              </UI.Tooltip>
 
-              <Dialog.Content size={"4"} className="bg-(--gray-1) p-0">
+              <UI.Dialog.Content size={"4"} className="bg-(--gray-1) p-0">
                 <div className="px-6 pt-6 pb-4">
-                  <Dialog.Title className="relative m-0">
-                    <Heading size="7" className="m-0">
+                  <UI.Dialog.Title className="relative m-0">
+                    <UI.Heading size="7" className="m-0">
                       Dice Roller
-                    </Heading>
+                    </UI.Heading>
                     {renderCloseButton()}
-                  </Dialog.Title>
-                  <Dialog.Description size="2" mb="4" className="hidden">
+                  </UI.Dialog.Title>
+                  <UI.Dialog.Description size="2" mb="4" className="hidden">
                     Click on a dice to roll it.
-                  </Dialog.Description>
+                  </UI.Dialog.Description>
                 </div>
                 <div>{renderDialogContent()}</div>
-              </Dialog.Content>
-            </Dialog.Root>
+              </UI.Dialog.Content>
+            </UI.Dialog.Root>
           </div>
         ) : (
           <div>{renderDialogContent()}</div>
         )}
       </div>
-    </Theme>
+    </UI.Theme>
   );
 
   function renderDialogContent() {
@@ -239,7 +228,7 @@ export function DiceRoller(props: {
       >
         <div className="flex w-full flex-col gap-4">
           <div className="w-full px-6">
-            <SegmentedControl.Root
+            <UI.SegmentedControl.Root
               value={category}
               onValueChange={(value) => {
                 return handleCategoryChange({ value: value as CategoryType });
@@ -248,23 +237,23 @@ export function DiceRoller(props: {
             >
               {categories.map((cat) => {
                 return (
-                  <SegmentedControl.Item
+                  <UI.SegmentedControl.Item
                     key={cat}
                     value={cat}
                     className="cursor-auto"
                   >
                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                  </SegmentedControl.Item>
+                  </UI.SegmentedControl.Item>
                 );
               })}
-            </SegmentedControl.Root>
+            </UI.SegmentedControl.Root>
           </div>
           <div className="px-6">{renderDice()}</div>
         </div>
         <div className="flex w-full flex-col gap-4 rounded-sm bg-white p-6 dark:bg-black">
-          <Heading size="5" className="">
+          <UI.Heading size="5" className="">
             Result
-          </Heading>
+          </UI.Heading>
           <div className="flex min-h-[180px] items-center justify-center bg-(--gray-1) p-3">
             <div className="flex flex-col items-center justify-center gap-4">
               {renderResults()}
@@ -282,22 +271,22 @@ export function DiceRoller(props: {
 
   function renderResults() {
     return (
-      <Flex direction="row" gap="2" wrap={"wrap"} justify={"center"}>
+      <UI.Flex direction="row" gap="2" wrap={"wrap"} justify={"center"}>
         {results.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-2 text-center">
-            <Text color="gray" className="">
+            <UI.Text color="gray" className="">
               <CircleOff size="4rem" className=""></CircleOff>
-            </Text>
-            <Text color="gray" className="" size="3">
+            </UI.Text>
+            <UI.Text color="gray" className="" size="3">
               Click on a dice to roll it.
-            </Text>
+            </UI.Text>
           </div>
         )}
         {results.map((result, index) => {
           const Icon = DiceIcons[result.command];
           const selected = selectedResultIndexes.includes(index);
           return (
-            <Button
+            <UI.Button
               key={index}
               size="3"
               className="flex h-auto flex-col items-center justify-center gap-2 p-4 font-mono"
@@ -310,7 +299,7 @@ export function DiceRoller(props: {
                 handleSelect(index);
               }}
             >
-              <Text>
+              <UI.Text>
                 <AnimatedResult
                   watch={result}
                   result={result.value}
@@ -319,14 +308,14 @@ export function DiceRoller(props: {
                     handleOnAnimationFinish(index);
                   }}
                 ></AnimatedResult>
-              </Text>
+              </UI.Text>
               <div>
                 <Icon className="h-auto w-6"></Icon>
               </div>
-            </Button>
+            </UI.Button>
           );
         })}
-      </Flex>
+      </UI.Flex>
     );
   }
 
@@ -337,7 +326,7 @@ export function DiceRoller(props: {
 
     return (
       <div className="flex w-full flex-col justify-center">
-        <Text
+        <UI.Text
           color="gray"
           size={"1"}
           className="text-center text-(--accent-11)"
@@ -345,7 +334,7 @@ export function DiceRoller(props: {
           Click on a card to reroll it.
           <br />
           Right click on a card to highlight it.
-        </Text>
+        </UI.Text>
       </div>
     );
   }
@@ -353,51 +342,51 @@ export function DiceRoller(props: {
   function renderResultsStats() {
     return (
       <div className="flex w-full justify-center gap-2">
-        <Badge
+        <UI.Badge
           size="2"
           className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
           <div>
-            <Text size="2">Total</Text>
+            <UI.Text size="2">Total</UI.Text>
           </div>
           <div>
-            <Text size="3" weight={"bold"}>
+            <UI.Text size="3" weight={"bold"}>
               {isAnimating || totalResult === -Infinity ? "-" : totalResult}
-            </Text>
+            </UI.Text>
           </div>
-        </Badge>
-        <Badge
+        </UI.Badge>
+        <UI.Badge
           size="2"
           className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
           <div>
-            <Text size="2">Highest</Text>
+            <UI.Text size="2">Highest</UI.Text>
           </div>
           <div>
-            <Text size="3" weight={"bold"}>
+            <UI.Text size="3" weight={"bold"}>
               {isAnimating || highestResult === -Infinity ? "-" : highestResult}
-            </Text>
+            </UI.Text>
           </div>
-        </Badge>
-        <Badge
+        </UI.Badge>
+        <UI.Badge
           size="2"
           className={clsx("block flex-grow bg-(--gray-1) p-3 text-center", {})}
           color={selectedResultIndexes.length > 0 ? undefined : "gray"}
           variant={selectedResultIndexes.length > 0 ? "soft" : "soft"}
         >
           <div>
-            <Text size="2">Lowest</Text>
+            <UI.Text size="2">Lowest</UI.Text>
           </div>
           <div>
-            <Text size="3" weight={"bold"}>
+            <UI.Text size="3" weight={"bold"}>
               {isAnimating || lowestResult === Infinity ? "-" : lowestResult}
-            </Text>
+            </UI.Text>
           </div>
-        </Badge>
+        </UI.Badge>
       </div>
     );
   }
@@ -405,7 +394,7 @@ export function DiceRoller(props: {
   function renderResultActions() {
     return (
       <div className="flex flex-row justify-center gap-2">
-        <Button
+        <UI.Button
           variant="solid"
           size="3"
           disabled={results.length === 0}
@@ -414,8 +403,8 @@ export function DiceRoller(props: {
           }}
         >
           Reroll all
-        </Button>
-        <Button
+        </UI.Button>
+        <UI.Button
           variant="outline"
           size="3"
           disabled={results.length === 0}
@@ -424,7 +413,7 @@ export function DiceRoller(props: {
           }}
         >
           Clear all
-        </Button>
+        </UI.Button>
       </div>
     );
   }
@@ -441,8 +430,8 @@ export function DiceRoller(props: {
     }
 
     return (
-      <Box>
-        <Flex
+      <UI.Box>
+        <UI.Flex
           direction="row"
           gap="3"
           wrap={"wrap"}
@@ -452,30 +441,30 @@ export function DiceRoller(props: {
           {filteredDiceCommands.map((diceCommand) => {
             const Icon = DiceIcons[diceCommand];
             return (
-              <Button
+              <UI.Button
                 key={diceCommand}
                 size={"2"}
                 variant="soft"
                 className="h-auto py-3"
                 onClick={() => handleDiceClick(diceCommand)}
               >
-                <Flex direction="column" gap="2" align="center">
+                <UI.Flex direction="column" gap="2" align="center">
                   <Icon className="h-auto w-8"></Icon>
-                  <Text size="2">{DiceCommands[diceCommand].label}</Text>
-                </Flex>
-              </Button>
+                  <UI.Text size="2">{DiceCommands[diceCommand].label}</UI.Text>
+                </UI.Flex>
+              </UI.Button>
             );
           })}
-        </Flex>
-      </Box>
+        </UI.Flex>
+      </UI.Box>
     );
   }
 
   function renderCloseButton() {
     return (
-      <Flex gap="3" justify="end" className="absolute top-0 right-0">
-        <Dialog.Close>
-          <Button
+      <UI.Flex gap="3" justify="end" className="absolute top-0 right-0">
+        <UI.Dialog.Close>
+          <UI.Button
             variant="ghost"
             color="gray"
             className="p-0"
@@ -484,9 +473,9 @@ export function DiceRoller(props: {
             }}
           >
             <XIcon></XIcon>
-          </Button>
-        </Dialog.Close>
-      </Flex>
+          </UI.Button>
+        </UI.Dialog.Close>
+      </UI.Flex>
     );
   }
 }

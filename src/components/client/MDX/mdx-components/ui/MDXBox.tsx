@@ -1,5 +1,5 @@
-import { Box } from "@radix-ui/themes";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -15,5 +15,5 @@ export function MDXBox(p: Props) {
     componentName: "MDXBox",
   });
 
-  return <Box data-mdx-type="box">{props.children}</Box>;
+  return <UI.Box data-mdx-type="box">{props.children}</UI.Box>;
 }

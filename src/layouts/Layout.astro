@@ -1,11 +1,4 @@
 ---
-import {
-  Box,
-  Container,
-  Flex,
-  Theme,
-  type ContainerProps,
-} from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { ClientRouter, fade } from "astro:transitions";
 
@@ -21,14 +14,15 @@ import { DLAstro } from "../domains/dl/DLAstro";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import PostHog from "../components/server/PostHog/PostHog.astro";
 import "../styles/global.css";
+import { UI } from "../components/ui/ui";
 
 type Props = {
   title: Array<string> | undefined;
   description: string | undefined;
 
-  size?: ContainerProps["size"];
+  size?: UI.ContainerProps["size"];
 
-  maxWidth?: ContainerProps["maxWidth"];
+  maxWidth?: UI.ContainerProps["maxWidth"];
 
   withOgImage?: boolean;
   withDefaultBanner?: boolean;
@@ -154,7 +148,7 @@ const ogImageUrl = props.withOgImage
     <!-- Animation -->
     <ClientRouter />
   </head>
-  <Theme {...themeProps} className="pb-[10rem]">
+  <UI.Theme {...themeProps} className="pb-[10rem]">
     <body>
       <Header client:load theme={themeProps} pathname={Astro.url.pathname} />
 
@@ -170,7 +164,7 @@ const ogImageUrl = props.withOgImage
           <Banner src={songsAndSagas.game.data.image!} alt={"Background"} />
         )
       }
-      <Container
+      <UI.Container
         px={{
           initial: "6",
           md: "9",
@@ -178,7 +172,7 @@ const ogImageUrl = props.withOgImage
         size={props.size || "4"}
         maxWidth={props.maxWidth || undefined}
       />
-      <Container
+      <UI.Container
         px={{
           initial: "6",
           md: "9",
@@ -191,8 +185,8 @@ const ogImageUrl = props.withOgImage
             <slot />
           </div>
         </main>
-      </Container>
-      <Container
+      </UI.Container>
+      <UI.Container
         px={{
           initial: "6",
           md: "9",
@@ -203,10 +197,10 @@ const ogImageUrl = props.withOgImage
         <Footer client:load ogImageUrl={ogImageUrl} theme={props.theme} />
         {
           import.meta.env.DEV && (
-            <Box>
-              <Box className="my-[10rem]">
+            <UI.Box>
+              <UI.Box className="my-[10rem]">
                 <MDXDivider />
-              </Box>
+              </UI.Box>
               <MDXColumns>
                 <Debug
                   debug={{
@@ -219,10 +213,10 @@ const ogImageUrl = props.withOgImage
                   <img src={ogImageUrl} alt="open graph" class="h-max w-full" />
                 )}
               </MDXColumns>
-            </Box>
+            </UI.Box>
           )
         }
-      </Container>
+      </UI.Container>
 
       <PostHog />
     </body>
@@ -261,5 +255,5 @@ const ogImageUrl = props.withOgImage
         --cursor-switch: default;
       }
     </style>
-  </Theme>
+  </UI.Theme>
 </html>

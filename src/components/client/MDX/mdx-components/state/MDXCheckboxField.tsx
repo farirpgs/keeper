@@ -1,4 +1,3 @@
-import { Checkbox, Flex, Text } from "@radix-ui/themes";
 import { useContext, useState } from "react";
 import { z } from "zod";
 import {
@@ -6,6 +5,7 @@ import {
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
+import { UI } from "../../../../ui/ui";
 import { useName } from "../state/MDXList";
 
 const propsSchema = z.object({
@@ -32,35 +32,37 @@ export function MDXCheckboxField(p: Props) {
   });
 
   return (
-    <Text data-mdx-type="text-field" as="label" size="2">
-      <Flex gap="2">
-        <Checkbox
-          name={name}
-          size="3"
-          checked={value}
-          onClick={(e) => {
-            if (campaignManager.readonly) {
-              return;
-            }
-            return setValue((prev) => !prev);
-          }}
-        />
-
-        {props.children && (
-          <span
-            onClick={() => {
+    <UI.Text data-mdx-type="text-field" as="label" size="2">
+      <div className="flex gap-2">
+        <UI.Flex gap={2}>
+          <UI.Checkbox
+            name={name}
+            size="3"
+            checked={value}
+            onClick={(e) => {
               if (campaignManager.readonly) {
                 return;
               }
               return setValue((prev) => !prev);
             }}
-          >
-            {props.children}
-          </span>
-        )}
-      </Flex>
+          />
 
-      <CampaignState value={value} name={name} />
-    </Text>
+          {props.children && (
+            <span
+              onClick={() => {
+                if (campaignManager.readonly) {
+                  return;
+                }
+                return setValue((prev) => !prev);
+              }}
+            >
+              {props.children}
+            </span>
+          )}
+        </UI.Flex>
+
+        <CampaignState value={value} name={name} />
+      </div>
+    </UI.Text>
   );
 }

@@ -1,27 +1,19 @@
-import { GitHubLogoIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import {
-  Box,
-  Button,
-  Dialog,
-  Flex,
-  Heading,
-  IconButton,
-  Inset,
-  Link,
-  Select,
-  Text,
-  Theme,
-  Tooltip,
-} from "@radix-ui/themes";
+  ExternalLinkIcon,
+  GitHubLogoIcon,
+  HamburgerMenuIcon,
+} from "@radix-ui/react-icons";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
 import React from "react";
+import { Card } from "../../components/client/AppCard/AppCard";
 import {
   getMdxComponents,
   MDXH1,
   MDXH4,
   MDXWrapper,
 } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
   CampaignContext,
@@ -53,12 +45,12 @@ export function ResourceRoute(props: {
   });
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
+    <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
         <div className="flex gap-9">
           <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
-            <Box
-              className="sticky top-6 overflow-y-auto px-2 pb-9"
+            <div
+              className="sticky top-6 overflow-y-auto px-2 pb-[40vh]"
               style={{
                 maxHeight: "calc(100vh - 32px)",
               }}
@@ -66,7 +58,7 @@ export function ResourceRoute(props: {
               {renderSidebar({
                 withImage: true,
               })}
-            </Box>
+            </div>
           </div>
           <div className="block w-full">
             <div>
@@ -89,19 +81,19 @@ export function ResourceRoute(props: {
             </div>
           </div>
         </div>
-        <Dialog.Root
+        <UI.Dialog.Root
           open={mobileMenuOpen}
           onOpenChange={(open) => {
             return setMobileMenuOpen(open);
           }}
         >
-          <Box className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
-            <Dialog.Trigger
+          <div className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
+            <UI.Dialog.Trigger
               onClick={() => {
                 return setMobileMenuOpen((prev) => !prev);
               }}
             >
-              <IconButton
+              <UI.IconButton
                 variant="solid"
                 size="4"
                 radius="full"
@@ -111,22 +103,24 @@ export function ResourceRoute(props: {
                   width={"2rem"}
                   height={"2rem"}
                 ></HamburgerMenuIcon>
-              </IconButton>
-            </Dialog.Trigger>
-          </Box>
+              </UI.IconButton>
+            </UI.Dialog.Trigger>
+          </div>
 
-          <Dialog.Content size={"3"}>
-            <Flex gap={"3"} direction={"column"}>
-              <Dialog.Title className="hidden">Menu</Dialog.Title>
-              <Dialog.Description className="hidden">Menu</Dialog.Description>
-              <Box>
+          <UI.Dialog.Content size={"3"}>
+            <div className="flex flex-col gap-3">
+              <UI.Dialog.Title className="hidden">Menu</UI.Dialog.Title>
+              <UI.Dialog.Description className="hidden">
+                Menu
+              </UI.Dialog.Description>
+              <div>
                 {renderSidebar({
                   withImage: false,
                 })}
-              </Box>
-              <Flex justify="end">
-                <Dialog.Close>
-                  <Button
+              </div>
+              <div className="flex justify-end">
+                <UI.Dialog.Close>
+                  <UI.Button
                     variant="soft"
                     color="gray"
                     onClick={() => {
@@ -134,159 +128,186 @@ export function ResourceRoute(props: {
                     }}
                   >
                     Close
-                  </Button>
-                </Dialog.Close>
-              </Flex>
-            </Flex>
-          </Dialog.Content>
-        </Dialog.Root>
+                  </UI.Button>
+                </UI.Dialog.Close>
+              </div>
+            </div>
+          </UI.Dialog.Content>
+        </UI.Dialog.Root>
       </CampaignContext.Provider>
-    </Theme>
+    </UI.Theme>
   );
 
   function renderPreviousAndNextButtons() {
     return (
-      <Flex
-        gap="3"
-        className="mt-[3rem]"
-        direction={{ initial: "column", sm: "row" }}
-        justify={
-          props.doc.previousPage && props.doc.nextPage
-            ? "between"
-            : props.doc.previousPage
-              ? "start"
-              : "end"
-        }
+      <div
+        className="mt-[3rem] flex flex-col gap-3 sm:flex-row"
+        style={{
+          justifyContent:
+            props.doc.previousPage && props.doc.nextPage
+              ? "space-between"
+              : props.doc.previousPage
+                ? "flex-start"
+                : "flex-end",
+        }}
       >
-        {props.doc.previousPage && (
-          <Tooltip content={props.doc.previousPage.title}>
-            <Link
-              className="w-full no-underline sm:w-[33%]"
-              href={AppUrl.resourcePage({
-                id: props.resource.id,
-                page: props.doc.previousPage.id,
-              })}
-              size="4"
-            >
-              <Flex
-                gap="2"
-                direction="column"
-                className="rounded-md border border-(--border) p-4"
-                style={
-                  {
-                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                  } as React.CSSProperties
-                }
-              >
-                <Text size="2" color="gray" className="">
-                  Previous
-                </Text>
+        {props.doc.previousPage &&
+          renderNavCard({
+            title: props.doc.previousPage.title,
+            href: AppUrl.resourcePage({
+              id: props.resource.id,
+              page: props.doc.previousPage.id,
+            }),
+            direction: "previous",
+          })}
+        {props.doc.nextPage &&
+          renderNavCard({
+            title: props.doc.nextPage.title,
+            href: AppUrl.resourcePage({
+              id: props.resource.id,
+              page: props.doc.nextPage.id,
+            }),
+            direction: "next",
+          })}
+      </div>
+    );
+  }
 
-                <Text truncate>{props.doc.previousPage.title}</Text>
-              </Flex>
-            </Link>
-          </Tooltip>
-        )}
-        {props.doc.nextPage && (
-          <Tooltip content={props.doc.nextPage.title}>
-            <Link
-              className="w-full no-underline sm:w-[33%]"
-              href={AppUrl.resourcePage({
-                id: props.resource.id,
-                page: props.doc.nextPage.id,
-              })}
-              size="4"
-            >
-              <Flex
-                gap="2"
-                direction="column"
-                className="rounded-md border border-(--border) p-4 text-right"
-                style={
-                  {
-                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
-                  } as React.CSSProperties
-                }
-              >
-                <Text size="2" color="gray" className="">
-                  Next
-                </Text>
-
-                <Text truncate>{props.doc.nextPage.title}</Text>
-              </Flex>
-            </Link>
-          </Tooltip>
-        )}
-      </Flex>
+  function renderNavCard(params: {
+    title: string;
+    href: string;
+    direction: "previous" | "next";
+  }) {
+    return (
+      <Card title={params.title} href={params.href}>
+        <div
+          className={clsx(
+            "flex flex-col gap-2 rounded-md border border-(--border) p-4",
+            {
+              "text-right": params.direction === "next",
+            },
+          )}
+          style={
+            {
+              "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+            } as React.CSSProperties
+          }
+        >
+          <UI.Text size="2" color="gray" className="">
+            {params.direction === "previous" ? "Previous" : "Next"}
+          </UI.Text>
+          <UI.Text truncate>{params.title}</UI.Text>
+        </div>
+      </Card>
     );
   }
 
   function renderEditButton() {
     return (
-      <Box mt="5">
-        <Flex justify={"end"}>
-          <Link
+      <div className="mt-5">
+        <div className="flex justify-end">
+          <UI.Link
             href={AppUrl.githubResource({
               id: props.resource.id,
               page: props.doc.currentPage?.gitHubId || "",
             })}
           >
-            <Button variant="ghost" color="gray" size="4" className="m-0">
+            <UI.Button variant="ghost" color="gray" size="4" className="m-0">
               <GitHubLogoIcon
                 width={"1.5rem"}
                 height={"1.5rem"}
               ></GitHubLogoIcon>
               Edit this page on GitHub
-            </Button>
-          </Link>
-        </Flex>
-      </Box>
+            </UI.Button>
+          </UI.Link>
+        </div>
+      </div>
     );
   }
 
   function renderSidebar(p: { withImage?: boolean }) {
     return (
-      <Flex direction="column" gap="3">
-        <Flex direction={"column"} gap="2">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {props.image && p.withImage && (
-            <Box className="">
-              <Inset
+            <div className="">
+              <UI.Inset
                 clip="padding-box"
                 side="top"
                 pb="current"
                 className="rounded-md"
               >
                 {props.image}
-              </Inset>
-            </Box>
+              </UI.Inset>
+            </div>
           )}
 
-          <Box>
-            <Text size="5" weight={"bold"} className="mt-2 block">
+          <div>
+            <UI.Text size="5" weight={"bold"} className="mt-2 block">
               {props.resource.data.name}
-            </Text>
-            <Link
+            </UI.Text>
+            <UI.Link
               href={AppUrl.creator({
                 id: props.creator.id,
               })}
               color="gray"
               className="hover:text-(--accent-12)"
             >
-              <Text size={"3"} className="block">
+              <UI.Text size={"3"} className="block">
                 By {props.creator.data.name}
-              </Text>
-            </Link>
-          </Box>
-        </Flex>
-        <Box>{renderLocalesDropdown()}</Box>
+              </UI.Text>
+            </UI.Link>
+          </div>
 
-        <Box>
+          <div>{renderLocalesDropdown()}</div>
+          {props.resource.data.links && (
+            <UI.Card
+              variant="surface"
+              className="shadow-none after:block after:shadow-none"
+            >
+              {Object.keys(props.resource.data.links).length > 0 && (
+                <>
+                  <UI.Heading size="2" className="mb-2">
+                    Creator Links
+                  </UI.Heading>
+                  <div className="flex flex-col gap-1">
+                    {Object.entries(props.resource.data.links).map(
+                      ([text, url]) => {
+                        if (!url) {
+                          return null;
+                        }
+                        return (
+                          <UI.Link
+                            key={text}
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 no-underline hover:text-(--accent-11)"
+                            color="gray"
+                            size="2"
+                          >
+                            <ExternalLinkIcon />
+                            <UI.Text truncate>{text}</UI.Text>
+                          </UI.Link>
+                        );
+                      },
+                    )}
+                  </div>
+                </>
+              )}
+            </UI.Card>
+          )}
+        </div>
+
+        <UI.Card
+          variant="surface"
+          className="flex flex-col gap-2 shadow-none after:block after:shadow-none"
+        >
           {Object.keys(props.doc.sidebar.categories).map((category) => {
             return (
               <React.Fragment key={category}>
-                <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
-                  {category}
-                </Heading>
-                <Flex direction="column">
+                <UI.Heading size="2">{category}</UI.Heading>
+                <div className="flex flex-col">
                   {props.doc.sidebar.categories[category].map((item) => {
                     const itemPatname = AppUrl.resourcePage({
                       id: props.resource.id,
@@ -309,15 +330,13 @@ export function ResourceRoute(props: {
                       </React.Fragment>
                     );
                   })}
-                </Flex>
+                </div>
               </React.Fragment>
             );
           })}
           {Object.keys(props.doc.sidebar.categories).length === 0 ? (
             <>
-              <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
-                Chapters
-              </Heading>
+              <UI.Heading size="2">Chapters</UI.Heading>
             </>
           ) : (
             <></>
@@ -332,18 +351,18 @@ export function ResourceRoute(props: {
             const isCurrent = itemPatname === props.pathname || isFirstPage;
 
             return (
-              <Flex key={item.id} direction="column">
+              <div key={item.id} className="flex flex-col">
                 {renderLink({
                   isCurrent: isCurrent,
                   href: itemPatname,
                   title: item.title,
                 })}
                 {isCurrent && renderToc()}
-              </Flex>
+              </div>
             );
           })}
-        </Box>
-      </Flex>
+        </UI.Card>
+      </div>
     );
   }
 
@@ -365,7 +384,7 @@ export function ResourceRoute(props: {
     const locale = props.resource.data._locale || "en";
 
     return (
-      <Select.Root
+      <UI.Select.Root
         value={locale}
         size={"2"}
         onValueChange={(newLocale) => {
@@ -378,19 +397,23 @@ export function ResourceRoute(props: {
           });
         }}
       >
-        <Select.Trigger className="w-full" variant="surface">
+        <UI.Select.Trigger
+          className="w-full bg-(--color-panel)"
+          variant="soft"
+          color="gray"
+        >
           {codeToWord[locale]}
-        </Select.Trigger>
-        <Select.Content>
+        </UI.Select.Trigger>
+        <UI.Select.Content>
           {props.locales.map((locale) => {
             return (
-              <Select.Item key={locale} value={locale}>
+              <UI.Select.Item key={locale} value={locale}>
                 {codeToWord[locale] || locale}
-              </Select.Item>
+              </UI.Select.Item>
             );
           })}
-        </Select.Content>
-      </Select.Root>
+        </UI.Select.Content>
+      </UI.Select.Root>
     );
   }
 
@@ -432,7 +455,7 @@ export function ResourceRoute(props: {
 
     return (
       <>
-        <Link
+        <UI.Link
           href={p.href}
           style={
             {
@@ -443,7 +466,7 @@ export function ResourceRoute(props: {
             setMobileMenuOpen(false);
           }}
         >
-          <Flex
+          <div
             className={clsx(
               "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item) py-[.25rem] hover:border-l-(--border-current)",
               {
@@ -464,15 +487,15 @@ export function ResourceRoute(props: {
               } as React.CSSProperties
             }
           >
-            <Text
+            <UI.Text
               className={clsx({ "font-bold": p.isCurrent })}
               size="2"
               truncate
             >
               {p.title}
-            </Text>
-          </Flex>
-        </Link>
+            </UI.Text>
+          </div>
+        </UI.Link>
       </>
     );
   }

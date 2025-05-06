@@ -1,10 +1,8 @@
-import { Text } from "@radix-ui/themes";
-import clsx from "clsx";
+import { UI } from "../../../../../components/ui/ui";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
-  fullWidth: z.boolean().optional(),
   children: z.any().optional(),
 });
 
@@ -18,15 +16,8 @@ export function MDXLabel(p: Props) {
   });
 
   return (
-    <Text
-      data-mdx-type="label"
-      size={"5"}
-      weight={"bold"}
-      className={clsx("text-(--accent-11)", {
-        "w-full": props.fullWidth,
-      })}
-    >
+    <UI.Text data-mdx-type="label" as="label">
       {props.children}
-    </Text>
+    </UI.Text>
   );
 }

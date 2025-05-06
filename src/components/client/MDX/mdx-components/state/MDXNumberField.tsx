@@ -1,4 +1,3 @@
-import { Flex, TextField, Tooltip } from "@radix-ui/themes";
 import { useContext, useState } from "react";
 import { z } from "zod";
 import {
@@ -6,6 +5,7 @@ import {
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
+import { UI } from "../../../../ui/ui";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
 import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
@@ -34,7 +34,7 @@ export function MDXNumberField(p: Props) {
   });
 
   return (
-    <Flex
+    <UI.Flex
       gap="1"
       direction={"column"}
       className="w-full"
@@ -43,15 +43,15 @@ export function MDXNumberField(p: Props) {
       <ConditionalWrapper
         wrapWhen={!!props.tooltip}
         wrapper={(children) => (
-          <Tooltip content={props.tooltip}>{children}</Tooltip>
+          <UI.Tooltip content={props.tooltip}>{children}</UI.Tooltip>
         )}
       >
         {props.children && (
-          <Flex>
+          <UI.Flex>
             <MDXDetail>{props.children}</MDXDetail>
-          </Flex>
+          </UI.Flex>
         )}
-        <TextField.Root
+        <UI.TextField.Root
           size="3"
           color="gray"
           variant="soft"
@@ -69,10 +69,10 @@ export function MDXNumberField(p: Props) {
           max={props.max}
           placeholder="0"
           className="w-full text-center text-[1.25rem] [&>input]:indent-0 [&>input]:font-semibold"
-        ></TextField.Root>
+        ></UI.TextField.Root>
       </ConditionalWrapper>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </Flex>
+    </UI.Flex>
   );
 }

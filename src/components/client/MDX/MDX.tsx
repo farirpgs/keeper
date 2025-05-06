@@ -1,16 +1,6 @@
-import {
-  Blockquote,
-  Card,
-  Em,
-  Heading,
-  Link,
-  Strong,
-  Table,
-  Text,
-  type HeadingProps,
-} from "@radix-ui/themes";
 import clsx from "clsx";
 import type React from "react";
+import { UI } from "../../ui/ui";
 import { getSurfaceStyle } from "../Surface/getSurfaceStyle";
 import { MDXCheckboxField } from "./mdx-components/state/MDXCheckboxField";
 import { MDXList } from "./mdx-components/state/MDXList";
@@ -64,16 +54,6 @@ export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
     h5: allowH1s ? "h5" : "h6",
     h6: allowH1s ? "h6" : "h6",
     Fields: Fields,
-    // add back links in h1-h6
-    // add back fancier block quotes
-    // add a container that removes all spacing for all sub children
-    // h1: allowH1s ? (MDXH1 as any) : (MDXH2 as any),
-    // h2: allowH1s ? (MDXH2 as any) : (MDXH3 as any),
-    // h3: allowH1s ? (MDXH3 as any) : (MDXH4 as any),
-    // h4: allowH1s ? (MDXH4 as any) : (MDXH5 as any),
-    // h5: allowH1s ? (MDXH5 as any) : (MDXH6 as any),
-    // h6: allowH1s ? (MDXH6 as any) : (MDXH6 as any),
-    // a: MDXA as any,
     blockquote: MDXBlockquote as any,
     Divider: MDXDivider as any,
     Row: MDXRow as any,
@@ -94,9 +74,9 @@ export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
   };
 }
 
-export function MDXH1(props: HeadingProps) {
+export function MDXH1(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h1"
       as="h1"
       size={{
@@ -104,11 +84,7 @@ export function MDXH1(props: HeadingProps) {
         sm: "9",
       }}
       {...props}
-      className={clsx(
-        "relative",
-        // 'mb-6 mt-8',
-        props.className,
-      )}
+      className={clsx("relative", props.className)}
     >
       {props.id ? (
         <>
@@ -117,13 +93,13 @@ export function MDXH1(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
-export function MDXH2(props: HeadingProps) {
+export function MDXH2(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h2"
       as="h2"
       size={{
@@ -140,13 +116,13 @@ export function MDXH2(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
-export function MDXH3(props: HeadingProps) {
+export function MDXH3(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h3"
       as="h3"
       size={{
@@ -163,13 +139,13 @@ export function MDXH3(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
-export function MDXH4(props: HeadingProps) {
+export function MDXH4(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h4"
       as="h4"
       size={{
@@ -186,13 +162,13 @@ export function MDXH4(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
-export function MDXH5(props: HeadingProps) {
+export function MDXH5(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h5"
       as="h5"
       size={{
@@ -209,13 +185,13 @@ export function MDXH5(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
-function MDXH6(props: HeadingProps) {
+function MDXH6(props: UI.HeadingProps) {
   return (
-    <Heading
+    <UI.Heading
       data-mdx-type="h6"
       as="h6"
       size={{
@@ -232,13 +208,13 @@ function MDXH6(props: HeadingProps) {
       ) : (
         <>{props.children}</>
       )}
-    </Heading>
+    </UI.Heading>
   );
 }
 
 function MDXA(props: any) {
   return (
-    <Link
+    <UI.Link
       data-mdx-type="a"
       weight={"medium"}
       underline="always"
@@ -250,7 +226,7 @@ function MDXA(props: any) {
 
 function MDXBlockquote(props: any) {
   return (
-    <Blockquote
+    <UI.Blockquote
       data-mdx-type="blockquote"
       style={{
         ...getSurfaceStyle(),
@@ -259,13 +235,13 @@ function MDXBlockquote(props: any) {
       {...props}
     >
       <MDXWrapper>{props.children}</MDXWrapper>
-    </Blockquote>
+    </UI.Blockquote>
   );
 }
 
 function MDXEm(props: any) {
   return (
-    <Em
+    <UI.Em
       data-mdx-type="em"
       {...props}
       className={clsx(props.className, TEXT_CLASSES)}
@@ -275,7 +251,7 @@ function MDXEm(props: any) {
 
 function MDXStrong(props: any) {
   return (
-    <Strong
+    <UI.Strong
       data-mdx-type="strong"
       {...props}
       className={clsx(props.className, TEXT_CLASSES)}
@@ -285,7 +261,7 @@ function MDXStrong(props: any) {
 
 function MDXPre(props: any) {
   return (
-    <Card>
+    <UI.Card>
       <pre
         data-mdx-type="pre"
         {...props}
@@ -296,7 +272,7 @@ function MDXPre(props: any) {
           "whitespace-pre-wrap",
         )}
       />
-    </Card>
+    </UI.Card>
   );
 }
 
@@ -342,7 +318,7 @@ function MDXCode(props: any) {
 
 export function MDXP(props: any) {
   return (
-    <Text
+    <UI.Text
       data-mdx-type="p"
       {...props}
       as="span"
@@ -353,25 +329,25 @@ export function MDXP(props: any) {
 }
 
 function MDXTable(props: any) {
-  return <Table.Root data-mdx-type="table" variant="surface" {...props} />;
+  return <UI.Table.Root data-mdx-type="table" variant="surface" {...props} />;
 }
 
 function MDXTHead(props: any) {
-  return <Table.Header data-mdx-type="thead" {...props} />;
+  return <UI.Table.Header data-mdx-type="thead" {...props} />;
 }
 
 function MDXTBody(props: any) {
-  return <Table.Body data-mdx-type="tbody" {...props} />;
+  return <UI.Table.Body data-mdx-type="tbody" {...props} />;
 }
 
 function MDXTr(props: any) {
-  return <Table.Row data-mdx-type="tr" {...props} />;
+  return <UI.Table.Row data-mdx-type="tr" {...props} />;
 }
 
 function MDXTh(props: any) {
-  return <Table.ColumnHeaderCell data-mdx-type="th" {...props} />;
+  return <UI.Table.ColumnHeaderCell data-mdx-type="th" {...props} />;
 }
 
 function MDXTd(props: any) {
-  return <Table.Cell data-mdx-type="td" {...props} />;
+  return <UI.Table.Cell data-mdx-type="td" {...props} />;
 }

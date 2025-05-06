@@ -1,13 +1,4 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import {
-  Box,
-  Callout,
-  Card,
-  Container,
-  Flex,
-  Link,
-  Theme,
-} from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { Smartphone } from "lucide-react";
 import {
@@ -17,6 +8,7 @@ import {
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
+import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
   CampaignContext,
@@ -44,11 +36,11 @@ export function PreviewGameAssetRoute(props: {
     : null;
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
+    <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <Card className="mx-auto max-w-[800px] p-6">
-          <Box className="hidden lg:block">{renderContent()}</Box>
-          <Box className="lg:hidden">
+        <UI.Card className="mx-auto max-w-[800px] p-6">
+          <UI.Box className="hidden lg:block">{renderContent()}</UI.Box>
+          <UI.Box className="lg:hidden">
             <NothingToShowHere
               icon={Smartphone}
               title={"Open on Desktop"}
@@ -59,27 +51,27 @@ export function PreviewGameAssetRoute(props: {
                 </>
               }
             ></NothingToShowHere>
-          </Box>
-        </Card>
+          </UI.Box>
+        </UI.Card>
       </CampaignContext.Provider>
-    </Theme>
+    </UI.Theme>
   );
 
   function renderContent() {
     return (
-      <Flex direction="column" gap="4">
-        <Callout.Root color="blue">
-          <Callout.Icon>
+      <UI.Flex direction="column" gap="4">
+        <UI.Callout.Root color="blue">
+          <UI.Callout.Icon>
             <InfoCircledIcon />
-          </Callout.Icon>
-          <Callout.Text>
+          </UI.Callout.Icon>
+          <UI.Callout.Text>
             This sheet is <b>read-only</b>. If you want to make changes, you can
             create a new campaign.
-          </Callout.Text>
-        </Callout.Root>
+          </UI.Callout.Text>
+        </UI.Callout.Root>
         <MDXH1>{props.currentAsset?.data.name}</MDXH1>
         <MDXH5 className="mt-[-0.5rem]">
-          <Link
+          <UI.Link
             href={AppUrl.game({
               id: props.game.id,
             })}
@@ -87,9 +79,9 @@ export function PreviewGameAssetRoute(props: {
             className="hover:text-(--accent-12)"
           >
             For {props.game.data.name}
-          </Link>
+          </UI.Link>
         </MDXH5>
-        <Container size={"1"}>
+        <UI.Container size={"1"}>
           {MDXContent && (
             <MDXSheetWrapper>
               <MDXContent
@@ -101,8 +93,8 @@ export function PreviewGameAssetRoute(props: {
               ></MDXContent>
             </MDXSheetWrapper>
           )}
-        </Container>
-      </Flex>
+        </UI.Container>
+      </UI.Flex>
     );
   }
 }

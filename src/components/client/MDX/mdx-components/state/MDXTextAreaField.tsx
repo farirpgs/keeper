@@ -1,10 +1,10 @@
-import { Flex, TextArea, Tooltip } from "@radix-ui/themes";
 import { useContext, useState } from "react";
 import { z } from "zod";
 import {
   CampaignContext,
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
+import { UI } from "../../../../ui/ui";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
 import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
@@ -29,7 +29,7 @@ export function MDXTextAreaField(p: Props) {
   });
 
   return (
-    <Flex
+    <UI.Flex
       data-mdx-type="text-area-field"
       gap="1"
       direction={"column"}
@@ -38,16 +38,16 @@ export function MDXTextAreaField(p: Props) {
       <ConditionalWrapper
         wrapWhen={!!props.tooltip}
         wrapper={(children) => (
-          <Tooltip content={props.tooltip}>{children}</Tooltip>
+          <UI.Tooltip content={props.tooltip}>{children}</UI.Tooltip>
         )}
       >
         {props.children && (
-          <Flex>
+          <UI.Flex>
             <MDXDetail>{props.children}</MDXDetail>
-          </Flex>
+          </UI.Flex>
         )}
 
-        <TextArea
+        <UI.TextArea
           size="3"
           variant="soft"
           color="gray"
@@ -70,6 +70,6 @@ export function MDXTextAreaField(p: Props) {
       </ConditionalWrapper>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </Flex>
+    </UI.Flex>
   );
 }

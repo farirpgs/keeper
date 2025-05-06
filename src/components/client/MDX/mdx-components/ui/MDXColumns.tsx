@@ -1,5 +1,5 @@
-import { Grid } from "@radix-ui/themes";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -17,13 +17,13 @@ export function MDXColumns(p: Props) {
   });
 
   return (
-    <Grid
+    <UI.Grid
       data-mdx-type="columns"
       columns={{ initial: "1", md: props.cols.toString() }}
       gap="4"
       width="auto"
     >
       {props.children}
-    </Grid>
+    </UI.Grid>
   );
 }

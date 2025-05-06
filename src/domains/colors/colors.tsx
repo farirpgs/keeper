@@ -26,7 +26,7 @@ import {
   violetDark,
   yellowDark,
 } from "@radix-ui/colors";
-import type { ThemeProps } from "@radix-ui/themes";
+import type { UI } from "../../components/ui/ui";
 
 export const Colors = {
   getAccentColors() {
@@ -69,7 +69,7 @@ const radixColors = [
   "orange",
 ] as const;
 
-export type ColorType = Required<ThemeProps>["accentColor"];
+export type ColorType = Required<UI.ThemeProps>["accentColor"];
 
 const radixDarkColors: Record<ColorType, any> = {
   gray: grayDark,

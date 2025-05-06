@@ -1,6 +1,6 @@
-import { Flex } from "@radix-ui/themes";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
+import { UI } from "../../../../ui/ui";
 
 const propsSchema = z.object({
   children: z.any().optional(),
@@ -20,8 +20,8 @@ export function MDXRow(p: Props) {
   });
 
   return (
-    <Flex data-mdx-type="row" gap="4" width={"100%"} align={props.align}>
+    <UI.Flex data-mdx-type="row" gap="4" width={"100%"} align={props.align}>
       {props.children}
-    </Flex>
+    </UI.Flex>
   );
 }

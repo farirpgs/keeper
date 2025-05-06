@@ -1,14 +1,13 @@
-import { Box, Button, Card, Flex, Link, Text, Theme } from "@radix-ui/themes";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import type { CollectionEntry } from "astro:content";
+import clsx from "clsx";
 import { MDXH1, MDXH4, MDXWrapper } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
+import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
   CampaignContext,
   useCampaign,
 } from "../../domains/campaign/useCampaign";
-
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
-import { AppUrl } from "../../domains/app-url/AppUrl";
 import type { ThemeType } from "../../domains/utils/getTheme";
 import { CreateNewCampaignButton } from "./components/CreateNewCampaignButton";
 
@@ -27,26 +26,26 @@ export function GameRoute(props: {
   });
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
+    <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <Flex direction="column" gap="9">
-          <Flex
+        <UI.Flex direction="column" gap="9">
+          <UI.Flex
             direction={{
               initial: "column-reverse",
               md: "row",
             }}
             gap="9"
           >
-            <Box
+            <UI.Box
               width={{
                 initial: "auto",
                 md: "60%",
               }}
             >
-              <Flex direction="column" gap="4">
+              <UI.Flex direction="column" gap="4">
                 <MDXH1 className="mt-0 mb-0">{props.game.data.name}</MDXH1>
                 <MDXH4 color="gray" className="mt-0 mb-0" size="6">
-                  <Link
+                  <UI.Link
                     href={AppUrl.creator({
                       id: props.creator.id,
                     })}
@@ -54,27 +53,27 @@ export function GameRoute(props: {
                     className="hover:text-(--accent-12)"
                   >
                     By {props.creator.data.name}
-                  </Link>
+                  </UI.Link>
                 </MDXH4>
 
                 <MDXWrapper>{props.children}</MDXWrapper>
-              </Flex>
-            </Box>
-            <Box
+              </UI.Flex>
+            </UI.Box>
+            <UI.Box
               width={{
                 initial: "auto",
                 md: "40%",
               }}
             >
-              <Box className={"sticky top-8 rounded-lg"}>
-                <Flex direction={"column"} gap="4">
-                  <Card>
-                    <Flex gap="4" direction="column">
+              <UI.Box className={"sticky top-8 rounded-lg"}>
+                <UI.Flex direction={"column"} gap="4">
+                  <UI.Card>
+                    <UI.Flex gap="4" direction="column">
                       {props.gameCover}
                       <CreateNewCampaignButton gameId={props.game.id} />
-                      <Card variant="surface">
-                        <Flex gap="4" direction={"column"}>
-                          <Text
+                      <UI.Card variant="surface">
+                        <UI.Flex gap="4" direction={"column"}>
+                          <UI.Text
                             size="4"
                             className={clsx(
                               "font-bold",
@@ -83,18 +82,18 @@ export function GameRoute(props: {
                             color="gray"
                           >
                             Include assets
-                          </Text>
+                          </UI.Text>
 
-                          <Flex
+                          <UI.Flex
                             gap="2"
                             direction="row"
                             justify={"center"}
                             wrap={"wrap"}
                           >
                             {props.assets.map((asset) => (
-                              <Box key={asset.id}>
+                              <UI.Box key={asset.id}>
                                 <a href={AppUrl.asset({ id: asset.id })}>
-                                  <Button
+                                  <UI.Button
                                     size="2"
                                     className={clsx(
                                       "font-bold",
@@ -105,21 +104,21 @@ export function GameRoute(props: {
                                   >
                                     <ExternalLinkIcon></ExternalLinkIcon>
                                     {asset.data.name}
-                                  </Button>
+                                  </UI.Button>
                                 </a>
-                              </Box>
+                              </UI.Box>
                             ))}
-                          </Flex>
-                        </Flex>
-                      </Card>
-                    </Flex>
-                  </Card>
-                </Flex>
-              </Box>
-            </Box>
-          </Flex>
-        </Flex>
+                          </UI.Flex>
+                        </UI.Flex>
+                      </UI.Card>
+                    </UI.Flex>
+                  </UI.Card>
+                </UI.Flex>
+              </UI.Box>
+            </UI.Box>
+          </UI.Flex>
+        </UI.Flex>
       </CampaignContext.Provider>
-    </Theme>
+    </UI.Theme>
   );
 }
