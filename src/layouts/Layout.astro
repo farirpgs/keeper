@@ -197,10 +197,10 @@ const ogImageUrl = props.withOgImage
         <Footer client:load ogImageUrl={ogImageUrl} theme={props.theme} />
         {
           import.meta.env.DEV && (
-            <UI.Box>
-              <UI.Box className="my-[10rem]">
+            <div>
+              <div class="my-[10rem]">
                 <MDXDivider />
-              </UI.Box>
+              </div>
               <MDXColumns>
                 <Debug
                   debug={{
@@ -213,7 +213,7 @@ const ogImageUrl = props.withOgImage
                   <img src={ogImageUrl} alt="open graph" class="h-max w-full" />
                 )}
               </MDXColumns>
-            </UI.Box>
+            </div>
           )
         }
       </UI.Container>

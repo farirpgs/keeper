@@ -34,32 +34,30 @@ export function MDXCheckboxField(p: Props) {
   return (
     <UI.Text data-mdx-type="text-field" as="label" size="2">
       <div className="flex gap-2">
-        <UI.Flex gap={2}>
-          <UI.Checkbox
-            name={name}
-            size="3"
-            checked={value}
-            onClick={(e) => {
+        <UI.Checkbox
+          name={name}
+          size="3"
+          checked={value}
+          onClick={(e) => {
+            if (campaignManager.readonly) {
+              return;
+            }
+            return setValue((prev) => !prev);
+          }}
+        />
+
+        {props.children && (
+          <span
+            onClick={() => {
               if (campaignManager.readonly) {
                 return;
               }
               return setValue((prev) => !prev);
             }}
-          />
-
-          {props.children && (
-            <span
-              onClick={() => {
-                if (campaignManager.readonly) {
-                  return;
-                }
-                return setValue((prev) => !prev);
-              }}
-            >
-              {props.children}
-            </span>
-          )}
-        </UI.Flex>
+          >
+            {props.children}
+          </span>
+        )}
 
         <CampaignState value={value} name={name} />
       </div>

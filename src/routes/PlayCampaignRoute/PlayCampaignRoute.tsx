@@ -42,9 +42,9 @@ export function PlayCampaignRoute(props: {
 
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
-      <UI.Flex gap="5" direction="column">
+      <div className="flex flex-col gap-5">
         <GameWarningBanner></GameWarningBanner>
-        <UI.Box className="hidden lg:block">
+        <div className="hidden lg:block">
           {id && (
             <Game
               id={id}
@@ -53,8 +53,8 @@ export function PlayCampaignRoute(props: {
               assets={props.assets}
             ></Game>
           )}
-        </UI.Box>
-        <UI.Box className="lg:hidden">
+        </div>
+        <div className="lg:hidden">
           <NothingToShowHere
             icon={Smartphone}
             title={"Open on Desktop"}
@@ -65,8 +65,8 @@ export function PlayCampaignRoute(props: {
               </>
             }
           ></NothingToShowHere>
-        </UI.Box>
-      </UI.Flex>
+        </div>
+      </div>
     </UI.Theme>
   );
 }
@@ -144,8 +144,8 @@ function Game(props: {
         }}
         ref={campaignManager.formRef}
       >
-        <UI.Flex direction={"column"} gap="4">
-          <UI.Flex direction="row" gap="4" align="center">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-row items-center gap-4">
             <UI.TextField.Root
               size="3"
               color="gray"
@@ -160,7 +160,7 @@ function Game(props: {
                 campaignManager.setCampaignName({ name: e.target.value });
               }}
             />
-            <UI.Flex direction="row" gap="2" align="center">
+            <div className="flex flex-row items-center gap-2">
               <UI.Tooltip
                 content={
                   <>
@@ -182,16 +182,14 @@ function Game(props: {
                   )}
                 </UI.Badge>
               </UI.Tooltip>
-            </UI.Flex>
-          </UI.Flex>
-          <UI.Flex direction="row" gap="9">
-            <UI.Flex
-              direction="column"
-              gap="4"
+            </div>
+          </div>
+          <div className="flex flex-row gap-9">
+            <div
+              className="flex max-w-[272px] min-w-[272px] flex-col gap-4 rounded-(--radius-2) p-4"
               style={{
                 ...getSurfaceStyle(),
               }}
-              className="max-w-[272px] min-w-[272px] rounded-(--radius-2) p-4"
             >
               <UI.Tabs.Root value={tab}>
                 <UI.Tabs.List size="2" justify={"center"}>
@@ -211,9 +209,9 @@ function Game(props: {
                   </UI.Tabs.Trigger>
                 </UI.Tabs.List>
 
-                <UI.Box pt="3" mt="2">
+                <div className="mt-2 pt-3">
                   <UI.Tabs.Content value="library">
-                    <UI.Flex direction="column" gap="2" px="2">
+                    <div className="flex flex-col gap-2 px-2">
                       {props.assets.map((asset, i) => {
                         const isAdding = addingAssetId === asset.id;
                         return (
@@ -238,10 +236,10 @@ function Game(props: {
                           </div>
                         );
                       })}
-                    </UI.Flex>
+                    </div>
                   </UI.Tabs.Content>
                   <UI.Tabs.Content value="assets">
-                    <UI.Flex direction="column" gap="2" px="2">
+                    <div className="flex flex-col gap-2 px-2">
                       {campaignAssetIds.length === 0 && (
                         <>
                           <NothingToShowHere
@@ -272,7 +270,7 @@ function Game(props: {
                         const assetName = campaignAssets[assetId].state["name"];
 
                         return (
-                          <UI.Flex key={assetId} gap="2">
+                          <div key={assetId} className="flex gap-2">
                             <UI.Button
                               size="2"
                               color={isSelected ? undefined : "gray"}
@@ -336,15 +334,15 @@ function Game(props: {
                                 </UI.DropdownMenu.Content>
                               </UI.DropdownMenu.Root>
                             </UI.Button>
-                          </UI.Flex>
+                          </div>
                         );
                       })}
-                    </UI.Flex>
+                    </div>
                   </UI.Tabs.Content>
-                </UI.Box>
+                </div>
               </UI.Tabs.Root>
-            </UI.Flex>
-            <UI.Flex direction="column" gap="4" flexGrow={"1"}>
+            </div>
+            <div className="flex flex-grow flex-col gap-4">
               <UI.Skeleton loading={campaignManager.loading} height={"60vh"}>
                 {selectedCampaignAsset ? (
                   <>
@@ -363,9 +361,9 @@ function Game(props: {
                   </>
                 )}
               </UI.Skeleton>
-            </UI.Flex>
-          </UI.Flex>
-        </UI.Flex>
+            </div>
+          </div>
+        </div>
       </form>
     </CampaignContext.Provider>
   );

@@ -37,27 +37,9 @@ export function HomeRoute(props: {
   function renderHeader() {
     return (
       <UI.Container size="4">
-        <UI.Flex
-          direction={{
-            initial: "column",
-            md: "row",
-          }}
-          gap="3"
-          className="my-3 lg:my-9"
-          align={"center"}
-        >
-          <UI.Box
-            width={{
-              initial: "100%",
-              md: "70%",
-            }}
-          >
-            <UI.Flex
-              align="start"
-              justify="center"
-              gap="4"
-              direction={"column"}
-            >
+        <div className="my-3 flex flex-col items-center gap-3 md:flex-row lg:my-9">
+          <div className="w-full md:w-[70%]">
+            <div className="flex flex-col items-start justify-center gap-4">
               <motion.div
                 initial={{ opacity: 0, filter: "blur(10px)" }}
                 animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -99,7 +81,7 @@ export function HomeRoute(props: {
                 animate={{ opacity: 1, filter: "blur(0px)" }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <UI.Flex gap="4" className="flex-col md:flex-row">
+                <div className="flex flex-col gap-4 md:flex-row">
                   <a href="#get-started">
                     <UI.Button size="4" radius="full" className="">
                       Get Started
@@ -115,22 +97,17 @@ export function HomeRoute(props: {
                       Search for content
                     </UI.Button>
                   </a>
-                </UI.Flex>
+                </div>
               </motion.div>
-            </UI.Flex>
-          </UI.Box>
-          <UI.Flex
-            width={"40%"}
-            justify="center"
-            align={"center"}
-            className="relative hidden md:flex"
-          >
+            </div>
+          </div>
+          <div className="relative hidden w-[40%] items-center justify-center md:flex">
             <motion.div
               initial={{ opacity: 0, filter: "blur(10px)" }}
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.5, delay: 0 }}
             >
-              <UI.Box
+              <div
                 className="animate-blur absolute z-[-1] hidden h-[calc(100%+4rem)] w-[calc(100%+4rem)] rounded-lg opacity-60 dark:block"
                 style={{
                   backgroundImage:
@@ -146,8 +123,8 @@ export function HomeRoute(props: {
                 className={"rounded-2xl"}
               />
             </motion.div>
-          </UI.Flex>
-        </UI.Flex>
+          </div>
+        </div>
       </UI.Container>
     );
   }
@@ -155,21 +132,14 @@ export function HomeRoute(props: {
   function renderResources() {
     return (
       <>
-        <UI.Box pt="4" id="get-started">
+        <div className="pt-4" id="get-started">
           <MDXH2>Resources</MDXH2>
           <UI.Text color="gray" size="3" mb="4">
             Explore list of free and open resources to use in your games or to
             use to make your own.
           </UI.Text>
-        </UI.Box>
-        <UI.Grid
-          columns={{
-            sm: "2",
-            md: "3",
-          }}
-          gap="6"
-          width="auto"
-        >
+        </div>
+        <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {props.topResources.map((item) => {
             return (
               <Card
@@ -205,7 +175,7 @@ export function HomeRoute(props: {
               </Card>
             );
           })}
-        </UI.Grid>
+        </div>
 
         <a
           href={AppUrl.search({
@@ -224,21 +194,14 @@ export function HomeRoute(props: {
   function renderGames() {
     return (
       <>
-        <UI.Flex pt="4" id="get-started" gap="2" direction="column">
+        <div className="flex flex-col gap-2 pt-4" id="get-started">
           <MDXH2>Games</MDXH2>
           <UI.Text color="gray" size="3" mb="4">
             Play free TTRPGs and campaigns made using templates from the
             community.
           </UI.Text>
-        </UI.Flex>
-        <UI.Grid
-          columns={{
-            sm: "2",
-            md: "3",
-          }}
-          gap="6"
-          width="auto"
-        >
+        </div>
+        <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {props.topGames.map((item) => {
             return (
               <Card
@@ -274,7 +237,7 @@ export function HomeRoute(props: {
               </Card>
             );
           })}
-        </UI.Grid>
+        </div>
         <a
           href={AppUrl.search({
             type: "games",

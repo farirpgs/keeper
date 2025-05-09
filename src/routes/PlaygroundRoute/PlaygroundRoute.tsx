@@ -41,7 +41,7 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
       <MDXH1>Asset Creation Playground</MDXH1>
-      <UI.Flex gap="7" direction="row">
+      <div className="flex flex-row gap-7">
         <div className="w-[30%]">
           <UI.TextArea
             className="f-full"
@@ -63,7 +63,7 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
             </MDXWrapper>
           </CampaignContext.Provider>
         </div>
-      </UI.Flex>
+      </div>
     </UI.Theme>
   );
 }

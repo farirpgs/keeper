@@ -41,7 +41,7 @@ export function CampaignsRoute(props: {
 
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
-      <UI.Flex gap="5" direction="column">
+      <div className="flex flex-col gap-5">
         <GameWarningBanner></GameWarningBanner>
         <MDXH1>My Campaigns</MDXH1>
         <UI.Skeleton loading={loading} className="h-[50vh]">
@@ -59,14 +59,7 @@ export function CampaignsRoute(props: {
                   }
                 />
               )}
-              <UI.Grid
-                columns={{
-                  sm: "2",
-                  md: "3",
-                }}
-                gap="6"
-                width="auto"
-              >
+              <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                 {campaignList?.map((campaign) => {
                   console.log("campaign", campaign);
 
@@ -81,11 +74,11 @@ export function CampaignsRoute(props: {
                     ></GameCard>
                   );
                 })}
-              </UI.Grid>
+              </div>
             </>
           )}
         </UI.Skeleton>
-      </UI.Flex>
+      </div>
     </UI.Theme>
   );
 }

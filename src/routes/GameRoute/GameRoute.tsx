@@ -28,21 +28,10 @@ export function GameRoute(props: {
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <UI.Flex direction="column" gap="9">
-          <UI.Flex
-            direction={{
-              initial: "column-reverse",
-              md: "row",
-            }}
-            gap="9"
-          >
-            <UI.Box
-              width={{
-                initial: "auto",
-                md: "60%",
-              }}
-            >
-              <UI.Flex direction="column" gap="4">
+        <div className="flex flex-col gap-9">
+          <div className="flex flex-col-reverse gap-9 md:flex-row">
+            <div className="w-full md:w-[60%]">
+              <div className="flex flex-col gap-4">
                 <MDXH1 className="mt-0 mb-0">{props.game.data.name}</MDXH1>
                 <MDXH4 color="gray" className="mt-0 mb-0" size="6">
                   <UI.Link
@@ -57,22 +46,17 @@ export function GameRoute(props: {
                 </MDXH4>
 
                 <MDXWrapper>{props.children}</MDXWrapper>
-              </UI.Flex>
-            </UI.Box>
-            <UI.Box
-              width={{
-                initial: "auto",
-                md: "40%",
-              }}
-            >
-              <UI.Box className={"sticky top-8 rounded-lg"}>
-                <UI.Flex direction={"column"} gap="4">
+              </div>
+            </div>
+            <div className="w-full md:w-[40%]">
+              <div className={"sticky top-8 rounded-lg"}>
+                <div className="flex flex-col gap-4">
                   <UI.Card>
-                    <UI.Flex gap="4" direction="column">
+                    <div className="flex flex-col gap-4">
                       {props.gameCover}
                       <CreateNewCampaignButton gameId={props.game.id} />
                       <UI.Card variant="surface">
-                        <UI.Flex gap="4" direction={"column"}>
+                        <div className="flex flex-col gap-4">
                           <UI.Text
                             size="4"
                             className={clsx(
@@ -84,14 +68,9 @@ export function GameRoute(props: {
                             Include assets
                           </UI.Text>
 
-                          <UI.Flex
-                            gap="2"
-                            direction="row"
-                            justify={"center"}
-                            wrap={"wrap"}
-                          >
+                          <div className="flex flex-row flex-wrap justify-center gap-2">
                             {props.assets.map((asset) => (
-                              <UI.Box key={asset.id}>
+                              <div key={asset.id}>
                                 <a href={AppUrl.asset({ id: asset.id })}>
                                   <UI.Button
                                     size="2"
@@ -106,18 +85,18 @@ export function GameRoute(props: {
                                     {asset.data.name}
                                   </UI.Button>
                                 </a>
-                              </UI.Box>
+                              </div>
                             ))}
-                          </UI.Flex>
-                        </UI.Flex>
+                          </div>
+                        </div>
                       </UI.Card>
-                    </UI.Flex>
+                    </div>
                   </UI.Card>
-                </UI.Flex>
-              </UI.Box>
-            </UI.Box>
-          </UI.Flex>
-        </UI.Flex>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </CampaignContext.Provider>
     </UI.Theme>
   );

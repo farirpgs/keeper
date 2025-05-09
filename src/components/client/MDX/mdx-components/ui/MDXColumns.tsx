@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -17,13 +16,11 @@ export function MDXColumns(p: Props) {
   });
 
   return (
-    <UI.Grid
+    <div
       data-mdx-type="columns"
-      columns={{ initial: "1", md: props.cols.toString() }}
-      gap="4"
-      width="auto"
+      className={`grid grid-cols-1 md:grid-cols-${props.cols} w-auto gap-4`}
     >
       {props.children}
-    </UI.Grid>
+    </div>
   );
 }

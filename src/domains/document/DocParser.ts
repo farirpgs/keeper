@@ -7,9 +7,9 @@ export class DocParser {
   #content: string;
   #pages: Array<IPageElement>;
   #indexes: Array<ISearchIndex>;
-  #currentPage: IPageElement | undefined;
-  #nextPage: IPageElement | undefined;
-  #previousPage: IPageElement | undefined;
+  #currentPage: IPageElement | null;
+  #nextPage: IPageElement | null;
+  #previousPage: IPageElement | null;
   #sidebar: ISidebar;
   #slugger = new GithubSlugger();
   constructor(
@@ -195,6 +195,7 @@ type IPageElement = {
   toc: Array<ITocElement>;
   indexes: Array<ISearchIndex>;
 };
+
 type ITocElement = {
   id: string;
   gitHubId: string;

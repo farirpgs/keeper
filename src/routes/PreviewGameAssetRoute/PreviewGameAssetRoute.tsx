@@ -39,8 +39,8 @@ export function PreviewGameAssetRoute(props: {
     <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
         <UI.Card className="mx-auto max-w-[800px] p-6">
-          <UI.Box className="hidden lg:block">{renderContent()}</UI.Box>
-          <UI.Box className="lg:hidden">
+          <div className="hidden lg:block">{renderContent()}</div>
+          <div className="lg:hidden">
             <NothingToShowHere
               icon={Smartphone}
               title={"Open on Desktop"}
@@ -51,7 +51,7 @@ export function PreviewGameAssetRoute(props: {
                 </>
               }
             ></NothingToShowHere>
-          </UI.Box>
+          </div>
         </UI.Card>
       </CampaignContext.Provider>
     </UI.Theme>
@@ -59,7 +59,7 @@ export function PreviewGameAssetRoute(props: {
 
   function renderContent() {
     return (
-      <UI.Flex direction="column" gap="4">
+      <div className="flex flex-col gap-4">
         <UI.Callout.Root color="blue">
           <UI.Callout.Icon>
             <InfoCircledIcon />
@@ -94,7 +94,7 @@ export function PreviewGameAssetRoute(props: {
             </MDXSheetWrapper>
           )}
         </UI.Container>
-      </UI.Flex>
+      </div>
     );
   }
 }

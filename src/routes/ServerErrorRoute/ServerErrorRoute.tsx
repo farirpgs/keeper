@@ -11,7 +11,7 @@ export function ServerErrorRoute(props: Props) {
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
       <UI.Container className="mx-auto max-w-3xl text-center">
-        <UI.Flex gap="5" direction="column">
+        <div className="flex flex-col gap-5">
           <MDXH1>Server Error</MDXH1>
 
           <MDXP>
@@ -28,14 +28,14 @@ export function ServerErrorRoute(props: Props) {
               : "Unknown error"}
           </div>
 
-          <UI.Flex align="center" justify={"center"}>
+          <div className="flex items-center justify-center">
             <UI.Link href="/">
               <UI.Button radius="full" size="4">
                 Go back home
               </UI.Button>
             </UI.Link>
-          </UI.Flex>
-        </UI.Flex>
+          </div>
+        </div>
       </UI.Container>
     </UI.Theme>
   );

@@ -3,8 +3,10 @@ import {
   GitHubLogoIcon,
   HamburgerMenuIcon,
 } from "@radix-ui/react-icons";
+import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
+import { Search } from "lucide-react";
 import React from "react";
 import { Card } from "../../components/client/AppCard/AppCard";
 import {
@@ -40,6 +42,54 @@ export function ResourceRoute(props: {
     id: "",
   });
 
+  const chapterSearchForm = useForm({
+    defaultValues: {
+      query: "",
+      debouncedQuery: "",
+      searchResults: null as Array<{ id: string; title: string }> | null,
+    },
+  });
+
+  function getSearchResults(params: { searchQuery: string | null }) {
+    const searchQuery = params.searchQuery;
+    if (!searchQuery) {
+      return null;
+    }
+    // Use the search index from props.doc.indexes
+    const matchingPageIds = new Set(
+      props.doc.indexes
+        .filter((idx) => {
+          const pageTitle = idx.pageTitle?.toLowerCase() || "";
+          const sectionTitle = idx.sectionTitle?.toLowerCase() || "";
+          return (
+            pageTitle.includes(searchQuery) ||
+            sectionTitle.includes(searchQuery)
+          );
+        })
+        .map((idx) => idx.pageId),
+    );
+    // Collect all matching chapters (from categories and root)
+    const allChapters: Array<{ id: string; title: string }> = [];
+    Object.values(props.doc.sidebar.categories).forEach((items) => {
+      items.forEach((item) => {
+        if (matchingPageIds.has(item.id)) {
+          allChapters.push(item);
+        }
+      });
+    });
+    props.doc.sidebar.root.forEach((item) => {
+      if (matchingPageIds.has(item.id)) {
+        allChapters.push(item);
+      }
+    });
+    // Remove duplicates by id
+    const uniqueChapters = Array.from(
+      new Map(allChapters.map((item) => [item.id, item])).values(),
+    );
+    // Set the search results and the debounced query
+    return uniqueChapters;
+  }
+
   const MDXContent = evaluateMdxSync({
     mdx: props.content || "",
   });
@@ -50,7 +100,7 @@ export function ResourceRoute(props: {
         <div className="flex gap-9">
           <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
             <div
-              className="sticky top-6 overflow-y-auto px-2 pb-[40vh]"
+              className="sticky top-6 overflow-y-scroll pb-[2rem]"
               style={{
                 maxHeight: "calc(100vh - 32px)",
               }}
@@ -151,24 +201,60 @@ export function ResourceRoute(props: {
                 : "flex-end",
         }}
       >
-        {props.doc.previousPage &&
-          renderNavCard({
-            title: props.doc.previousPage.title,
-            href: AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.previousPage.id,
-            }),
-            direction: "previous",
-          })}
-        {props.doc.nextPage &&
-          renderNavCard({
-            title: props.doc.nextPage.title,
-            href: AppUrl.resourcePage({
-              id: props.resource.id,
-              page: props.doc.nextPage.id,
-            }),
-            direction: "next",
-          })}
+        {props.doc.previousPage && (
+          <UI.Tooltip content={props.doc.previousPage.title}>
+            <UI.Link
+              className="w-full no-underline sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.previousPage.id,
+              })}
+              size="4"
+            >
+              <div
+                className="flex flex-col gap-2 rounded-md border p-4"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <UI.Text size="2" color="gray" className="">
+                  Previous
+                </UI.Text>
+
+                <UI.Text truncate>{props.doc.previousPage.title}</UI.Text>
+              </div>
+            </UI.Link>
+          </UI.Tooltip>
+        )}
+        {props.doc.nextPage && (
+          <UI.Tooltip content={props.doc.nextPage.title}>
+            <UI.Link
+              className="w-full no-underline sm:w-[33%]"
+              href={AppUrl.resourcePage({
+                id: props.resource.id,
+                page: props.doc.nextPage.id,
+              })}
+              size="4"
+            >
+              <div
+                className="flex flex-col gap-2 rounded-md border p-4 text-right"
+                style={
+                  {
+                    "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+                  } as React.CSSProperties
+                }
+              >
+                <UI.Text size="2" color="gray" className="">
+                  Next
+                </UI.Text>
+
+                <UI.Text truncate>{props.doc.nextPage.title}</UI.Text>
+              </div>
+            </UI.Link>
+          </UI.Tooltip>
+        )}
       </div>
     );
   }
@@ -259,16 +345,21 @@ export function ResourceRoute(props: {
             </UI.Link>
           </div>
 
-          <div>{renderLocalesDropdown()}</div>
+          <UI.Card variant="surface" className="after:block after:shadow-none">
+            <UI.Heading size="2" className="mb-2">
+              Locales
+            </UI.Heading>
+            {renderLocalesDropdown()}
+          </UI.Card>
           {props.resource.data.links && (
             <UI.Card
               variant="surface"
-              className="shadow-none after:block after:shadow-none"
+              className="after:block after:shadow-none"
             >
               {Object.keys(props.resource.data.links).length > 0 && (
                 <>
-                  <UI.Heading size="2" className="mb-2">
-                    Creator Links
+                  <UI.Heading size="3" className="mb-2">
+                    Links
                   </UI.Heading>
                   <div className="flex flex-col gap-1">
                     {Object.entries(props.resource.data.links).map(
@@ -303,64 +394,172 @@ export function ResourceRoute(props: {
           variant="surface"
           className="flex flex-col gap-2 shadow-none after:block after:shadow-none"
         >
-          {Object.keys(props.doc.sidebar.categories).map((category) => {
-            return (
-              <React.Fragment key={category}>
-                <UI.Heading size="2">{category}</UI.Heading>
-                <div className="flex flex-col">
-                  {props.doc.sidebar.categories[category].map((item) => {
-                    const itemPatname = AppUrl.resourcePage({
-                      id: props.resource.id,
-                      page: item.id,
-                    });
-                    const isFirstPage =
-                      !props.doc.previousPage &&
-                      props.doc.currentPage?.id === item.id;
-                    const isCurrent =
-                      itemPatname === props.pathname || isFirstPage;
+          <chapterSearchForm.Field
+            name="query"
+            validators={{
+              onChangeAsyncDebounceMs: 200,
+              onChangeAsync: () => {
+                chapterSearchForm.setFieldValue(
+                  "debouncedQuery",
+                  chapterSearchForm.getFieldValue("query"),
+                );
+              },
+            }}
+          >
+            {(field) => (
+              <UI.TextField.Root
+                variant="soft"
+                size="2"
+                className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
+                color="gray"
+                placeholder="Search chapters..."
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                autoComplete="off"
+              >
+                <UI.TextField.Slot>
+                  <Search height="16" width="16" />
+                </UI.TextField.Slot>
+              </UI.TextField.Root>
+            )}
+          </chapterSearchForm.Field>
 
-                    return (
-                      <React.Fragment key={item.id}>
-                        {renderLink({
-                          isCurrent,
-                          href: itemPatname,
-                          title: item.title,
+          <chapterSearchForm.Subscribe
+            selector={(s) => s.values.debouncedQuery}
+          >
+            {(debouncedQuery) => {
+              const searchResults = getSearchResults({
+                searchQuery: debouncedQuery,
+              });
+
+              return (
+                <>
+                  {searchResults ? (
+                    <>
+                      <UI.Heading size="3">Search Results</UI.Heading>
+                      {searchResults.length === 0 && (
+                        <UI.Text size="2" color="gray">
+                          No results found.
+                        </UI.Text>
+                      )}
+                      <div className="flex flex-col">
+                        {searchResults.map((item) => {
+                          const itemPatname = AppUrl.resourcePage({
+                            id: props.resource.id,
+                            page: item.id,
+                          });
+                          const isFirstPage =
+                            !props.doc.previousPage &&
+                            props.doc.currentPage?.id === item.id;
+                          const isCurrent =
+                            itemPatname === props.pathname || isFirstPage;
+                          // Find the page object for this item
+                          const page =
+                            props.doc.pages.find((p) => p.id === item.id) ||
+                            null;
+                          return (
+                            <div key={item.id} className="flex flex-col">
+                              {renderLink({
+                                isCurrent: isCurrent,
+                                href: itemPatname,
+                                title: item.title,
+                              })}
+                              {renderToc({
+                                page: page,
+                                query: debouncedQuery,
+                              })}
+                            </div>
+                          );
                         })}
-                        {isCurrent && renderToc()}
-                      </React.Fragment>
-                    );
-                  })}
-                </div>
-              </React.Fragment>
-            );
-          })}
-          {Object.keys(props.doc.sidebar.categories).length === 0 ? (
-            <>
-              <UI.Heading size="2">Chapters</UI.Heading>
-            </>
-          ) : (
-            <></>
-          )}
-          {props.doc.sidebar.root.map((item) => {
-            const itemPatname = AppUrl.resourcePage({
-              id: props.resource.id,
-              page: item.id,
-            });
-            const isFirstPage =
-              !props.doc.previousPage && props.doc.currentPage?.id === item.id;
-            const isCurrent = itemPatname === props.pathname || isFirstPage;
-
-            return (
-              <div key={item.id} className="flex flex-col">
-                {renderLink({
-                  isCurrent: isCurrent,
-                  href: itemPatname,
-                  title: item.title,
-                })}
-                {isCurrent && renderToc()}
-              </div>
-            );
-          })}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {Object.keys(props.doc.sidebar.categories).map(
+                        (category) => {
+                          const filteredCategoryItems =
+                            props.doc.sidebar.categories[category];
+                          if (
+                            !filteredCategoryItems ||
+                            filteredCategoryItems.length === 0
+                          )
+                            return null;
+                          return (
+                            <React.Fragment key={category}>
+                              <UI.Heading size="3">{category}</UI.Heading>
+                              <div className="flex flex-col">
+                                {filteredCategoryItems.map((item) => {
+                                  const itemPatname = AppUrl.resourcePage({
+                                    id: props.resource.id,
+                                    page: item.id,
+                                  });
+                                  const isFirstPage =
+                                    !props.doc.previousPage &&
+                                    props.doc.currentPage?.id === item.id;
+                                  const isCurrent =
+                                    itemPatname === props.pathname ||
+                                    isFirstPage;
+                                  return (
+                                    <React.Fragment key={item.id}>
+                                      {renderLink({
+                                        isCurrent,
+                                        href: itemPatname,
+                                        title: item.title,
+                                      })}
+                                      {isCurrent &&
+                                        renderToc({
+                                          page: props.doc.currentPage,
+                                          query: null,
+                                        })}
+                                    </React.Fragment>
+                                  );
+                                })}
+                              </div>
+                            </React.Fragment>
+                          );
+                        },
+                      )}
+                      {Object.keys(props.doc.sidebar.categories).length ===
+                        0 && (
+                        <>
+                          <UI.Heading size="3">Chapters</UI.Heading>
+                        </>
+                      )}
+                      {props.doc.sidebar.root.length > 0 && (
+                        <div className="flex flex-col">
+                          {props.doc.sidebar.root.map((item) => {
+                            const itemPatname = AppUrl.resourcePage({
+                              id: props.resource.id,
+                              page: item.id,
+                            });
+                            const isFirstPage =
+                              !props.doc.previousPage &&
+                              props.doc.currentPage?.id === item.id;
+                            const isCurrent =
+                              itemPatname === props.pathname || isFirstPage;
+                            return (
+                              <div key={item.id} className="flex flex-col">
+                                {renderLink({
+                                  isCurrent: isCurrent,
+                                  href: itemPatname,
+                                  title: item.title,
+                                })}
+                                {isCurrent &&
+                                  renderToc({
+                                    page: props.doc.currentPage,
+                                    query: null,
+                                  })}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              );
+            }}
+          </chapterSearchForm.Subscribe>
         </UI.Card>
       </div>
     );
@@ -399,7 +598,7 @@ export function ResourceRoute(props: {
       >
         <UI.Select.Trigger
           className="w-full bg-(--color-panel)"
-          variant="soft"
+          variant="surface"
           color="gray"
         >
           {codeToWord[locale]}
@@ -417,18 +616,49 @@ export function ResourceRoute(props: {
     );
   }
 
-  function renderToc() {
+  function renderToc(params: {
+    page: DocType["pages"][number] | null;
+    query: string | null;
+  }) {
+    const searchQuery = params?.query;
+
+    if (!params.page) {
+      return null;
+    }
+
+    const filteredToc = params.page.toc.filter((tocElement) => {
+      if (!searchQuery) {
+        return true;
+      }
+      const title = tocElement.title.toLowerCase();
+      return title.includes(searchQuery);
+    });
+
+    if (filteredToc.length === 0) {
+      return null;
+    }
+
     return (
       <>
-        {props.doc.currentPage?.toc.map((toc) => {
+        {filteredToc.map((tocElement) => {
+          let href = `#${tocElement.id}`;
+          if (searchQuery) {
+            href = AppUrl.resourcePage({
+              id: props.resource.id,
+              page: params.page!.id,
+              hash: tocElement.id,
+            });
+          }
           return (
-            <React.Fragment key={toc.id}>
+            <React.Fragment key={tocElement.id}>
               {renderLink({
-                href: `#${toc.id}`,
-                title: toc.title,
+                href: href,
+                title: tocElement.title,
+                // To prevent highlighting in search results
                 isCurrent: false,
-                isToc: true,
-                level: toc.level,
+                // To prevent highlighting in search results
+                isToc: false,
+                level: tocElement.level,
               })}
             </React.Fragment>
           );

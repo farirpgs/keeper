@@ -42,6 +42,7 @@
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "github-slugger": "^2.0.0",
+    "jscodeshift": "^17.3.0",
     "knip": "^5.46.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.487.0",

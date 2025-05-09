@@ -87,10 +87,10 @@ export function MDXRollingTable(p: Props) {
   }
 
   return (
-    <UI.Box mdx-type="rolling-table">
+    <div mdx-type="rolling-table">
       <UI.Card>
-        <UI.Flex direction={"column"} gap="2">
-          <UI.Flex gap="2" align="center">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
             <UI.IconButton
               variant="outline"
               loading={rolling}
@@ -101,9 +101,9 @@ export function MDXRollingTable(p: Props) {
               <Dices></Dices>
             </UI.IconButton>
             <MDXLabel>{props.name}</MDXLabel>{" "}
-          </UI.Flex>
+          </div>
           {rollHistory.length > 0 && (
-            <UI.Box>
+            <div>
               {maxRollHistory.map((item, index) => {
                 const isLatest = index === 0;
                 return (
@@ -122,14 +122,14 @@ export function MDXRollingTable(p: Props) {
                   </UI.Text>
                 );
               })}
-            </UI.Box>
+            </div>
           )}
           {rollHistory.length === 0 && (
             <UI.Text size="1">Click on the dice to roll on the table</UI.Text>
           )}
-        </UI.Flex>
+        </div>
       </UI.Card>
       <CampaignState name={name} value={rollHistory} />
-    </UI.Box>
+    </div>
   );
 }

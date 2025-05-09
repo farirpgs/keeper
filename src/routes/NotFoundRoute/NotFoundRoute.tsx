@@ -8,7 +8,7 @@ export function NotFoundRoute(props: { theme: ThemeType }) {
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
       <UI.Container className="mx-auto max-w-3xl text-center">
-        <UI.Flex gap="5" direction="column">
+        <div className="flex flex-col gap-5">
           <MDXH1>Page Not Found</MDXH1>
 
           <MDXP>
@@ -20,7 +20,7 @@ export function NotFoundRoute(props: { theme: ThemeType }) {
 
           <MDXP>We're here to help!</MDXP>
 
-          <UI.Flex align="center" justify={"center"}>
+          <div className="flex items-center justify-center">
             <a
               href={AppUrl.search({})}
               aria-label="Search"
@@ -31,8 +31,8 @@ export function NotFoundRoute(props: { theme: ThemeType }) {
                 <MagnifyingGlassIcon className="h-[24px] w-[24px]" />
               </UI.Button>
             </a>
-          </UI.Flex>
-        </UI.Flex>
+          </div>
+        </div>
       </UI.Container>
     </UI.Theme>
   );

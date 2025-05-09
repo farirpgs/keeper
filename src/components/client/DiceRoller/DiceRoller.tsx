@@ -271,7 +271,7 @@ export function DiceRoller(props: {
 
   function renderResults() {
     return (
-      <UI.Flex direction="row" gap="2" wrap={"wrap"} justify={"center"}>
+      <div className="flex flex-row flex-wrap justify-center gap-2">
         {results.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-2 text-center">
             <UI.Text color="gray" className="">
@@ -315,7 +315,7 @@ export function DiceRoller(props: {
             </UI.Button>
           );
         })}
-      </UI.Flex>
+      </div>
     );
   }
 
@@ -430,14 +430,8 @@ export function DiceRoller(props: {
     }
 
     return (
-      <UI.Box>
-        <UI.Flex
-          direction="row"
-          gap="3"
-          wrap={"wrap"}
-          justify={"center"}
-          align={"center"}
-        >
+      <div>
+        <div className="flex flex-row flex-wrap items-center justify-center gap-3">
           {filteredDiceCommands.map((diceCommand) => {
             const Icon = DiceIcons[diceCommand];
             return (
@@ -448,21 +442,21 @@ export function DiceRoller(props: {
                 className="h-auto py-3"
                 onClick={() => handleDiceClick(diceCommand)}
               >
-                <UI.Flex direction="column" gap="2" align="center">
+                <div className="flex flex-col items-center gap-2">
                   <Icon className="h-auto w-8"></Icon>
                   <UI.Text size="2">{DiceCommands[diceCommand].label}</UI.Text>
-                </UI.Flex>
+                </div>
               </UI.Button>
             );
           })}
-        </UI.Flex>
-      </UI.Box>
+        </div>
+      </div>
     );
   }
 
   function renderCloseButton() {
     return (
-      <UI.Flex gap="3" justify="end" className="absolute top-0 right-0">
+      <div className="absolute top-0 right-0 flex justify-end gap-3">
         <UI.Dialog.Close>
           <UI.Button
             variant="ghost"
@@ -475,7 +469,7 @@ export function DiceRoller(props: {
             <XIcon></XIcon>
           </UI.Button>
         </UI.Dialog.Close>
-      </UI.Flex>
+      </div>
     );
   }
 }

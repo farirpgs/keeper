@@ -130,7 +130,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
         }}
       </form.Subscribe>
 
-      <UI.Flex direction={{ initial: "column", sm: "row" }} gap="4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <form.Field
           name="query"
           validators={{
@@ -185,7 +185,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
             );
           }}
         </form.Field>
-      </UI.Flex>
+      </div>
 
       <UI.Skeleton loading={searching}>
         <MDXH2 color="gray">
@@ -193,14 +193,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
         </MDXH2>
       </UI.Skeleton>
       {searching && (
-        <UI.Grid
-          columns={{
-            sm: "2",
-            md: "3",
-          }}
-          gap="6"
-          width="auto"
-        >
+        <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {new Array(12).fill(1).map((_, index) => {
             return (
               <UI.Skeleton
@@ -209,16 +202,9 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
               />
             );
           })}
-        </UI.Grid>
+        </div>
       )}
-      <UI.Grid
-        columns={{
-          sm: "2",
-          md: "3",
-        }}
-        gap="6"
-        width="auto"
-      >
+      <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {results.map((item) => {
           return (
             <Card
@@ -255,7 +241,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
             </Card>
           );
         })}
-      </UI.Grid>
+      </div>
     </>
   );
 }

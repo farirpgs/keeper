@@ -38,15 +38,17 @@ export const AppUrl = {
   resourcePage(props: {
     id: CollectionEntry<"resources">["id"];
     page: string;
+    hash?: string;
   }) {
+    const hash = props.hash ? `#${props.hash}` : "";
     const [creatorSegment, resourceSegment, languageSegment] =
       props.id.split("/");
 
     const pageSegment = props.page ? `${props.page}/` : "";
     if (languageSegment) {
-      return `/resources/${creatorSegment}/${resourceSegment}.${languageSegment}/${pageSegment}`;
+      return `/resources/${creatorSegment}/${resourceSegment}.${languageSegment}/${pageSegment}${hash}`;
     }
-    return `/resources/${props.id}/${pageSegment}`;
+    return `/resources/${props.id}/${pageSegment}${hash}`;
   },
   asset(props: { id: CollectionEntry<"assets">["id"] }) {
     return `/games/${props.id}/`;

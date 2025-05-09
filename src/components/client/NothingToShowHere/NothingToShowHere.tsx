@@ -1,6 +1,6 @@
-import { UI } from "../../ui/ui";
 import { CircleOff } from "lucide-react";
 import type { JSX } from "react";
+import { UI } from "../../ui/ui";
 import { MDXH1 } from "../MDX/MDX";
 
 export function NothingToShowHere(props: {
@@ -10,7 +10,7 @@ export function NothingToShowHere(props: {
 }) {
   return (
     <UI.Container size="2">
-      <UI.Flex direction="column" gap="4" align="center">
+      <div className="flex flex-col items-center gap-4">
         {props.icon === true ? (
           <CircleOff className="h-12 w-12" />
         ) : props.icon ? (
@@ -18,7 +18,7 @@ export function NothingToShowHere(props: {
         ) : null}
         {props.title && <MDXH1>{props.title}</MDXH1>}
         <UI.Text>{props.description}</UI.Text>
-      </UI.Flex>
+      </div>
     </UI.Container>
   );
 }

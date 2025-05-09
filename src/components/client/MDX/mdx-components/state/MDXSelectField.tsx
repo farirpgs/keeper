@@ -30,12 +30,7 @@ export function MDXSelectField(p: Props) {
   });
 
   return (
-    <UI.Flex
-      data-mdx-type="select-field"
-      gap="1"
-      direction={"column"}
-      className="w-full"
-    >
+    <div className="flex w-full flex-col gap-1" data-mdx-type="select-field">
       <UI.Select.Root
         defaultValue={props.defaultValue}
         size="3"
@@ -55,9 +50,9 @@ export function MDXSelectField(p: Props) {
         >
           <>
             {props.children && (
-              <UI.Flex>
+              <div className="flex">
                 <MDXDetail>{props.children}</MDXDetail>
-              </UI.Flex>
+              </div>
             )}
             <UI.Select.Trigger
               variant="soft"
@@ -77,6 +72,6 @@ export function MDXSelectField(p: Props) {
       </UI.Select.Root>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </UI.Flex>
+    </div>
   );
 }

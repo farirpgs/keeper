@@ -35,7 +35,7 @@ export function Card(props: {
   }
 
   return (
-    <UI.Card variant="ghost" className="rounded-lg">
+    <UI.Card variant="ghost" className="rounded-2xl">
       <a
         style={{
           background: !props.accentColor
@@ -43,7 +43,7 @@ export function Card(props: {
             : `linear-gradient(45deg, ${firstColor} 0%, ${secondColor} 100%)`,
         }}
         className={clsx(
-          "relative block overflow-hidden rounded-lg transition-all",
+          "relative block overflow-hidden rounded-2xl transition-all",
           hover ? "brightness-[115%]" : "",
         )}
         href={props.href}
@@ -56,7 +56,7 @@ export function Card(props: {
             className={clsx([
               "[&>img]:h-full",
               "[&>img]:w-full",
-              "[&>img]:rounded-lg",
+              "[&>img]:rounded-2xl",
               "[&>img]:object-cover",
             ])}
           >

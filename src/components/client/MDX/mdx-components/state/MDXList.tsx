@@ -114,12 +114,7 @@ export function MDXList(p: Props) {
   }
 
   return (
-    <UI.Flex
-      data-mdx-type="list"
-      direction={"column"}
-      gap="2"
-      className="w-full"
-    >
+    <div className="flex w-full flex-col gap-2" data-mdx-type="list">
       {ids.map((id) => {
         const isFirst = id === ids[0];
         const isLast = id === ids[ids.length - 1];
@@ -185,6 +180,6 @@ export function MDXList(p: Props) {
           </ListContext.Provider>
         );
       })}
-    </UI.Flex>
+    </div>
   );
 }

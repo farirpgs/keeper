@@ -65,7 +65,7 @@ export function MDXTracker(p: Props) {
 
   return (
     <UI.Text data-mdx-type="text-field" as="label" size="2">
-      <UI.Flex gap="2" align={"center"}>
+      <div className="flex items-center gap-2">
         <UI.IconButton
           size="1"
           variant="ghost"
@@ -77,7 +77,7 @@ export function MDXTracker(p: Props) {
         </UI.IconButton>
         {values.map((value, i) => {
           return (
-            <UI.Box key={i}>
+            <div key={i}>
               <UI.IconButton
                 radius="full"
                 color="gray"
@@ -113,7 +113,7 @@ export function MDXTracker(p: Props) {
                   <CircleIcon width={"1.5rem"} height={"1.5rem"} />
                 )}
               </UI.IconButton>
-            </UI.Box>
+            </div>
           );
         })}
         <UI.IconButton
@@ -125,7 +125,7 @@ export function MDXTracker(p: Props) {
         >
           <PlusIcon></PlusIcon>
         </UI.IconButton>
-      </UI.Flex>
+      </div>
 
       <CampaignState name={name} value={values}></CampaignState>
     </UI.Text>

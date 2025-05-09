@@ -6,7 +6,6 @@ import {
   MDXWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
-import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import { type ColorType, Colors } from "../../domains/colors/colors";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
@@ -22,7 +21,7 @@ export function CreatorRoute(props: {
   });
 
   return (
-    <UI.Flex direction="column" gap="5">
+    <div className="flex flex-col gap-5">
       <MDXH1>{props.creator.data.name}</MDXH1>
 
       <MDXWrapper>
@@ -34,7 +33,7 @@ export function CreatorRoute(props: {
       </MDXWrapper>
       {renderResources()}
       {renderGames()}
-    </UI.Flex>
+    </div>
   );
 
   function renderResources() {
@@ -43,14 +42,7 @@ export function CreatorRoute(props: {
         {props.resources.length > 0 && (
           <>
             <MDXH2>Resources</MDXH2>
-            <UI.Grid
-              columns={{
-                sm: "2",
-                md: "3",
-              }}
-              gap="6"
-              width="auto"
-            >
+            <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {props.resources.map((resource) => (
                 <Card
                   key={resource.id}
@@ -82,7 +74,7 @@ export function CreatorRoute(props: {
                   )}
                 </Card>
               ))}
-            </UI.Grid>
+            </div>
           </>
         )}
       </>
@@ -95,14 +87,7 @@ export function CreatorRoute(props: {
         {props.games.length > 0 && (
           <>
             <MDXH2>Games</MDXH2>
-            <UI.Grid
-              columns={{
-                sm: "2",
-                lg: "3",
-              }}
-              gap="6"
-              width="auto"
-            >
+            <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {props.games.map((game) => (
                 <Card
                   key={game.id}
@@ -134,7 +119,7 @@ export function CreatorRoute(props: {
                   )}
                 </Card>
               ))}
-            </UI.Grid>
+            </div>
           </>
         )}
       </>

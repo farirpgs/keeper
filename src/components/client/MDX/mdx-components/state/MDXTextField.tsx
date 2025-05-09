@@ -27,12 +27,7 @@ export function MDXTextField(p: Props) {
   });
 
   return (
-    <UI.Flex
-      gap="1"
-      direction={"column"}
-      className="w-full"
-      data-mdx-type="text-field"
-    >
+    <div className="flex w-full flex-col gap-1" data-mdx-type="text-field">
       <ConditionalWrapper
         wrapWhen={!!props.tooltip}
         wrapper={(children) => (
@@ -40,9 +35,9 @@ export function MDXTextField(p: Props) {
         )}
       >
         {props.children && (
-          <UI.Flex>
+          <div className="flex">
             <MDXDetail>{props.children}</MDXDetail>
-          </UI.Flex>
+          </div>
         )}
         <UI.TextField.Root
           size="3"
@@ -65,7 +60,7 @@ export function MDXTextField(p: Props) {
       </ConditionalWrapper>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </UI.Flex>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -16,8 +15,8 @@ export function MDXStack(p: Props) {
   });
 
   return (
-    <UI.Flex data-mdx-type="stack" direction="column" gap="4">
+    <div data-mdx-type="stack" className="flex flex-col gap-4">
       {props.children}
-    </UI.Flex>
+    </div>
   );
 }

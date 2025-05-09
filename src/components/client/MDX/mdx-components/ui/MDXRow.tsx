@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
-import { UI } from "../../../../ui/ui";
 
 const propsSchema = z.object({
   children: z.any().optional(),
@@ -19,9 +18,10 @@ export function MDXRow(p: Props) {
     componentName: "MDXRow",
   });
 
+  const alignClass = `items-${props.align}`;
   return (
-    <UI.Flex data-mdx-type="row" gap="4" width={"100%"} align={props.align}>
+    <div data-mdx-type="row" className={`flex w-full gap-4 ${alignClass}`}>
       {props.children}
-    </UI.Flex>
+    </div>
   );
 }

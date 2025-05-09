@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -15,5 +14,5 @@ export function MDXBox(p: Props) {
     componentName: "MDXBox",
   });
 
-  return <UI.Box data-mdx-type="box">{props.children}</UI.Box>;
+  return <div data-mdx-type="box">{props.children}</div>;
 }
