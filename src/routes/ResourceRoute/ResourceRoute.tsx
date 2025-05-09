@@ -15,6 +15,7 @@ import {
   MDXH4,
   MDXWrapper,
 } from "../../components/client/MDX/MDX";
+import { Footer } from "../../components/server/Footer/Footer";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
@@ -100,14 +101,21 @@ export function ResourceRoute(props: {
         <div className="flex gap-9">
           <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
             <div
-              className="sticky top-6 overflow-y-scroll pb-[2rem]"
-              style={{
-                maxHeight: "calc(100vh - 32px)",
-              }}
+              className="sticky top-6"
+              style={{ maxHeight: "calc(100vh - 32px)" }}
             >
-              {renderSidebar({
-                withImage: true,
-              })}
+              <div className="relative h-full overflow-y-scroll pb-[10rem]">
+                {renderSidebar({
+                  withImage: true,
+                })}
+                {/* <div
+                  className="pointer-events-none absolute right-0 bottom-0 left-0 h-[10rem]"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--color-panel, #fff) 100%)",
+                  }}
+                /> */}
+              </div>
             </div>
           </div>
           <div className="block w-full">
@@ -129,6 +137,7 @@ export function ResourceRoute(props: {
               {renderPreviousAndNextButtons()}
               {renderEditButton()}
             </div>
+            <Footer></Footer>
           </div>
         </div>
         <UI.Dialog.Root
@@ -350,7 +359,7 @@ export function ResourceRoute(props: {
           </div>
 
           <UI.Card variant="surface">
-            <UI.Heading size="2" className="mb-2">
+            <UI.Heading size="3" className="mb-2">
               Locales
             </UI.Heading>
             {renderLocalesDropdown()}
