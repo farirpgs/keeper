@@ -97,3 +97,7 @@ html.dark {
 .dark .moon {
   display: block;
 }
+
+iframe {
+  max-width: 100%;
+}
