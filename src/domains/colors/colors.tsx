@@ -32,6 +32,12 @@ export const Colors = {
   getAccentColors() {
     return radixColors;
   },
+  getLightColor(
+    color: ColorType,
+    level: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,
+  ) {
+    return radixDarkColors[color][color + level];
+  },
   getDarkColor(
     color: ColorType,
     level: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12,

@@ -98,7 +98,7 @@ export function ResourceRoute(props: {
     <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
         <div className="flex gap-9">
-          <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
+          <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
             <div
               className="sticky top-6 overflow-y-scroll pb-[2rem]"
               style={{
@@ -137,25 +137,29 @@ export function ResourceRoute(props: {
             return setMobileMenuOpen(open);
           }}
         >
-          <div className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
-            <UI.Dialog.Trigger
-              onClick={() => {
-                return setMobileMenuOpen((prev) => !prev);
-              }}
-            >
-              <UI.IconButton
-                variant="solid"
-                size="4"
-                radius="full"
-                className="fixed right-4 bottom-4 h-[4rem] w-[4rem] lg:hidden"
-              >
-                <HamburgerMenuIcon
-                  width={"2rem"}
-                  height={"2rem"}
-                ></HamburgerMenuIcon>
-              </UI.IconButton>
-            </UI.Dialog.Trigger>
-          </div>
+          <UI.Portal>
+            <UI.Theme {...props.theme} hasBackground={false}>
+              <div className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
+                <UI.Dialog.Trigger
+                  onClick={() => {
+                    return setMobileMenuOpen((prev) => !prev);
+                  }}
+                >
+                  <UI.Button
+                    variant="solid"
+                    size="3"
+                    radius="full"
+                    color="gray"
+                    highContrast
+                    className="fixed right-4 bottom-4 lg:hidden"
+                  >
+                    <HamburgerMenuIcon width={"1.5rem"} height={"1.5rem"} />
+                    Chapters
+                  </UI.Button>
+                </UI.Dialog.Trigger>
+              </div>
+            </UI.Theme>
+          </UI.Portal>
 
           <UI.Dialog.Content size={"3"}>
             <div className="flex flex-col gap-3">
@@ -345,17 +349,14 @@ export function ResourceRoute(props: {
             </UI.Link>
           </div>
 
-          <UI.Card variant="surface" className="after:block after:shadow-none">
+          <UI.Card variant="surface">
             <UI.Heading size="2" className="mb-2">
               Locales
             </UI.Heading>
             {renderLocalesDropdown()}
           </UI.Card>
           {props.resource.data.links && (
-            <UI.Card
-              variant="surface"
-              className="after:block after:shadow-none"
-            >
+            <UI.Card variant="surface">
               {Object.keys(props.resource.data.links).length > 0 && (
                 <>
                   <UI.Heading size="3" className="mb-2">
@@ -390,144 +391,58 @@ export function ResourceRoute(props: {
           )}
         </div>
 
-        <UI.Card
-          variant="surface"
-          className="flex flex-col gap-2 shadow-none after:block after:shadow-none"
-        >
-          <chapterSearchForm.Field
-            name="query"
-            validators={{
-              onChangeAsyncDebounceMs: 200,
-              onChangeAsync: () => {
-                chapterSearchForm.setFieldValue(
-                  "debouncedQuery",
-                  chapterSearchForm.getFieldValue("query"),
-                );
-              },
-            }}
-          >
-            {(field) => (
-              <UI.TextField.Root
-                variant="soft"
-                size="2"
-                className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
-                color="gray"
-                placeholder="Search chapters..."
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-                autoComplete="off"
-              >
-                <UI.TextField.Slot>
-                  <Search height="16" width="16" />
-                </UI.TextField.Slot>
-              </UI.TextField.Root>
-            )}
-          </chapterSearchForm.Field>
+        <UI.Card variant="surface" className="">
+          <div className="flex flex-col gap-2">
+            <chapterSearchForm.Field
+              name="query"
+              validators={{
+                onChangeAsyncDebounceMs: 200,
+                onChangeAsync: () => {
+                  chapterSearchForm.setFieldValue(
+                    "debouncedQuery",
+                    chapterSearchForm.getFieldValue("query"),
+                  );
+                },
+              }}
+            >
+              {(field) => (
+                <UI.TextField.Root
+                  variant="soft"
+                  size="2"
+                  className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
+                  color="gray"
+                  placeholder="Search chapters..."
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="off"
+                >
+                  <UI.TextField.Slot>
+                    <Search height="16" width="16" />
+                  </UI.TextField.Slot>
+                </UI.TextField.Root>
+              )}
+            </chapterSearchForm.Field>
 
-          <chapterSearchForm.Subscribe
-            selector={(s) => s.values.debouncedQuery}
-          >
-            {(debouncedQuery) => {
-              const searchResults = getSearchResults({
-                searchQuery: debouncedQuery,
-              });
+            <chapterSearchForm.Subscribe
+              selector={(s) => s.values.debouncedQuery}
+            >
+              {(debouncedQuery) => {
+                const searchResults = getSearchResults({
+                  searchQuery: debouncedQuery,
+                });
 
-              return (
-                <>
-                  {searchResults ? (
-                    <>
-                      <UI.Heading size="3">Search Results</UI.Heading>
-                      {searchResults.length === 0 && (
-                        <UI.Text size="2" color="gray">
-                          No results found.
-                        </UI.Text>
-                      )}
-                      <div className="flex flex-col">
-                        {searchResults.map((item) => {
-                          const itemPatname = AppUrl.resourcePage({
-                            id: props.resource.id,
-                            page: item.id,
-                          });
-                          const isFirstPage =
-                            !props.doc.previousPage &&
-                            props.doc.currentPage?.id === item.id;
-                          const isCurrent =
-                            itemPatname === props.pathname || isFirstPage;
-                          // Find the page object for this item
-                          const page =
-                            props.doc.pages.find((p) => p.id === item.id) ||
-                            null;
-                          return (
-                            <div key={item.id} className="flex flex-col">
-                              {renderLink({
-                                isCurrent: isCurrent,
-                                href: itemPatname,
-                                title: item.title,
-                              })}
-                              {renderToc({
-                                page: page,
-                                query: debouncedQuery,
-                              })}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      {Object.keys(props.doc.sidebar.categories).map(
-                        (category) => {
-                          const filteredCategoryItems =
-                            props.doc.sidebar.categories[category];
-                          if (
-                            !filteredCategoryItems ||
-                            filteredCategoryItems.length === 0
-                          )
-                            return null;
-                          return (
-                            <React.Fragment key={category}>
-                              <UI.Heading size="3">{category}</UI.Heading>
-                              <div className="flex flex-col">
-                                {filteredCategoryItems.map((item) => {
-                                  const itemPatname = AppUrl.resourcePage({
-                                    id: props.resource.id,
-                                    page: item.id,
-                                  });
-                                  const isFirstPage =
-                                    !props.doc.previousPage &&
-                                    props.doc.currentPage?.id === item.id;
-                                  const isCurrent =
-                                    itemPatname === props.pathname ||
-                                    isFirstPage;
-                                  return (
-                                    <React.Fragment key={item.id}>
-                                      {renderLink({
-                                        isCurrent,
-                                        href: itemPatname,
-                                        title: item.title,
-                                      })}
-                                      {isCurrent &&
-                                        renderToc({
-                                          page: props.doc.currentPage,
-                                          query: null,
-                                        })}
-                                    </React.Fragment>
-                                  );
-                                })}
-                              </div>
-                            </React.Fragment>
-                          );
-                        },
-                      )}
-                      {Object.keys(props.doc.sidebar.categories).length ===
-                        0 && (
-                        <>
-                          <UI.Heading size="3">Chapters</UI.Heading>
-                        </>
-                      )}
-                      {props.doc.sidebar.root.length > 0 && (
+                return (
+                  <>
+                    {searchResults ? (
+                      <>
+                        <UI.Heading size="3">Search Results</UI.Heading>
+                        {searchResults.length === 0 && (
+                          <UI.Text size="2" color="gray">
+                            No results found.
+                          </UI.Text>
+                        )}
                         <div className="flex flex-col">
-                          {props.doc.sidebar.root.map((item) => {
+                          {searchResults.map((item) => {
                             const itemPatname = AppUrl.resourcePage({
                               id: props.resource.id,
                               page: item.id,
@@ -537,6 +452,10 @@ export function ResourceRoute(props: {
                               props.doc.currentPage?.id === item.id;
                             const isCurrent =
                               itemPatname === props.pathname || isFirstPage;
+                            // Find the page object for this item
+                            const page =
+                              props.doc.pages.find((p) => p.id === item.id) ||
+                              null;
                             return (
                               <div key={item.id} className="flex flex-col">
                                 {renderLink({
@@ -544,22 +463,103 @@ export function ResourceRoute(props: {
                                   href: itemPatname,
                                   title: item.title,
                                 })}
-                                {isCurrent &&
-                                  renderToc({
-                                    page: props.doc.currentPage,
-                                    query: null,
-                                  })}
+                                {renderToc({
+                                  page: page,
+                                  query: debouncedQuery,
+                                })}
                               </div>
                             );
                           })}
                         </div>
-                      )}
-                    </>
-                  )}
-                </>
-              );
-            }}
-          </chapterSearchForm.Subscribe>
+                      </>
+                    ) : (
+                      <>
+                        {Object.keys(props.doc.sidebar.categories).map(
+                          (category) => {
+                            const filteredCategoryItems =
+                              props.doc.sidebar.categories[category];
+                            if (
+                              !filteredCategoryItems ||
+                              filteredCategoryItems.length === 0
+                            )
+                              return null;
+                            return (
+                              <React.Fragment key={category}>
+                                <UI.Heading size="3">{category}</UI.Heading>
+                                <div className="flex flex-col">
+                                  {filteredCategoryItems.map((item) => {
+                                    const itemPatname = AppUrl.resourcePage({
+                                      id: props.resource.id,
+                                      page: item.id,
+                                    });
+                                    const isFirstPage =
+                                      !props.doc.previousPage &&
+                                      props.doc.currentPage?.id === item.id;
+                                    const isCurrent =
+                                      itemPatname === props.pathname ||
+                                      isFirstPage;
+                                    return (
+                                      <React.Fragment key={item.id}>
+                                        {renderLink({
+                                          isCurrent,
+                                          href: itemPatname,
+                                          title: item.title,
+                                        })}
+                                        {isCurrent &&
+                                          renderToc({
+                                            page: props.doc.currentPage,
+                                            query: null,
+                                          })}
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </div>
+                              </React.Fragment>
+                            );
+                          },
+                        )}
+                        {Object.keys(props.doc.sidebar.categories).length ===
+                          0 && (
+                          <>
+                            <UI.Heading size="3">Chapters</UI.Heading>
+                          </>
+                        )}
+                        {props.doc.sidebar.root.length > 0 && (
+                          <div className="flex flex-col">
+                            {props.doc.sidebar.root.map((item) => {
+                              const itemPatname = AppUrl.resourcePage({
+                                id: props.resource.id,
+                                page: item.id,
+                              });
+                              const isFirstPage =
+                                !props.doc.previousPage &&
+                                props.doc.currentPage?.id === item.id;
+                              const isCurrent =
+                                itemPatname === props.pathname || isFirstPage;
+                              return (
+                                <div key={item.id} className="flex flex-col">
+                                  {renderLink({
+                                    isCurrent: isCurrent,
+                                    href: itemPatname,
+                                    title: item.title,
+                                  })}
+                                  {isCurrent &&
+                                    renderToc({
+                                      page: props.doc.currentPage,
+                                      query: null,
+                                    })}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </>
+                );
+              }}
+            </chapterSearchForm.Subscribe>
+          </div>
         </UI.Card>
       </div>
     );
@@ -654,10 +654,10 @@ export function ResourceRoute(props: {
               {renderLink({
                 href: href,
                 title: tocElement.title,
-                // To prevent highlighting in search results
+                // Toc can't be current
                 isCurrent: false,
                 // To prevent highlighting in search results
-                isToc: false,
+                isToc: searchQuery ? false : true,
                 level: tocElement.level,
               })}
             </React.Fragment>
@@ -698,7 +698,7 @@ export function ResourceRoute(props: {
         >
           <div
             className={clsx(
-              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item) py-[.25rem] hover:border-l-(--border-current)",
+              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item-light) py-[.25rem] hover:border-l-(--border-current) dark:border-l-(--border-item-dark)",
               {
                 "m-[0px]": p.isCurrent,
               },
@@ -710,7 +710,11 @@ export function ResourceRoute(props: {
                   props.theme.accentColor,
                   9,
                 ),
-                "--border-item":
+                "--border-item-light":
+                  p.isCurrent || p.isToc
+                    ? Colors.getDarkColor(props.theme.accentColor, 9)
+                    : Colors.getDarkColor("gray", 11),
+                "--border-item-dark":
                   p.isCurrent || p.isToc
                     ? Colors.getDarkColor(props.theme.accentColor, 9)
                     : Colors.getDarkColor("gray", 7),
