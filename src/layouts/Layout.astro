@@ -1,11 +1,4 @@
 ---
-import {
-  Box,
-  Container,
-  Flex,
-  Theme,
-  type ContainerProps,
-} from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { ClientRouter, fade } from "astro:transitions";
 
@@ -21,17 +14,19 @@ import { DLAstro } from "../domains/dl/DLAstro";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import PostHog from "../components/server/PostHog/PostHog.astro";
 import "../styles/global.css";
+import { UI } from "../components/ui/ui";
 
 type Props = {
   title: Array<string> | undefined;
   description: string | undefined;
 
-  size?: ContainerProps["size"];
+  size?: UI.ContainerProps["size"];
 
-  maxWidth?: ContainerProps["maxWidth"];
+  maxWidth?: UI.ContainerProps["maxWidth"];
 
   withOgImage?: boolean;
   withDefaultBanner?: boolean;
+  withFooter?: boolean;
 
   headingFont?: string;
   bodyFont?: string;
@@ -60,7 +55,9 @@ const fontsAsString = [headingFont, bodyFont]
 const themeProps = getTheme({
   theme: props.theme,
 });
-
+const size: UI.ContainerProps["size"] = props.size || "4";
+const maxWidth: UI.ContainerProps["maxWidth"] = props.maxWidth || undefined;
+const withFooter = props.withFooter ?? true;
 const googleFontUrl =
   fontsAsString &&
   encodeURI(`https://fonts.googleapis.com/css2?${fontsAsString}&display=swap`);
@@ -154,7 +151,7 @@ const ogImageUrl = props.withOgImage
     <!-- Animation -->
     <ClientRouter />
   </head>
-  <Theme {...themeProps} className="pb-[10rem]">
+  <UI.Theme {...themeProps} className="">
     <body>
       <Header client:load theme={themeProps} pathname={Astro.url.pathname} />
 
@@ -170,59 +167,64 @@ const ogImageUrl = props.withOgImage
           <Banner src={songsAndSagas.game.data.image!} alt={"Background"} />
         )
       }
-      <Container
+      <UI.Container
         px={{
           initial: "6",
           md: "9",
         }}
-        size={props.size || "4"}
-        maxWidth={props.maxWidth || undefined}
+        size={size}
+        maxWidth={maxWidth}
       />
-      <Container
+      <UI.Container
         px={{
           initial: "6",
           md: "9",
         }}
-        size={props.size || "4"}
-        maxWidth={props.maxWidth || undefined}
+        size={size}
+        maxWidth={maxWidth}
       >
         <main>
           <div class="flex flex-col gap-5">
             <slot />
           </div>
-        </main>
-      </Container>
-      <Container
-        px={{
-          initial: "6",
-          md: "9",
-        }}
-        size={props.size || "4"}
-        maxWidth={props.maxWidth || undefined}
-      >
-        <Footer client:load ogImageUrl={ogImageUrl} theme={props.theme} />
-        {
-          import.meta.env.DEV && (
-            <Box>
-              <Box className="my-[10rem]">
-                <MDXDivider />
-              </Box>
-              <MDXColumns>
-                <Debug
-                  debug={{
-                    title,
-                    description,
-                    props,
-                  }}
+          {
+            withFooter && (
+              <>
+                <Footer
+                  client:load
+                  ogImageUrl={ogImageUrl}
+                  theme={themeProps}
+                  size={size}
+                  maxWidth={maxWidth}
                 />
-                {ogImageUrl && (
-                  <img src={ogImageUrl} alt="open graph" class="h-max w-full" />
+                {false && (
+                  <div>
+                    <div class="">
+                      <MDXDivider />
+                    </div>
+                    <MDXColumns>
+                      <Debug
+                        debug={{
+                          title,
+                          description,
+                          props,
+                        }}
+                      />
+                      {ogImageUrl && (
+                        <img
+                          src={ogImageUrl}
+                          alt="open graph"
+                          class="h-max w-full"
+                        />
+                      )}
+                    </MDXColumns>
+                  </div>
                 )}
-              </MDXColumns>
-            </Box>
-          )
-        }
-      </Container>
+              </>
+            )
+          }
+        </main>
+      </UI.Container>
 
       <PostHog />
     </body>
@@ -261,5 +263,5 @@ const ogImageUrl = props.withOgImage
         --cursor-switch: default;
       }
     </style>
-  </Theme>
+  </UI.Theme>
 </html>

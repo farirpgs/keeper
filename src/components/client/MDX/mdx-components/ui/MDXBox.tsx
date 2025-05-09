@@ -1,4 +1,3 @@
-import { Box } from "@radix-ui/themes";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
@@ -15,5 +14,5 @@ export function MDXBox(p: Props) {
     componentName: "MDXBox",
   });
 
-  return <Box data-mdx-type="box">{props.children}</Box>;
+  return <div data-mdx-type="box">{props.children}</div>;
 }

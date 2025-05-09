@@ -1,17 +1,7 @@
-import { Flex } from "@radix-ui/themes";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
-  align: z
-    .enum(["start", "center", "end", "baseline", "stretch"])
-    .optional()
-    .default("start"),
-  justify: z
-    .enum(["start", "center", "end", "between"])
-    .optional()
-    .default("start"),
-
   children: z.any().optional(),
 });
 
@@ -25,15 +15,8 @@ export function MDXStack(p: Props) {
   });
 
   return (
-    <Flex
-      data-mdx-type="stack"
-      direction={"column"}
-      gap="2"
-      width="100%"
-      align={props.align}
-      justify={props.justify}
-    >
+    <div data-mdx-type="stack" className="flex flex-col gap-4">
       {props.children}
-    </Flex>
+    </div>
   );
 }

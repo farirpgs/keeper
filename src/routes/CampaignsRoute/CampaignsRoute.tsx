@@ -1,15 +1,9 @@
-import {
-  DropdownMenu,
-  Flex,
-  Grid,
-  Link,
-  Skeleton,
-  Theme,
-} from "@radix-ui/themes";
+import { DropdownMenu } from "@radix-ui/themes";
 import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
-import { Card } from "../../components/client/Card/Card";
+import { Card } from "../../components/client/AppCard/AppCard";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
+import { UI } from "../../components/ui/ui";
 
 import { MDXH1 } from "../../components/client/MDX/MDX";
 import { GameWarningBanner } from "../../components/server/GameWarningBanner/GameWarningBanner";
@@ -46,11 +40,11 @@ export function CampaignsRoute(props: {
   }
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
-      <Flex gap="5" direction="column">
+    <UI.Theme {...props.theme} hasBackground={false}>
+      <div className="flex flex-col gap-5">
         <GameWarningBanner></GameWarningBanner>
         <MDXH1>My Campaigns</MDXH1>
-        <Skeleton loading={loading} className="h-[50vh]">
+        <UI.Skeleton loading={loading} className="h-[50vh]">
           {!loading && (
             <>
               {empty && (
@@ -59,20 +53,13 @@ export function CampaignsRoute(props: {
                   title={"You have no campaigns"}
                   description={
                     <>
-                      Go to the <Link href="/">homepage</Link> and pick one of
-                      the available games to get started.
+                      Go to the <UI.Link href="/">homepage</UI.Link> and pick
+                      one of the available games to get started.
                     </>
                   }
                 />
               )}
-              <Grid
-                columns={{
-                  sm: "2",
-                  md: "3",
-                }}
-                gap="6"
-                width="auto"
-              >
+              <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
                 {campaignList?.map((campaign) => {
                   console.log("campaign", campaign);
 
@@ -87,12 +74,12 @@ export function CampaignsRoute(props: {
                     ></GameCard>
                   );
                 })}
-              </Grid>
+              </div>
             </>
           )}
-        </Skeleton>
-      </Flex>
-    </Theme>
+        </UI.Skeleton>
+      </div>
+    </UI.Theme>
   );
 }
 
@@ -155,7 +142,7 @@ function GameCard(props: {
   console.log("loading", loading);
 
   return (
-    <Skeleton loading={loading}>
+    <UI.Skeleton loading={loading}>
       {!loading && (
         <>
           {!error && gameWithCreator ? (
@@ -198,6 +185,6 @@ function GameCard(props: {
           )}
         </>
       )}
-    </Skeleton>
+    </UI.Skeleton>
   );
 }

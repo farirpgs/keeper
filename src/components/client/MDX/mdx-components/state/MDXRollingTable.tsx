@@ -1,4 +1,3 @@
-import { Box, Card, Flex, IconButton, Text } from "@radix-ui/themes";
 import clsx from "clsx";
 import { Dices } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import {
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
 import { wait } from "../../../../../domains/utils/wait";
+import { UI } from "../../../../ui/ui";
 import { MDXLabel } from "../ui/MDXLabel";
 import { useName } from "./MDXList";
 
@@ -87,11 +87,11 @@ export function MDXRollingTable(p: Props) {
   }
 
   return (
-    <Box mdx-type="rolling-table">
-      <Card>
-        <Flex direction={"column"} gap="2">
-          <Flex gap="2" align="center">
-            <IconButton
+    <div mdx-type="rolling-table">
+      <UI.Card>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <UI.IconButton
               variant="outline"
               loading={rolling}
               onClick={() => {
@@ -99,15 +99,15 @@ export function MDXRollingTable(p: Props) {
               }}
             >
               <Dices></Dices>
-            </IconButton>
+            </UI.IconButton>
             <MDXLabel>{props.name}</MDXLabel>{" "}
-          </Flex>
+          </div>
           {rollHistory.length > 0 && (
-            <Box>
+            <div>
               {maxRollHistory.map((item, index) => {
                 const isLatest = index === 0;
                 return (
-                  <Text
+                  <UI.Text
                     as="div"
                     size="2"
                     key={index}
@@ -119,17 +119,17 @@ export function MDXRollingTable(p: Props) {
                     {index + 1}
                     {". "}
                     {item}
-                  </Text>
+                  </UI.Text>
                 );
               })}
-            </Box>
+            </div>
           )}
           {rollHistory.length === 0 && (
-            <Text size="1">Click on the dice to roll on the table</Text>
+            <UI.Text size="1">Click on the dice to roll on the table</UI.Text>
           )}
-        </Flex>
-      </Card>
+        </div>
+      </UI.Card>
       <CampaignState name={name} value={rollHistory} />
-    </Box>
+    </div>
   );
 }

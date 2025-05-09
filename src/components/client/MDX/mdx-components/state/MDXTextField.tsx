@@ -1,10 +1,10 @@
-import { Flex, TextField, Tooltip } from "@radix-ui/themes";
 import { useContext, useState } from "react";
 import { z } from "zod";
 import {
   CampaignContext,
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
+import { UI } from "../../../../ui/ui";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
 import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
@@ -27,24 +27,19 @@ export function MDXTextField(p: Props) {
   });
 
   return (
-    <Flex
-      gap="1"
-      direction={"column"}
-      className="w-full"
-      data-mdx-type="text-field"
-    >
+    <div className="flex w-full flex-col gap-1" data-mdx-type="text-field">
       <ConditionalWrapper
         wrapWhen={!!props.tooltip}
         wrapper={(children) => (
-          <Tooltip content={props.tooltip}>{children}</Tooltip>
+          <UI.Tooltip content={props.tooltip}>{children}</UI.Tooltip>
         )}
       >
         {props.children && (
-          <Flex>
+          <div className="flex">
             <MDXDetail>{props.children}</MDXDetail>
-          </Flex>
+          </div>
         )}
-        <TextField.Root
+        <UI.TextField.Root
           size="3"
           color="gray"
           variant="soft"
@@ -65,7 +60,7 @@ export function MDXTextField(p: Props) {
       </ConditionalWrapper>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </Flex>
+    </div>
   );
 }
 

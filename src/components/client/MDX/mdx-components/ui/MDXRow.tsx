@@ -1,4 +1,3 @@
-import { Flex } from "@radix-ui/themes";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
@@ -19,9 +18,10 @@ export function MDXRow(p: Props) {
     componentName: "MDXRow",
   });
 
+  const alignClass = `items-${props.align}`;
   return (
-    <Flex data-mdx-type="row" gap="4" width={"100%"} align={props.align}>
+    <div data-mdx-type="row" className={`flex w-full gap-4 ${alignClass}`}>
       {props.children}
-    </Flex>
+    </div>
   );
 }

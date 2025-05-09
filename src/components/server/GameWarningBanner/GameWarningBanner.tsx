@@ -1,19 +1,19 @@
 import { InfoCircledIcon } from "@radix-ui/react-icons";
-import { Callout, Link } from "@radix-ui/themes";
+import { UI } from "../../ui/ui";
 
 export function GameWarningBanner() {
   return (
     <>
-      <Callout.Root color="yellow">
-        <Callout.Icon>
+      <UI.Callout.Root color="yellow">
+        <UI.Callout.Icon>
           <InfoCircledIcon />
-        </Callout.Icon>
-        <Callout.Text>
+        </UI.Callout.Icon>
+        <UI.Callout.Text>
           Games, campaigns and the character keeper are currently alpha
           features. Please report any bugs or issues here on{" "}
-          <Link href="https://link.farirpgs.com/discord">Discord</Link>.
-        </Callout.Text>
-      </Callout.Root>
+          <UI.Link href="https://link.farirpgs.com/discord">Discord</UI.Link>.
+        </UI.Callout.Text>
+      </UI.Callout.Root>
     </>
   );
 }

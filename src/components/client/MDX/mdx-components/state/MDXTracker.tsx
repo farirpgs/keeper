@@ -1,5 +1,4 @@
 import { CircleIcon, MinusIcon, PlusIcon } from "@radix-ui/react-icons";
-import { Box, Flex, IconButton, Text } from "@radix-ui/themes";
 import clsx from "clsx";
 import { CircleCheckBig } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import {
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
+import { UI } from "../../../../ui/ui";
 import { useName } from "./MDXList";
 
 const propsSchema = z.object({
@@ -64,9 +64,9 @@ export function MDXTracker(p: Props) {
   }
 
   return (
-    <Text data-mdx-type="text-field" as="label" size="2">
-      <Flex gap="2" align={"center"}>
-        <IconButton
+    <UI.Text data-mdx-type="text-field" as="label" size="2">
+      <div className="flex items-center gap-2">
+        <UI.IconButton
           size="1"
           variant="ghost"
           color="gray"
@@ -74,11 +74,11 @@ export function MDXTracker(p: Props) {
           onClick={handleRemoveItem}
         >
           <MinusIcon></MinusIcon>
-        </IconButton>
+        </UI.IconButton>
         {values.map((value, i) => {
           return (
-            <Box key={i}>
-              <IconButton
+            <div key={i}>
+              <UI.IconButton
                 radius="full"
                 color="gray"
                 name={name + i.toString()}
@@ -112,11 +112,11 @@ export function MDXTracker(p: Props) {
                 ) : (
                   <CircleIcon width={"1.5rem"} height={"1.5rem"} />
                 )}
-              </IconButton>
-            </Box>
+              </UI.IconButton>
+            </div>
           );
         })}
-        <IconButton
+        <UI.IconButton
           size="1"
           variant="ghost"
           color="gray"
@@ -124,10 +124,10 @@ export function MDXTracker(p: Props) {
           onClick={handleAddItem}
         >
           <PlusIcon></PlusIcon>
-        </IconButton>
-      </Flex>
+        </UI.IconButton>
+      </div>
 
       <CampaignState name={name} value={values}></CampaignState>
-    </Text>
+    </UI.Text>
   );
 }

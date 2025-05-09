@@ -1,8 +1,8 @@
-import { Card, ContextMenu, Flex, Tooltip } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import { CampaignContext } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
+import { UI } from "../../../../ui/ui";
 import { MDXStack } from "../ui/MDXStack";
 
 const propsSchema = z.object({
@@ -114,7 +114,7 @@ export function MDXList(p: Props) {
   }
 
   return (
-    <Flex data-mdx-type="list" direction={"column"} gap="2" className="w-full">
+    <div className="flex w-full flex-col gap-2" data-mdx-type="list">
       {ids.map((id) => {
         const isFirst = id === ids[0];
         const isLast = id === ids[ids.length - 1];
@@ -129,57 +129,57 @@ export function MDXList(p: Props) {
             }}
             key={id}
           >
-            <ContextMenu.Root>
-              <Tooltip
+            <UI.ContextMenu.Root>
+              <UI.Tooltip
                 content={"Right click the card's background for options..."}
               >
-                <ContextMenu.Trigger>
-                  <Card size="2" className={"w-full"}>
-                    <Flex gap="4" align={"start"}>
+                <UI.ContextMenu.Trigger>
+                  <UI.Card size="2" className={"w-full"}>
+                    <div className="flex items-start gap-4">
                       <MDXStack>{props.children}</MDXStack>
-                      <ContextMenu.Content color="gray">
-                        <ContextMenu.Item onClick={() => handleAddBelow(id)}>
+                      <UI.ContextMenu.Content color="gray">
+                        <UI.ContextMenu.Item onClick={() => handleAddBelow(id)}>
                           Add Below
-                        </ContextMenu.Item>
+                        </UI.ContextMenu.Item>
                         {shouldRenderMoveButtons && (
                           <>
-                            <ContextMenu.Separator />
+                            <UI.ContextMenu.Separator />
                             {!isFirst && (
-                              <ContextMenu.Item
+                              <UI.ContextMenu.Item
                                 onClick={() => handleMoveUp(id)}
                               >
                                 Move Up
-                              </ContextMenu.Item>
+                              </UI.ContextMenu.Item>
                             )}
                             {!isLast && (
-                              <ContextMenu.Item
+                              <UI.ContextMenu.Item
                                 onClick={() => handleMoveDown(id)}
                               >
                                 Move Down
-                              </ContextMenu.Item>
+                              </UI.ContextMenu.Item>
                             )}
                           </>
                         )}
                         {shouldRenderDeleteButton && (
                           <>
-                            <ContextMenu.Separator />
-                            <ContextMenu.Item
+                            <UI.ContextMenu.Separator />
+                            <UI.ContextMenu.Item
                               color="red"
                               onClick={() => handleDelete(id)}
                             >
                               Delete
-                            </ContextMenu.Item>
+                            </UI.ContextMenu.Item>
                           </>
                         )}
-                      </ContextMenu.Content>
-                    </Flex>
-                  </Card>
-                </ContextMenu.Trigger>
-              </Tooltip>
-            </ContextMenu.Root>
+                      </UI.ContextMenu.Content>
+                    </div>
+                  </UI.Card>
+                </UI.ContextMenu.Trigger>
+              </UI.Tooltip>
+            </UI.ContextMenu.Root>
           </ListContext.Provider>
         );
       })}
-    </Flex>
+    </div>
   );
 }

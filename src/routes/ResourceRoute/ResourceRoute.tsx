@@ -1,27 +1,22 @@
-import { GitHubLogoIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import {
-  Box,
-  Button,
-  Dialog,
-  Flex,
-  Heading,
-  IconButton,
-  Inset,
-  Link,
-  Select,
-  Text,
-  Theme,
-  Tooltip,
-} from "@radix-ui/themes";
+  ExternalLinkIcon,
+  GitHubLogoIcon,
+  HamburgerMenuIcon,
+} from "@radix-ui/react-icons";
+import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
+import { Search } from "lucide-react";
 import React from "react";
+import { Card } from "../../components/client/AppCard/AppCard";
 import {
   getMdxComponents,
   MDXH1,
   MDXH4,
   MDXWrapper,
 } from "../../components/client/MDX/MDX";
+import { Footer } from "../../components/server/Footer/Footer";
+import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
   CampaignContext,
@@ -48,25 +43,80 @@ export function ResourceRoute(props: {
     id: "",
   });
 
+  const chapterSearchForm = useForm({
+    defaultValues: {
+      query: "",
+      debouncedQuery: "",
+      searchResults: null as Array<{ id: string; title: string }> | null,
+    },
+  });
+
+  function getSearchResults(params: { searchQuery: string | null }) {
+    const searchQuery = params.searchQuery;
+    if (!searchQuery) {
+      return null;
+    }
+    // Use the search index from props.doc.indexes
+    const matchingPageIds = new Set(
+      props.doc.indexes
+        .filter((idx) => {
+          const pageTitle = idx.pageTitle?.toLowerCase() || "";
+          const sectionTitle = idx.sectionTitle?.toLowerCase() || "";
+          return (
+            pageTitle.includes(searchQuery) ||
+            sectionTitle.includes(searchQuery)
+          );
+        })
+        .map((idx) => idx.pageId),
+    );
+    // Collect all matching chapters (from categories and root)
+    const allChapters: Array<{ id: string; title: string }> = [];
+    Object.values(props.doc.sidebar.categories).forEach((items) => {
+      items.forEach((item) => {
+        if (matchingPageIds.has(item.id)) {
+          allChapters.push(item);
+        }
+      });
+    });
+    props.doc.sidebar.root.forEach((item) => {
+      if (matchingPageIds.has(item.id)) {
+        allChapters.push(item);
+      }
+    });
+    // Remove duplicates by id
+    const uniqueChapters = Array.from(
+      new Map(allChapters.map((item) => [item.id, item])).values(),
+    );
+    // Set the search results and the debounced query
+    return uniqueChapters;
+  }
+
   const MDXContent = evaluateMdxSync({
     mdx: props.content || "",
   });
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
+    <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
         <div className="flex gap-9">
-          <div className="hidden flex-shrink-0 flex-grow basis-[300px] lg:flex">
-            <Box
-              className="sticky top-6 overflow-y-auto px-2 pb-9"
-              style={{
-                maxHeight: "calc(100vh - 32px)",
-              }}
+          <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
+            <div
+              className="sticky top-6"
+              style={{ maxHeight: "calc(100vh - 32px)" }}
             >
-              {renderSidebar({
-                withImage: true,
-              })}
-            </Box>
+              <div className="relative h-full overflow-y-scroll pb-[10rem]">
+                {renderSidebar({
+                  withImage: true,
+                })}
+                {/* <div
+                  className="pointer-events-none absolute right-0 bottom-0 left-0 h-[10rem]"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--color-panel, #fff) 100%)",
+                  }}
+                /> */}
+              </div>
+            </div>
           </div>
           <div className="block w-full">
             <div>
@@ -87,46 +137,53 @@ export function ResourceRoute(props: {
               {renderPreviousAndNextButtons()}
               {renderEditButton()}
             </div>
+            <Footer></Footer>
           </div>
         </div>
-        <Dialog.Root
+        <UI.Dialog.Root
           open={mobileMenuOpen}
           onOpenChange={(open) => {
             return setMobileMenuOpen(open);
           }}
         >
-          <Box className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
-            <Dialog.Trigger
-              onClick={() => {
-                return setMobileMenuOpen((prev) => !prev);
-              }}
-            >
-              <IconButton
-                variant="solid"
-                size="4"
-                radius="full"
-                className="fixed right-4 bottom-4 h-[4rem] w-[4rem] lg:hidden"
-              >
-                <HamburgerMenuIcon
-                  width={"2rem"}
-                  height={"2rem"}
-                ></HamburgerMenuIcon>
-              </IconButton>
-            </Dialog.Trigger>
-          </Box>
+          <UI.Portal>
+            <UI.Theme {...props.theme} hasBackground={false}>
+              <div className="fixed right-0 bottom-0 left-0 w-full bg-black lg:hidden">
+                <UI.Dialog.Trigger
+                  onClick={() => {
+                    return setMobileMenuOpen((prev) => !prev);
+                  }}
+                >
+                  <UI.Button
+                    variant="solid"
+                    size="3"
+                    radius="full"
+                    color="gray"
+                    highContrast
+                    className="fixed right-4 bottom-4 lg:hidden"
+                  >
+                    <HamburgerMenuIcon width={"1.5rem"} height={"1.5rem"} />
+                    Chapters
+                  </UI.Button>
+                </UI.Dialog.Trigger>
+              </div>
+            </UI.Theme>
+          </UI.Portal>
 
-          <Dialog.Content size={"3"}>
-            <Flex gap={"3"} direction={"column"}>
-              <Dialog.Title className="hidden">Menu</Dialog.Title>
-              <Dialog.Description className="hidden">Menu</Dialog.Description>
-              <Box>
+          <UI.Dialog.Content size={"3"}>
+            <div className="flex flex-col gap-3">
+              <UI.Dialog.Title className="hidden">Menu</UI.Dialog.Title>
+              <UI.Dialog.Description className="hidden">
+                Menu
+              </UI.Dialog.Description>
+              <div>
                 {renderSidebar({
                   withImage: false,
                 })}
-              </Box>
-              <Flex justify="end">
-                <Dialog.Close>
-                  <Button
+              </div>
+              <div className="flex justify-end">
+                <UI.Dialog.Close>
+                  <UI.Button
                     variant="soft"
                     color="gray"
                     onClick={() => {
@@ -134,33 +191,32 @@ export function ResourceRoute(props: {
                     }}
                   >
                     Close
-                  </Button>
-                </Dialog.Close>
-              </Flex>
-            </Flex>
-          </Dialog.Content>
-        </Dialog.Root>
+                  </UI.Button>
+                </UI.Dialog.Close>
+              </div>
+            </div>
+          </UI.Dialog.Content>
+        </UI.Dialog.Root>
       </CampaignContext.Provider>
-    </Theme>
+    </UI.Theme>
   );
 
   function renderPreviousAndNextButtons() {
     return (
-      <Flex
-        gap="3"
-        className="mt-[3rem]"
-        direction={{ initial: "column", sm: "row" }}
-        justify={
-          props.doc.previousPage && props.doc.nextPage
-            ? "between"
-            : props.doc.previousPage
-              ? "start"
-              : "end"
-        }
+      <div
+        className="mt-[3rem] flex flex-col gap-3 sm:flex-row"
+        style={{
+          justifyContent:
+            props.doc.previousPage && props.doc.nextPage
+              ? "space-between"
+              : props.doc.previousPage
+                ? "flex-start"
+                : "flex-end",
+        }}
       >
         {props.doc.previousPage && (
-          <Tooltip content={props.doc.previousPage.title}>
-            <Link
+          <UI.Tooltip content={props.doc.previousPage.title}>
+            <UI.Link
               className="w-full no-underline sm:w-[33%]"
               href={AppUrl.resourcePage({
                 id: props.resource.id,
@@ -168,28 +224,26 @@ export function ResourceRoute(props: {
               })}
               size="4"
             >
-              <Flex
-                gap="2"
-                direction="column"
-                className="rounded-md border border-(--border) p-4"
+              <div
+                className="flex flex-col gap-2 rounded-md border p-4"
                 style={
                   {
                     "--border": Colors.getDarkColor(props.theme.accentColor, 7),
                   } as React.CSSProperties
                 }
               >
-                <Text size="2" color="gray" className="">
+                <UI.Text size="2" color="gray" className="">
                   Previous
-                </Text>
+                </UI.Text>
 
-                <Text truncate>{props.doc.previousPage.title}</Text>
-              </Flex>
-            </Link>
-          </Tooltip>
+                <UI.Text truncate>{props.doc.previousPage.title}</UI.Text>
+              </div>
+            </UI.Link>
+          </UI.Tooltip>
         )}
         {props.doc.nextPage && (
-          <Tooltip content={props.doc.nextPage.title}>
-            <Link
+          <UI.Tooltip content={props.doc.nextPage.title}>
+            <UI.Link
               className="w-full no-underline sm:w-[33%]"
               href={AppUrl.resourcePage({
                 id: props.resource.id,
@@ -197,153 +251,326 @@ export function ResourceRoute(props: {
               })}
               size="4"
             >
-              <Flex
-                gap="2"
-                direction="column"
-                className="rounded-md border border-(--border) p-4 text-right"
+              <div
+                className="flex flex-col gap-2 rounded-md border p-4 text-right"
                 style={
                   {
                     "--border": Colors.getDarkColor(props.theme.accentColor, 7),
                   } as React.CSSProperties
                 }
               >
-                <Text size="2" color="gray" className="">
+                <UI.Text size="2" color="gray" className="">
                   Next
-                </Text>
+                </UI.Text>
 
-                <Text truncate>{props.doc.nextPage.title}</Text>
-              </Flex>
-            </Link>
-          </Tooltip>
+                <UI.Text truncate>{props.doc.nextPage.title}</UI.Text>
+              </div>
+            </UI.Link>
+          </UI.Tooltip>
         )}
-      </Flex>
+      </div>
+    );
+  }
+
+  function renderNavCard(params: {
+    title: string;
+    href: string;
+    direction: "previous" | "next";
+  }) {
+    return (
+      <Card title={params.title} href={params.href}>
+        <div
+          className={clsx(
+            "flex flex-col gap-2 rounded-md border border-(--border) p-4",
+            {
+              "text-right": params.direction === "next",
+            },
+          )}
+          style={
+            {
+              "--border": Colors.getDarkColor(props.theme.accentColor, 7),
+            } as React.CSSProperties
+          }
+        >
+          <UI.Text size="2" color="gray" className="">
+            {params.direction === "previous" ? "Previous" : "Next"}
+          </UI.Text>
+          <UI.Text truncate>{params.title}</UI.Text>
+        </div>
+      </Card>
     );
   }
 
   function renderEditButton() {
     return (
-      <Box mt="5">
-        <Flex justify={"end"}>
-          <Link
+      <div className="mt-5">
+        <div className="flex justify-end">
+          <UI.Link
             href={AppUrl.githubResource({
               id: props.resource.id,
               page: props.doc.currentPage?.gitHubId || "",
             })}
           >
-            <Button variant="ghost" color="gray" size="4" className="m-0">
+            <UI.Button variant="ghost" color="gray" size="4" className="m-0">
               <GitHubLogoIcon
                 width={"1.5rem"}
                 height={"1.5rem"}
               ></GitHubLogoIcon>
               Edit this page on GitHub
-            </Button>
-          </Link>
-        </Flex>
-      </Box>
+            </UI.Button>
+          </UI.Link>
+        </div>
+      </div>
     );
   }
 
   function renderSidebar(p: { withImage?: boolean }) {
     return (
-      <Flex direction="column" gap="3">
-        <Flex direction={"column"} gap="2">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           {props.image && p.withImage && (
-            <Box className="">
-              <Inset
+            <div className="">
+              <UI.Inset
                 clip="padding-box"
                 side="top"
                 pb="current"
                 className="rounded-md"
               >
                 {props.image}
-              </Inset>
-            </Box>
+              </UI.Inset>
+            </div>
           )}
 
-          <Box>
-            <Text size="5" weight={"bold"} className="mt-2 block">
+          <div>
+            <UI.Text size="5" weight={"bold"} className="mt-2 block">
               {props.resource.data.name}
-            </Text>
-            <Link
+            </UI.Text>
+            <UI.Link
               href={AppUrl.creator({
                 id: props.creator.id,
               })}
               color="gray"
               className="hover:text-(--accent-12)"
             >
-              <Text size={"3"} className="block">
+              <UI.Text size={"3"} className="block">
                 By {props.creator.data.name}
-              </Text>
-            </Link>
-          </Box>
-        </Flex>
-        <Box>{renderLocalesDropdown()}</Box>
+              </UI.Text>
+            </UI.Link>
+          </div>
 
-        <Box>
-          {Object.keys(props.doc.sidebar.categories).map((category) => {
-            return (
-              <React.Fragment key={category}>
-                <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
-                  {category}
-                </Heading>
-                <Flex direction="column">
-                  {props.doc.sidebar.categories[category].map((item) => {
-                    const itemPatname = AppUrl.resourcePage({
-                      id: props.resource.id,
-                      page: item.id,
-                    });
-                    const isFirstPage =
-                      !props.doc.previousPage &&
-                      props.doc.currentPage?.id === item.id;
-                    const isCurrent =
-                      itemPatname === props.pathname || isFirstPage;
-
-                    return (
-                      <React.Fragment key={item.id}>
-                        {renderLink({
-                          isCurrent,
-                          href: itemPatname,
-                          title: item.title,
-                        })}
-                        {isCurrent && renderToc()}
-                      </React.Fragment>
-                    );
-                  })}
-                </Flex>
-              </React.Fragment>
-            );
-          })}
-          {Object.keys(props.doc.sidebar.categories).length === 0 ? (
-            <>
-              <Heading size="2" className="mt-3 mb-2 uppercase" color="gray">
-                Chapters
-              </Heading>
-            </>
-          ) : (
-            <></>
+          <UI.Card variant="surface">
+            <UI.Heading size="3" className="mb-2">
+              Locales
+            </UI.Heading>
+            {renderLocalesDropdown()}
+          </UI.Card>
+          {props.resource.data.links && (
+            <UI.Card variant="surface">
+              {Object.keys(props.resource.data.links).length > 0 && (
+                <>
+                  <UI.Heading size="3" className="mb-2">
+                    Links
+                  </UI.Heading>
+                  <div className="flex flex-col gap-1">
+                    {Object.entries(props.resource.data.links).map(
+                      ([text, url]) => {
+                        if (!url) {
+                          return null;
+                        }
+                        return (
+                          <UI.Link
+                            key={text}
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 no-underline hover:text-(--accent-11)"
+                            color="gray"
+                            size="2"
+                          >
+                            <ExternalLinkIcon />
+                            <UI.Text truncate>{text}</UI.Text>
+                          </UI.Link>
+                        );
+                      },
+                    )}
+                  </div>
+                </>
+              )}
+            </UI.Card>
           )}
-          {props.doc.sidebar.root.map((item) => {
-            const itemPatname = AppUrl.resourcePage({
-              id: props.resource.id,
-              page: item.id,
-            });
-            const isFirstPage =
-              !props.doc.previousPage && props.doc.currentPage?.id === item.id;
-            const isCurrent = itemPatname === props.pathname || isFirstPage;
+        </div>
 
-            return (
-              <Flex key={item.id} direction="column">
-                {renderLink({
-                  isCurrent: isCurrent,
-                  href: itemPatname,
-                  title: item.title,
-                })}
-                {isCurrent && renderToc()}
-              </Flex>
-            );
-          })}
-        </Box>
-      </Flex>
+        <UI.Card variant="surface" className="">
+          <div className="flex flex-col gap-2">
+            <chapterSearchForm.Field
+              name="query"
+              validators={{
+                onChangeAsyncDebounceMs: 200,
+                onChangeAsync: () => {
+                  chapterSearchForm.setFieldValue(
+                    "debouncedQuery",
+                    chapterSearchForm.getFieldValue("query"),
+                  );
+                },
+              }}
+            >
+              {(field) => (
+                <UI.TextField.Root
+                  variant="soft"
+                  size="2"
+                  className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
+                  color="gray"
+                  placeholder="Search chapters..."
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  autoComplete="off"
+                >
+                  <UI.TextField.Slot>
+                    <Search height="16" width="16" />
+                  </UI.TextField.Slot>
+                </UI.TextField.Root>
+              )}
+            </chapterSearchForm.Field>
+
+            <chapterSearchForm.Subscribe
+              selector={(s) => s.values.debouncedQuery}
+            >
+              {(debouncedQuery) => {
+                const searchResults = getSearchResults({
+                  searchQuery: debouncedQuery,
+                });
+
+                return (
+                  <>
+                    {searchResults ? (
+                      <>
+                        <UI.Heading size="3">Search Results</UI.Heading>
+                        {searchResults.length === 0 && (
+                          <UI.Text size="2" color="gray">
+                            No results found.
+                          </UI.Text>
+                        )}
+                        <div className="flex flex-col">
+                          {searchResults.map((item) => {
+                            const itemPatname = AppUrl.resourcePage({
+                              id: props.resource.id,
+                              page: item.id,
+                            });
+                            const isFirstPage =
+                              !props.doc.previousPage &&
+                              props.doc.currentPage?.id === item.id;
+                            const isCurrent =
+                              itemPatname === props.pathname || isFirstPage;
+                            // Find the page object for this item
+                            const page =
+                              props.doc.pages.find((p) => p.id === item.id) ||
+                              null;
+                            return (
+                              <div key={item.id} className="flex flex-col">
+                                {renderLink({
+                                  isCurrent: isCurrent,
+                                  href: itemPatname,
+                                  title: item.title,
+                                })}
+                                {renderToc({
+                                  page: page,
+                                  query: debouncedQuery,
+                                })}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {Object.keys(props.doc.sidebar.categories).map(
+                          (category) => {
+                            const filteredCategoryItems =
+                              props.doc.sidebar.categories[category];
+                            if (
+                              !filteredCategoryItems ||
+                              filteredCategoryItems.length === 0
+                            )
+                              return null;
+                            return (
+                              <React.Fragment key={category}>
+                                <UI.Heading size="3">{category}</UI.Heading>
+                                <div className="flex flex-col">
+                                  {filteredCategoryItems.map((item) => {
+                                    const itemPatname = AppUrl.resourcePage({
+                                      id: props.resource.id,
+                                      page: item.id,
+                                    });
+                                    const isFirstPage =
+                                      !props.doc.previousPage &&
+                                      props.doc.currentPage?.id === item.id;
+                                    const isCurrent =
+                                      itemPatname === props.pathname ||
+                                      isFirstPage;
+                                    return (
+                                      <React.Fragment key={item.id}>
+                                        {renderLink({
+                                          isCurrent,
+                                          href: itemPatname,
+                                          title: item.title,
+                                        })}
+                                        {isCurrent &&
+                                          renderToc({
+                                            page: props.doc.currentPage,
+                                            query: null,
+                                          })}
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </div>
+                              </React.Fragment>
+                            );
+                          },
+                        )}
+                        {Object.keys(props.doc.sidebar.categories).length ===
+                          0 && (
+                          <>
+                            <UI.Heading size="3">Chapters</UI.Heading>
+                          </>
+                        )}
+                        {props.doc.sidebar.root.length > 0 && (
+                          <div className="flex flex-col">
+                            {props.doc.sidebar.root.map((item) => {
+                              const itemPatname = AppUrl.resourcePage({
+                                id: props.resource.id,
+                                page: item.id,
+                              });
+                              const isFirstPage =
+                                !props.doc.previousPage &&
+                                props.doc.currentPage?.id === item.id;
+                              const isCurrent =
+                                itemPatname === props.pathname || isFirstPage;
+                              return (
+                                <div key={item.id} className="flex flex-col">
+                                  {renderLink({
+                                    isCurrent: isCurrent,
+                                    href: itemPatname,
+                                    title: item.title,
+                                  })}
+                                  {isCurrent &&
+                                    renderToc({
+                                      page: props.doc.currentPage,
+                                      query: null,
+                                    })}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </>
+                );
+              }}
+            </chapterSearchForm.Subscribe>
+          </div>
+        </UI.Card>
+      </div>
     );
   }
 
@@ -365,7 +592,7 @@ export function ResourceRoute(props: {
     const locale = props.resource.data._locale || "en";
 
     return (
-      <Select.Root
+      <UI.Select.Root
         value={locale}
         size={"2"}
         onValueChange={(newLocale) => {
@@ -378,34 +605,69 @@ export function ResourceRoute(props: {
           });
         }}
       >
-        <Select.Trigger className="w-full" variant="surface">
+        <UI.Select.Trigger
+          className="w-full bg-(--color-panel)"
+          variant="surface"
+          color="gray"
+        >
           {codeToWord[locale]}
-        </Select.Trigger>
-        <Select.Content>
+        </UI.Select.Trigger>
+        <UI.Select.Content>
           {props.locales.map((locale) => {
             return (
-              <Select.Item key={locale} value={locale}>
+              <UI.Select.Item key={locale} value={locale}>
                 {codeToWord[locale] || locale}
-              </Select.Item>
+              </UI.Select.Item>
             );
           })}
-        </Select.Content>
-      </Select.Root>
+        </UI.Select.Content>
+      </UI.Select.Root>
     );
   }
 
-  function renderToc() {
+  function renderToc(params: {
+    page: DocType["pages"][number] | null;
+    query: string | null;
+  }) {
+    const searchQuery = params?.query;
+
+    if (!params.page) {
+      return null;
+    }
+
+    const filteredToc = params.page.toc.filter((tocElement) => {
+      if (!searchQuery) {
+        return true;
+      }
+      const title = tocElement.title.toLowerCase();
+      return title.includes(searchQuery);
+    });
+
+    if (filteredToc.length === 0) {
+      return null;
+    }
+
     return (
       <>
-        {props.doc.currentPage?.toc.map((toc) => {
+        {filteredToc.map((tocElement) => {
+          let href = `#${tocElement.id}`;
+          if (searchQuery) {
+            href = AppUrl.resourcePage({
+              id: props.resource.id,
+              page: params.page!.id,
+              hash: tocElement.id,
+            });
+          }
           return (
-            <React.Fragment key={toc.id}>
+            <React.Fragment key={tocElement.id}>
               {renderLink({
-                href: `#${toc.id}`,
-                title: toc.title,
+                href: href,
+                title: tocElement.title,
+                // Toc can't be current
                 isCurrent: false,
-                isToc: true,
-                level: toc.level,
+                // To prevent highlighting in search results
+                isToc: searchQuery ? false : true,
+                level: tocElement.level,
               })}
             </React.Fragment>
           );
@@ -432,7 +694,7 @@ export function ResourceRoute(props: {
 
     return (
       <>
-        <Link
+        <UI.Link
           href={p.href}
           style={
             {
@@ -443,9 +705,9 @@ export function ResourceRoute(props: {
             setMobileMenuOpen(false);
           }}
         >
-          <Flex
+          <div
             className={clsx(
-              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item) py-[.25rem] hover:border-l-(--border-current)",
+              "border-l-solid flex max-w-[300px] border-l-[2px] border-l-(--border-item-light) py-[.25rem] hover:border-l-(--border-current) dark:border-l-(--border-item-dark)",
               {
                 "m-[0px]": p.isCurrent,
               },
@@ -457,22 +719,26 @@ export function ResourceRoute(props: {
                   props.theme.accentColor,
                   9,
                 ),
-                "--border-item":
+                "--border-item-light":
+                  p.isCurrent || p.isToc
+                    ? Colors.getDarkColor(props.theme.accentColor, 9)
+                    : Colors.getDarkColor("gray", 11),
+                "--border-item-dark":
                   p.isCurrent || p.isToc
                     ? Colors.getDarkColor(props.theme.accentColor, 9)
                     : Colors.getDarkColor("gray", 7),
               } as React.CSSProperties
             }
           >
-            <Text
+            <UI.Text
               className={clsx({ "font-bold": p.isCurrent })}
               size="2"
               truncate
             >
               {p.title}
-            </Text>
-          </Flex>
-        </Link>
+            </UI.Text>
+          </div>
+        </UI.Link>
       </>
     );
   }

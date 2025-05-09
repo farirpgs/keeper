@@ -1,6 +1,6 @@
-import { VisuallyHidden } from "@radix-ui/themes";
 import isEqual from "lodash/isEqual";
 import { createContext, useEffect, useRef, useState } from "react";
+import { UI } from "../../components/ui/ui";
 import { DLStorage, schemas, type CampaignType } from "../dl/DLStorage";
 import { getLogger } from "../utils/getLogger";
 
@@ -236,8 +236,8 @@ export function CampaignState<T>(props: { name: string; value: T }) {
   const name = "__keeper." + props.name;
   const state = JSON.stringify({ value: props.value });
   return (
-    <VisuallyHidden>
+    <UI.VisuallyHidden>
       <input type="hidden" name={name} value={state} />;
-    </VisuallyHidden>
+    </UI.VisuallyHidden>
   );
 }

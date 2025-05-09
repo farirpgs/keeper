@@ -1,5 +1,5 @@
-import { Separator } from "@radix-ui/themes";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({});
@@ -14,6 +14,10 @@ export function MDXDivider(p: Props) {
   });
 
   return (
-    <Separator data-mdx-type="divider" size="4" className="my-4"></Separator>
+    <UI.Separator
+      data-mdx-type="divider"
+      size="4"
+      className="my-4"
+    ></UI.Separator>
   );
 }

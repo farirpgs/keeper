@@ -1,6 +1,6 @@
-import { Container, Flex, Text } from "@radix-ui/themes";
 import { CircleOff } from "lucide-react";
 import type { JSX } from "react";
+import { UI } from "../../ui/ui";
 import { MDXH1 } from "../MDX/MDX";
 
 export function NothingToShowHere(props: {
@@ -8,24 +8,17 @@ export function NothingToShowHere(props: {
   description: JSX.Element | string;
   icon?: true | undefined | React.ComponentType<any>;
 }) {
-  let Icon: React.ComponentType<any> | undefined;
-  if (props.icon === true) {
-    Icon = CircleOff;
-  } else {
-    Icon = props.icon;
-  }
-
   return (
-    <Container className="mx-auto max-w-[768px]">
-      <div className="py-[10vh]">
-        <Flex direction="column" gap="4" align="center">
-          {Icon && <Icon size="20vh" className="mb-[2rem]"></Icon>}
-          <MDXH1 as="h3" align={"center"} size="6">
-            {props.title}
-          </MDXH1>
-          <Text align={"center"}>{props.description}</Text>
-        </Flex>
+    <UI.Container size="2">
+      <div className="flex flex-col items-center gap-4">
+        {props.icon === true ? (
+          <CircleOff className="h-12 w-12" />
+        ) : props.icon ? (
+          <props.icon className="h-12 w-12" />
+        ) : null}
+        {props.title && <MDXH1>{props.title}</MDXH1>}
+        <UI.Text>{props.description}</UI.Text>
       </div>
-    </Container>
+    </UI.Container>
   );
 }

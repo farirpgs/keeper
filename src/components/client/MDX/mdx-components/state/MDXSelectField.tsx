@@ -1,4 +1,3 @@
-import { Flex, Select, Tooltip } from "@radix-ui/themes";
 import { useContext, useState } from "react";
 import { z } from "zod";
 import {
@@ -6,6 +5,8 @@ import {
   CampaignState,
 } from "../../../../../domains/campaign/useCampaign";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
+
+import { UI } from "../../../../ui/ui";
 import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
 
@@ -29,13 +30,8 @@ export function MDXSelectField(p: Props) {
   });
 
   return (
-    <Flex
-      data-mdx-type="select-field"
-      gap="1"
-      direction={"column"}
-      className="w-full"
-    >
-      <Select.Root
+    <div className="flex w-full flex-col gap-1" data-mdx-type="select-field">
+      <UI.Select.Root
         defaultValue={props.defaultValue}
         size="3"
         value={value}
@@ -49,33 +45,33 @@ export function MDXSelectField(p: Props) {
         <ConditionalWrapper
           wrapWhen={!!props.tooltip}
           wrapper={(children) => (
-            <Tooltip content={props.tooltip}>{children}</Tooltip>
+            <UI.Tooltip content={props.tooltip}>{children}</UI.Tooltip>
           )}
         >
           <>
             {props.children && (
-              <Flex>
+              <div className="flex">
                 <MDXDetail>{props.children}</MDXDetail>
-              </Flex>
+              </div>
             )}
-            <Select.Trigger
+            <UI.Select.Trigger
               variant="soft"
               color="gray"
               placeholder={props.placeholder || "—"}
-            ></Select.Trigger>
+            ></UI.Select.Trigger>
           </>
         </ConditionalWrapper>
 
-        <Select.Content color="gray">
+        <UI.Select.Content color="gray">
           {props.options.map((option) => (
-            <Select.Item key={option} value={option}>
+            <UI.Select.Item key={option} value={option}>
               {option}
-            </Select.Item>
+            </UI.Select.Item>
           ))}
-        </Select.Content>
-      </Select.Root>
+        </UI.Select.Content>
+      </UI.Select.Root>
 
       <CampaignState name={name} value={value}></CampaignState>
-    </Flex>
+    </div>
   );
 }

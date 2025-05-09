@@ -1,4 +1,4 @@
-import { Text } from "@radix-ui/themes";
+import { UI } from "../../../../../components/ui/ui";
 import clsx from "clsx";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
@@ -19,7 +19,7 @@ export function MDXDetail(p: Props) {
   });
 
   return (
-    <Text
+    <UI.Text
       as="span"
       color="gray"
       className={clsx(
@@ -30,6 +30,6 @@ export function MDXDetail(p: Props) {
       )}
     >
       {props.children}
-    </Text>
+    </UI.Text>
   );
 }

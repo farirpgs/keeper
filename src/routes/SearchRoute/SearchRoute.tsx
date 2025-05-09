@@ -1,17 +1,11 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import {
-  Badge,
-  Flex,
-  Grid,
-  SegmentedControl,
-  Skeleton,
-  TextField,
-} from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
 import { useEffect, useState } from "react";
-import { Card } from "../../components/client/Card/Card";
+import { Card } from "../../components/client/AppCard/AppCard";
 import { MDXH1, MDXH2 } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
 import { shuffleWithSeed } from "../../domains/dl/shuffleWithSeed";
+
 const searchTypes = {
   all: "All",
   games: "Games",
@@ -136,7 +130,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
         }}
       </form.Subscribe>
 
-      <Flex direction={{ initial: "column", sm: "row" }} gap="4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <form.Field
           name="query"
           validators={{
@@ -151,7 +145,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
         >
           {(field) => {
             return (
-              <TextField.Root
+              <UI.TextField.Root
                 placeholder="Search..."
                 size="3"
                 color="gray"
@@ -162,20 +156,20 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
                 autoComplete="off"
                 className="w-full"
               >
-                <TextField.Slot>
+                <UI.TextField.Slot>
                   <MagnifyingGlassIcon height="16" width="16" />
-                </TextField.Slot>
-              </TextField.Root>
+                </UI.TextField.Slot>
+              </UI.TextField.Root>
             );
           }}
         </form.Field>
         <form.Field name="type">
           {(field) => {
             return (
-              <SegmentedControl.Root value={field.state.value} size={"3"}>
+              <UI.SegmentedControl.Root value={field.state.value} size={"3"}>
                 {Object.keys(searchTypes).map((key) => {
                   return (
-                    <SegmentedControl.Item
+                    <UI.SegmentedControl.Item
                       key={key}
                       value={key}
                       onClick={() => {
@@ -184,44 +178,33 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
                       }}
                     >
                       {(searchTypes as any)[key]}
-                    </SegmentedControl.Item>
+                    </UI.SegmentedControl.Item>
                   );
                 })}
-              </SegmentedControl.Root>
+              </UI.SegmentedControl.Root>
             );
           }}
         </form.Field>
-      </Flex>
+      </div>
 
-      <Skeleton loading={searching}>
+      <UI.Skeleton loading={searching}>
         <MDXH2 color="gray">
           {results.length} result{results.length === 1 ? "" : "s"}
         </MDXH2>
-      </Skeleton>
+      </UI.Skeleton>
       {searching && (
-        <Grid
-          columns={{
-            sm: "2",
-            md: "3",
-          }}
-          gap="6"
-          width="auto"
-        >
+        <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {new Array(12).fill(1).map((_, index) => {
             return (
-              <Skeleton key={index} className="h-[250px] w-full rounded-lg" />
+              <UI.Skeleton
+                key={index}
+                className="h-[250px] w-full rounded-lg"
+              />
             );
           })}
-        </Grid>
+        </div>
       )}
-      <Grid
-        columns={{
-          sm: "2",
-          md: "3",
-        }}
-        gap="6"
-        width="auto"
-      >
+      <div className="grid w-auto grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {results.map((item) => {
           return (
             <Card
@@ -231,14 +214,14 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
               subtitle={item.subTitle}
               accentColor={"gold"}
               badge={
-                <Badge
+                <UI.Badge
                   size="1"
                   variant={item.type === "resources" ? "surface" : "surface"}
                   color="gray"
                   highContrast={true}
                 >
                   {item.type === "games" ? "Game" : "Resource"}
-                </Badge>
+                </UI.Badge>
               }
             >
               {item.imageMetaData ? (
@@ -258,7 +241,7 @@ export function SearchRoute(props: { indexes: Array<SearchIndexType> }) {
             </Card>
           );
         })}
-      </Grid>
+      </div>
     </>
   );
 }

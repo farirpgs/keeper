@@ -1,13 +1,14 @@
-import { Button } from "@radix-ui/themes";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { UI } from "../../../components/ui/ui";
 import { DLStorage } from "../../../domains/dl/DLStorage";
 import { wait } from "../../../domains/utils/wait";
 
 export function CreateNewCampaignButton(props: { gameId: string }) {
   const [ready, setReady] = useState(true);
   const [adding, setAdding] = useState(false);
-  useEffect(() => {
+
+  useEffect(function initializeButton() {
     main();
 
     async function main() {
@@ -29,7 +30,7 @@ export function CreateNewCampaignButton(props: { gameId: string }) {
   }
 
   return (
-    <Button
+    <UI.Button
       size="4"
       className={clsx("font-bold", "transition-all")}
       variant="solid"
@@ -38,6 +39,6 @@ export function CreateNewCampaignButton(props: { gameId: string }) {
       loading={adding}
     >
       Start a new campaign
-    </Button>
+    </UI.Button>
   );
 }

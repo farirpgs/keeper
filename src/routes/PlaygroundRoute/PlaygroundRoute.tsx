@@ -1,10 +1,10 @@
-import { Flex, TextArea, Theme } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import {
   getMdxComponents,
   MDXH1,
   MDXWrapper,
 } from "../../components/client/MDX/MDX";
+import { UI } from "../../components/ui/ui";
 import {
   CampaignContext,
   useCampaign,
@@ -39,16 +39,16 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
   }, [text]);
 
   return (
-    <Theme {...props.theme} hasBackground={false}>
+    <UI.Theme {...props.theme} hasBackground={false}>
       <MDXH1>Asset Creation Playground</MDXH1>
-      <Flex gap="7" direction="row">
+      <div className="flex flex-row gap-7">
         <div className="w-[30%]">
-          <TextArea
+          <UI.TextArea
             className="f-full"
             rows={20}
             value={text}
             onChange={(e) => setText(e.target.value)}
-          ></TextArea>
+          ></UI.TextArea>
         </div>
         <div className="w-[70%]">
           <CampaignContext.Provider value={campaignManager}>
@@ -63,7 +63,7 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
             </MDXWrapper>
           </CampaignContext.Provider>
         </div>
-      </Flex>
-    </Theme>
+      </div>
+    </UI.Theme>
   );
 }

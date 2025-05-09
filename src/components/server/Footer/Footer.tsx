@@ -3,10 +3,16 @@ import { Computer, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ThemeType } from "../../../domains/utils/getTheme";
 import { MDXDivider } from "../../client/MDX/mdx-components/ui/MDXDivider";
+import { UI } from "../../ui/ui";
 
 type ThemeColorSchemeType = "system" | "dark" | "light";
 
-export function Footer(props: { ogImageUrl: string; theme?: ThemeType }) {
+export function Footer(props: {
+  ogImageUrl?: string;
+  theme?: ThemeType;
+  size?: UI.ContainerProps["size"];
+  maxWidth?: UI.ContainerProps["maxWidth"];
+}) {
   const [themeColorScheme, setThemeColorScheme] =
     useState<ThemeColorSchemeType>("system");
 
@@ -109,39 +115,48 @@ export function Footer(props: { ogImageUrl: string; theme?: ThemeType }) {
 
   return (
     <Theme {...props.theme} hasBackground={false} className="min-h-0">
-      <div className="my-[10rem]">
-        <MDXDivider />
-      </div>
-      <div className="flex items-start justify-between gap-9">
-        {Object.entries(links).map(([category, links]) => (
-          <div className="flex flex-col items-start gap-2" key={category}>
-            <Text className="font-bold">{category}</Text>
-            {Object.entries(links).map(([link, linkUrl]) => (
-              <Text key={link}>
-                <Link href={linkUrl}>{link}</Link>
-              </Text>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <div className="my-[5rem] flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <a href="https://www.netlify.com" target="_blank">
-            <img
-              src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
-              alt="Deploys by Netlify"
-            />
-          </a>
-          <Text>
-            This site is powered by{" "}
-            <Link href="https://www.netlify.com" target="_blank">
-              Netlify
-            </Link>
-          </Text>
+      <UI.Container
+        px={{
+          initial: "6",
+          md: "9",
+        }}
+        size={props.size || "4"}
+        maxWidth={props.maxWidth || undefined}
+      >
+        <div className="my-[10rem]">
+          <MDXDivider />
         </div>
-        {renderThemeToggleButton()}
-      </div>
+        <div className="flex items-start justify-between gap-9">
+          {Object.entries(links).map(([category, links]) => (
+            <div className="flex flex-col items-start gap-2" key={category}>
+              <Text className="font-bold">{category}</Text>
+              {Object.entries(links).map(([link, linkUrl]) => (
+                <Text key={link}>
+                  <Link href={linkUrl}>{link}</Link>
+                </Text>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="my-[5rem] flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <a href="https://www.netlify.com" target="_blank">
+              <img
+                src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
+                alt="Deploys by Netlify"
+              />
+            </a>
+            <Text>
+              This site is powered by{" "}
+              <Link href="https://www.netlify.com" target="_blank">
+                Netlify
+              </Link>
+            </Text>
+          </div>
+          {renderThemeToggleButton()}
+        </div>
+      </UI.Container>
     </Theme>
   );
 

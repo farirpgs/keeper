@@ -1,17 +1,9 @@
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import {
-  AspectRatio,
-  Badge,
-  Box,
-  Button,
-  DropdownMenu,
-  Flex,
-  Card as RadixCard,
-  Text,
-} from "@radix-ui/themes";
+
 import clsx from "clsx";
 import { useState } from "react";
 import { Colors, type ColorType } from "../../../domains/colors/colors";
+import { UI } from "../../ui/ui";
 import { Graphic } from "../Graphic/Graphic";
 
 export function Card(props: {
@@ -43,7 +35,7 @@ export function Card(props: {
   }
 
   return (
-    <RadixCard variant="ghost" className="rounded-lg">
+    <UI.Card variant="ghost" className="rounded-2xl">
       <a
         style={{
           background: !props.accentColor
@@ -51,20 +43,20 @@ export function Card(props: {
             : `linear-gradient(45deg, ${firstColor} 0%, ${secondColor} 100%)`,
         }}
         className={clsx(
-          "relative block overflow-hidden rounded-lg transition-all",
+          "relative block overflow-hidden rounded-2xl transition-all",
           hover ? "brightness-[115%]" : "",
         )}
         href={props.href}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <Flex gap="2" align="start" direction={"column"} position={"relative"}>
-          <AspectRatio
+        <div className="relative flex flex-col items-start gap-2">
+          <UI.AspectRatio
             ratio={630 / 500}
             className={clsx([
               "[&>img]:h-full",
               "[&>img]:w-full",
-              "[&>img]:rounded-lg",
+              "[&>img]:rounded-2xl",
               "[&>img]:object-cover",
             ])}
           >
@@ -75,9 +67,9 @@ export function Card(props: {
               }}
             />
             {props.children}
-          </AspectRatio>
+          </UI.AspectRatio>
 
-          <Box
+          <UI.Box
             position={"absolute"}
             className="bottom-0 left-0 h-[100%] w-full"
             style={{
@@ -87,30 +79,24 @@ export function Card(props: {
             }}
           />
           {props.badge && (
-            <Box className="absolute right-4 bottom-4">{props.badge}</Box>
+            <UI.Box className="absolute right-4 bottom-4">{props.badge}</UI.Box>
           )}
 
-          <Box position={"absolute"} className="bottom-0 left-0 w-full">
-            <Flex
-              gap="2"
-              justify={"between"}
-              align={"end"}
-              width={"100%"}
-              className="px-4 py-4"
-            >
-              <Box
+          <UI.Box position={"absolute"} className="bottom-0 left-0 w-full">
+            <div className="flex w-full items-end justify-between gap-2 px-4 py-4">
+              <UI.Box
                 className={clsx("flex w-full flex-col", {
                   "max-w-[75%]": hasSideContent,
                   "max-w-[100%]": !hasSideContent,
                 })}
               >
-                <Flex gap="2" align="end">
+                <div className="flex items-end gap-2">
                   {props.error && (
-                    <Badge size="2" color="red">
+                    <UI.Badge size="2" color="red">
                       {props.error}
-                    </Badge>
+                    </UI.Badge>
                   )}
-                  <Text
+                  <UI.Text
                     as="div"
                     size={{
                       initial: "5",
@@ -122,11 +108,11 @@ export function Card(props: {
                     className="dark text-(--accent-a12)"
                   >
                     {props.title}
-                  </Text>
-                </Flex>
+                  </UI.Text>
+                </div>
 
                 {props.subtitle && (
-                  <Text
+                  <UI.Text
                     as="div"
                     size={{
                       initial: "2",
@@ -137,27 +123,29 @@ export function Card(props: {
                     className="dark text-(--accent-a11)"
                   >
                     {props.subtitle}
-                  </Text>
+                  </UI.Text>
                 )}
-              </Box>
+              </UI.Box>
               {props.menu && (
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger>
-                    <Button
+                <UI.DropdownMenu.Root>
+                  <UI.DropdownMenu.Trigger>
+                    <UI.Button
                       variant={hover ? "solid" : "outline"}
                       className="transition-all duration-75"
                     >
                       <HamburgerMenuIcon />
-                      <DropdownMenu.TriggerIcon />
-                    </Button>
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Content>{props.menu}</DropdownMenu.Content>
-                </DropdownMenu.Root>
+                      <UI.DropdownMenu.TriggerIcon />
+                    </UI.Button>
+                  </UI.DropdownMenu.Trigger>
+                  <UI.DropdownMenu.Content>
+                    {props.menu}
+                  </UI.DropdownMenu.Content>
+                </UI.DropdownMenu.Root>
               )}
-            </Flex>
-          </Box>
-        </Flex>
+            </div>
+          </UI.Box>
+        </div>
       </a>
-    </RadixCard>
+    </UI.Card>
   );
 }

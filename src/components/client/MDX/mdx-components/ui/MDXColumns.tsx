@@ -1,4 +1,3 @@
-import { Grid } from "@radix-ui/themes";
 import { z } from "zod";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
@@ -17,13 +16,11 @@ export function MDXColumns(p: Props) {
   });
 
   return (
-    <Grid
+    <div
       data-mdx-type="columns"
-      columns={{ initial: "1", md: props.cols.toString() }}
-      gap="4"
-      width="auto"
+      className={`grid grid-cols-1 md:grid-cols-${props.cols} w-auto gap-4`}
     >
       {props.children}
-    </Grid>
+    </div>
   );
 }

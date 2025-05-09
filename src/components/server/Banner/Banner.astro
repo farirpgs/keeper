@@ -1,6 +1,6 @@
 ---
-import { AspectRatio, Box } from "@radix-ui/themes";
 import { Image } from "astro:assets";
+import { UI } from "../../../components/ui/ui";
 
 type Props = {
   src: ImageMetadata;
@@ -21,8 +21,8 @@ const ratio = 4 / 1.2;
     props.class,
   ]}
 >
-  <Box className="">
-    <AspectRatio ratio={ratio}>
+  <div class="">
+    <UI.AspectRatio ratio={ratio}>
       <Image
         loading="eager"
         quality={"low"}
@@ -44,6 +44,6 @@ const ratio = 4 / 1.2;
           opacity: 0,
         }}
       />
-    </AspectRatio>
-  </Box>
+    </UI.AspectRatio>
+  </div>
 </div>

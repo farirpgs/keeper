@@ -1,5 +1,5 @@
-import { Heading } from "@radix-ui/themes";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -16,8 +16,8 @@ export function MDXHeading(p: Props) {
   });
 
   return (
-    <Heading data-mdx-type="heading" weight={"bold"} className="text-3xl">
+    <UI.Heading data-mdx-type="heading" weight={"bold"} className="text-3xl">
       {props.children}
-    </Heading>
+    </UI.Heading>
   );
 }
