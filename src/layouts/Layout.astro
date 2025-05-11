@@ -197,7 +197,7 @@ const ogImageUrl = props.withOgImage
                   size={size}
                   maxWidth={maxWidth}
                 />
-                {false && (
+                {import.meta.env.DEV && (
                   <div>
                     <div class="">
                       <MDXDivider />

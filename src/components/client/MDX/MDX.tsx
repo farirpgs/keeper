@@ -23,14 +23,14 @@ export const TEXT_CLASSES = "text-[1.2rem] leading-[1.5em] tracking-normal";
 
 export function MDXWrapper(props: { children: React.ReactNode }) {
   return (
-    <div className="prose prose-xl dark:prose-invert w-full max-w-full">
+    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
       {props.children}
     </div>
   );
 }
 export function MDXSheetWrapper(props: { children: React.ReactNode }) {
   return (
-    <div className="prose prose-xl dark:prose-invert w-full max-w-full">
+    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
       {props.children}
     </div>
   );

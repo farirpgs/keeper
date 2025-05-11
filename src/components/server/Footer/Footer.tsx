@@ -27,10 +27,8 @@ export function Footer(props: {
       Contact: "https://farirpgs.com/contact",
     },
   };
-  if (props.ogImageUrl) {
-    links["Debug"] = {
-      "OG Image": props.ogImageUrl,
-    };
+  if (import.meta.env.DEV && props.ogImageUrl) {
+    links.Miscellaneous["OG Image"] = props.ogImageUrl;
   }
 
   useEffect(function initializeTheme() {
@@ -126,7 +124,7 @@ export function Footer(props: {
         <div className="my-[10rem]">
           <MDXDivider />
         </div>
-        <div className="flex items-start justify-between gap-9">
+        <div className="flex flex-col items-start justify-between gap-9 md:flex-row">
           {Object.entries(links).map(([category, links]) => (
             <div className="flex flex-col items-start gap-2" key={category}>
               <Text className="font-bold">{category}</Text>
