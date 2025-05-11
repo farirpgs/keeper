@@ -137,24 +137,22 @@ export function Footer(props: {
           ))}
         </div>
 
-        <div className="my-[5rem] flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-2">
-          <div className="flex items-center gap-2 justify-center md:justify-start">
+        <div className="my-[5rem] flex flex-col items-center justify-between gap-8 md:flex-row">
+          <div className="flex flex-col items-center gap-5 md:flex-row md:gap-2">
             <a href="https://www.netlify.com" target="_blank">
               <img
                 src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
                 alt="Deploys by Netlify"
               />
             </a>
-            <Text>
+            <Text className="text-center md:text-left">
               This site is powered by{" "}
               <Link href="https://www.netlify.com" target="_blank">
                 Netlify
               </Link>
             </Text>
           </div>
-          <div className="flex justify-center md:justify-end w-full md:w-auto">
-            {renderThemeToggleButton()}
-          </div>
+          <div>{renderThemeToggleButton()}</div>
         </div>
       </UI.Container>
     </Theme>
