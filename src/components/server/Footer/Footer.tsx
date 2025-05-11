@@ -137,8 +137,8 @@ export function Footer(props: {
           ))}
         </div>
 
-        <div className="my-[5rem] flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+        <div className="my-[5rem] flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-2">
+          <div className="flex items-center gap-2 justify-center md:justify-start">
             <a href="https://www.netlify.com" target="_blank">
               <img
                 src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
@@ -152,7 +152,9 @@ export function Footer(props: {
               </Link>
             </Text>
           </div>
-          {renderThemeToggleButton()}
+          <div className="flex justify-center md:justify-end w-full md:w-auto">
+            {renderThemeToggleButton()}
+          </div>
         </div>
       </UI.Container>
     </Theme>
