@@ -27,8 +27,8 @@ export function Footer(props: {
       Contact: "https://farirpgs.com/contact",
     },
   };
-  if (import.meta.env.DEV && props.ogImageUrl) {
-    links.Miscellaneous["OG Image"] = props.ogImageUrl;
+  if (props.ogImageUrl) {
+    links.Miscellaneous["Social Media Image"] = props.ogImageUrl;
   }
 
   useEffect(function initializeTheme() {
