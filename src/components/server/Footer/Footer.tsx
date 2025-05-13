@@ -130,7 +130,13 @@ export function Footer(props: {
               <Text className="font-bold">{category}</Text>
               {Object.entries(links).map(([link, linkUrl]) => (
                 <Text key={link}>
-                  <Link href={linkUrl}>{link}</Link>
+                  <Link
+                    href={linkUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link}
+                  </Link>
                 </Text>
               ))}
             </div>

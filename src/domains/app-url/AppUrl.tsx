@@ -83,4 +83,15 @@ export const AppUrl = {
     const hash = props.page ? `#${props.page}` : "";
     return `https://github.com/farirpgs/keeper/blob/main/src/content/resources/${filePath}${hash}`;
   },
+  ogImage(props: { origin: string; pathname: string }) {
+    return (
+      props.origin +
+      "/" +
+      ["og", props.pathname, "image.png"]
+        .join("/")
+        .split("/")
+        .filter((part) => part !== "")
+        .join("/")
+    );
+  },
 };

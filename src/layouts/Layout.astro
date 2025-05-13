@@ -15,6 +15,7 @@ import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import PostHog from "../components/server/PostHog/PostHog.astro";
 import "../styles/global.css";
 import { UI } from "../components/ui/ui";
+import { AppUrl } from "../domains/app-url/AppUrl";
 
 type Props = {
   title: Array<string> | undefined;
@@ -62,15 +63,10 @@ const googleFontUrl =
   fontsAsString &&
   encodeURI(`https://fonts.googleapis.com/css2?${fontsAsString}&display=swap`);
 
-const ogImageUrl = props.withOgImage
-  ? `${Astro.url.origin}/` +
-    ["og", Astro.url.pathname, "image.png"]
-      // remove all extra slashes
-      .join("/")
-      .split("/")
-      .filter((part) => part !== "")
-      .join("/")
-  : "";
+const ogImageUrl = AppUrl.ogImage({
+  origin: Astro.url.origin,
+  pathname: Astro.url.pathname,
+});
 ---
 
 <!doctype html>

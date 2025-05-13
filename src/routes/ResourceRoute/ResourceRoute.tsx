@@ -28,13 +28,14 @@ import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
 import type { ThemeType } from "../../domains/utils/getTheme";
 
 export function ResourceRoute(props: {
+  origin: string;
+  pathname: string;
   creator: CollectionEntry<"creators">;
   resource: CollectionEntry<"resources">;
   locales: Array<string>;
   image?: React.ReactNode;
   doc: DocType;
   theme: ThemeType;
-  pathname: string;
   content: string | undefined;
   children: any;
 }) {
@@ -137,7 +138,12 @@ export function ResourceRoute(props: {
               {renderPreviousAndNextButtons()}
               {renderEditButton()}
             </div>
-            <Footer></Footer>
+            <Footer
+              ogImageUrl={AppUrl.ogImage({
+                origin: props.origin,
+                pathname: props.pathname,
+              })}
+            ></Footer>
           </div>
         </div>
         <UI.Dialog.Root
