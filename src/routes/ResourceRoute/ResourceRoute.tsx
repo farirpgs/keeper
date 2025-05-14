@@ -6,15 +6,10 @@ import {
 import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
-import { Search } from "lucide-react";
+import { Copy, Download, DownloadCloudIcon, Search } from "lucide-react";
 import React from "react";
 import { Card } from "../../components/client/AppCard/AppCard";
-import {
-  getMdxComponents,
-  MDXH1,
-  MDXH4,
-  MDXWrapper,
-} from "../../components/client/MDX/MDX";
+import { getMdxComponents, MDXWrapper } from "../../components/client/MDX/MDX";
 import { Footer } from "../../components/server/Footer/Footer";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
@@ -96,35 +91,93 @@ export function ResourceRoute(props: {
     mdx: props.content || "",
   });
 
+  function handleCopyMarkdown() {
+    if (props.content) {
+      navigator.clipboard.writeText(props.content);
+    }
+  }
+
+  function handleDownloadMarkdown() {
+    if (props.content) {
+      const blob = new Blob([props.content], { type: "text/markdown" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${props.doc.currentPage?.title || "document"}.md`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }
+
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
       <CampaignContext.Provider value={campaignManager}>
-        <div className="flex gap-9">
-          <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
-            <div
-              className="sticky top-6"
-              style={{ maxHeight: "calc(100vh - 32px)" }}
-            >
-              <div className="relative h-full overflow-y-scroll pb-[10rem]">
-                {renderSidebar({
-                  withImage: true,
-                })}
-                {/* <div
-                  className="pointer-events-none absolute right-0 bottom-0 left-0 h-[10rem]"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--color-panel, #fff) 100%)",
-                  }}
-                /> */}
+        <div>
+          <div className="flex gap-9">
+            <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
+              <div
+                className="sticky top-6"
+                style={{ maxHeight: "calc(100vh - 32px)" }}
+              >
+                <div className="relative h-full overflow-y-scroll pb-[10rem]">
+                  {renderSidebar({
+                    withImage: true,
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="block w-full">
-            <div>
-              <MDXH1 className="">{props.doc.currentPage?.title || ""}</MDXH1>
-              <MDXH4 color="gray" className="mb-5" size="6">
-                {props.resource.data.name}
-              </MDXH4>
+            <div className="block w-full">
+              <div className="">
+                <div className="flex flex-row items-center justify-between gap-2">
+                  <MDXWrapper>
+                    <h1
+                      style={{
+                        marginBottom: "0 !important",
+                      }}
+                    >
+                      {props.doc.currentPage?.title || ""}
+                    </h1>
+                  </MDXWrapper>
+                  <UI.DropdownMenu.Root>
+                    <UI.DropdownMenu.Trigger>
+                      <UI.IconButton
+                        variant="ghost"
+                        size="1"
+                        color="gray"
+                        highContrast
+                      >
+                        <Download></Download>
+                      </UI.IconButton>
+                    </UI.DropdownMenu.Trigger>
+                    <UI.DropdownMenu.Content>
+                      <UI.DropdownMenu.Item onClick={handleCopyMarkdown}>
+                        <Copy size={"1em"}></Copy>
+                        Copy page to clipboard
+                      </UI.DropdownMenu.Item>
+                      <UI.DropdownMenu.Item onClick={handleDownloadMarkdown}>
+                        <DownloadCloudIcon size={"1em"}></DownloadCloudIcon>
+                        Download page
+                      </UI.DropdownMenu.Item>
+                    </UI.DropdownMenu.Content>
+                  </UI.DropdownMenu.Root>
+                </div>
+                <div className="flex flex-row items-center justify-between gap-2">
+                  <MDXWrapper>
+                    <h4
+                      style={{
+                        marginTop: "0 !important",
+                        marginBottom: "1rem !important",
+                        color: `var(--gray-11) !important`,
+                      }}
+                    >
+                      {props.resource.data.name}
+                    </h4>
+                  </MDXWrapper>
+                </div>
+              </div>
+
               {props.children}
               {MDXContent && (
                 <MDXWrapper>
@@ -132,19 +185,19 @@ export function ResourceRoute(props: {
                     components={{
                       ...getMdxComponents({}),
                     }}
-                  ></MDXContent>
+                  />
                 </MDXWrapper>
               )}
               {renderPreviousAndNextButtons()}
               {renderEditButton()}
             </div>
-            <Footer
-              ogImageUrl={AppUrl.ogImage({
-                origin: props.origin,
-                pathname: props.pathname,
-              })}
-            ></Footer>
           </div>
+          <Footer
+            ogImageUrl={AppUrl.ogImage({
+              origin: props.origin,
+              pathname: props.pathname,
+            })}
+          ></Footer>
         </div>
         <UI.Dialog.Root
           open={mobileMenuOpen}
