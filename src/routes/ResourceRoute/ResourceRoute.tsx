@@ -98,15 +98,15 @@ export function ResourceRoute(props: {
   }
 
   function handleDownloadMarkdown() {
-    if (props.content) {
+    if (props.content && props.doc.currentPage) {
       const blob = new Blob([props.content], { type: "text/markdown" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${props.doc.currentPage?.title || "document"}.md`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${props.doc.currentPage.title} - ${props.resource.data.name}.md`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
     }
   }
