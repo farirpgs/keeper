@@ -6,7 +6,7 @@ import {
 import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
-import { Copy, Download, DownloadCloudIcon, Search } from "lucide-react";
+import { Copy, DownloadCloudIcon, Search } from "lucide-react";
 import React from "react";
 import { Card } from "../../components/client/AppCard/AppCard";
 import { getMdxComponents, MDXWrapper } from "../../components/client/MDX/MDX";
@@ -21,6 +21,8 @@ import { Colors } from "../../domains/colors/colors";
 import type { DocType } from "../../domains/document/DocParser";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
 import type { ThemeType } from "../../domains/utils/getTheme";
+
+import toast, { Toaster } from "react-hot-toast";
 
 export function ResourceRoute(props: {
   origin: string;
@@ -94,6 +96,7 @@ export function ResourceRoute(props: {
   function handleCopyMarkdown() {
     if (props.content) {
       navigator.clipboard.writeText(props.content);
+      toast.success("Copied to clipboard!");
     }
   }
 
@@ -108,11 +111,13 @@ export function ResourceRoute(props: {
       anchor.click();
       document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
+      toast.success("Downloaded!");
     }
   }
 
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
+      <Toaster></Toaster>
       <CampaignContext.Provider value={campaignManager}>
         <div>
           <div className="flex gap-9">
@@ -140,41 +145,51 @@ export function ResourceRoute(props: {
                       {props.doc.currentPage?.title || ""}
                     </h1>
                   </MDXWrapper>
-                  <UI.DropdownMenu.Root>
-                    <UI.DropdownMenu.Trigger>
-                      <UI.IconButton
-                        variant="ghost"
-                        size="1"
-                        color="gray"
-                        highContrast
-                      >
-                        <Download></Download>
-                      </UI.IconButton>
-                    </UI.DropdownMenu.Trigger>
-                    <UI.DropdownMenu.Content>
-                      <UI.DropdownMenu.Item onClick={handleCopyMarkdown}>
-                        <Copy size={"1em"}></Copy>
-                        Copy page to clipboard
-                      </UI.DropdownMenu.Item>
-                      <UI.DropdownMenu.Item onClick={handleDownloadMarkdown}>
-                        <DownloadCloudIcon size={"1em"}></DownloadCloudIcon>
-                        Download page
-                      </UI.DropdownMenu.Item>
-                    </UI.DropdownMenu.Content>
-                  </UI.DropdownMenu.Root>
                 </div>
-                <div className="flex flex-row items-center justify-between gap-2">
-                  <MDXWrapper>
-                    <h3
-                      style={{
-                        marginTop: "0 !important",
-                        marginBottom: "3rem !important",
-                        color: `var(--gray-10) !important`,
-                      }}
+                <UI.Separator className="mt-1 mb-3 flex w-full"></UI.Separator>
+                <div className="mb-6 flex flex-row gap-2">
+                  <UI.Button
+                    variant="soft"
+                    color="gray"
+                    size="1"
+                    radius="full"
+                    onClick={handleCopyMarkdown}
+                    className="flex items-center gap-2"
+                  >
+                    <Copy size={"1em"} />
+                    Copy as Markdown
+                  </UI.Button>
+                  <UI.Button
+                    variant="soft"
+                    color="gray"
+                    size="1"
+                    radius="full"
+                    onClick={handleDownloadMarkdown}
+                    className="flex items-center gap-2"
+                  >
+                    <DownloadCloudIcon size={"1em"} />
+                    Download as Markdown
+                  </UI.Button>
+                  <UI.Link
+                    href={AppUrl.githubResource({
+                      id: props.resource.id,
+                      page: props.doc.currentPage?.gitHubId || "",
+                    })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 no-underline"
+                  >
+                    <UI.Button
+                      variant="soft"
+                      color="gray"
+                      size="1"
+                      radius="full"
+                      className="flex items-center gap-2"
                     >
-                      {props.resource.data.name}
-                    </h3>
-                  </MDXWrapper>
+                      <GitHubLogoIcon width={"1.2em"} height={"1.2em"} />
+                      Edit on GitHub
+                    </UI.Button>
+                  </UI.Link>
                 </div>
               </div>
 
