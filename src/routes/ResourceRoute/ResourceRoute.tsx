@@ -134,7 +134,7 @@ export function ResourceRoute(props: {
                   <MDXWrapper>
                     <h1
                       style={{
-                        marginBottom: "0 !important",
+                        marginBottom: ".25rem !important",
                       }}
                     >
                       {props.doc.currentPage?.title || ""}
@@ -165,15 +165,15 @@ export function ResourceRoute(props: {
                 </div>
                 <div className="flex flex-row items-center justify-between gap-2">
                   <MDXWrapper>
-                    <h4
+                    <h3
                       style={{
                         marginTop: "0 !important",
-                        marginBottom: "1rem !important",
-                        color: `var(--gray-11) !important`,
+                        marginBottom: "3rem !important",
+                        color: `var(--gray-10) !important`,
                       }}
                     >
                       {props.resource.data.name}
-                    </h4>
+                    </h3>
                   </MDXWrapper>
                 </div>
               </div>
