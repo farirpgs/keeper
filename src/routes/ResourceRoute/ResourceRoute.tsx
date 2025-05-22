@@ -6,15 +6,10 @@ import {
 import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
-import { Search } from "lucide-react";
+import { Copy, DownloadCloudIcon, Search } from "lucide-react";
 import React from "react";
 import { Card } from "../../components/client/AppCard/AppCard";
-import {
-  getMdxComponents,
-  MDXH1,
-  MDXH4,
-  MDXWrapper,
-} from "../../components/client/MDX/MDX";
+import { getMdxComponents, MDXWrapper } from "../../components/client/MDX/MDX";
 import { Footer } from "../../components/server/Footer/Footer";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
@@ -27,14 +22,17 @@ import type { DocType } from "../../domains/document/DocParser";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
 import type { ThemeType } from "../../domains/utils/getTheme";
 
+import toast, { Toaster } from "react-hot-toast";
+
 export function ResourceRoute(props: {
+  origin: string;
+  pathname: string;
   creator: CollectionEntry<"creators">;
   resource: CollectionEntry<"resources">;
   locales: Array<string>;
   image?: React.ReactNode;
   doc: DocType;
   theme: ThemeType;
-  pathname: string;
   content: string | undefined;
   children: any;
 }) {
@@ -95,49 +93,119 @@ export function ResourceRoute(props: {
     mdx: props.content || "",
   });
 
+  function handleCopyMarkdown() {
+    if (props.content) {
+      navigator.clipboard.writeText(props.content);
+      toast.success("Copied to clipboard!");
+    }
+  }
+
+  function handleDownloadMarkdown() {
+    if (props.content && props.doc.currentPage) {
+      const blob = new Blob([props.content], { type: "text/markdown" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${props.doc.currentPage.title} - ${props.resource.data.name}.md`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(url);
+      toast.success("Downloaded!");
+    }
+  }
+
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
+      <Toaster />
       <CampaignContext.Provider value={campaignManager}>
-        <div className="flex gap-9">
-          <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
-            <div
-              className="sticky top-6"
-              style={{ maxHeight: "calc(100vh - 32px)" }}
-            >
-              <div className="relative h-full overflow-y-scroll pb-[10rem]">
-                {renderSidebar({
-                  withImage: true,
-                })}
-                {/* <div
-                  className="pointer-events-none absolute right-0 bottom-0 left-0 h-[10rem]"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--color-panel, #fff) 100%)",
-                  }}
-                /> */}
+        <div>
+          <div className="flex flex-row gap-9">
+            <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
+              <div
+                className="sticky top-6"
+                style={{ maxHeight: "calc(100vh - 32px)" }}
+              >
+                <div className="relative h-full overflow-y-scroll pb-[10rem]">
+                  {renderSidebar({ withImage: true })}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="block w-full">
-            <div>
-              <MDXH1 className="">{props.doc.currentPage?.title || ""}</MDXH1>
-              <MDXH4 color="gray" className="mb-5" size="6">
-                {props.resource.data.name}
-              </MDXH4>
-              {props.children}
-              {MDXContent && (
-                <MDXWrapper>
-                  <MDXContent
-                    components={{
-                      ...getMdxComponents({}),
-                    }}
-                  ></MDXContent>
-                </MDXWrapper>
-              )}
-              {renderPreviousAndNextButtons()}
-              {renderEditButton()}
+            <div className="flex flex-col">
+              <div className="block w-full">
+                <div className="">
+                  <div className="flex flex-row items-center justify-between gap-2">
+                    <MDXWrapper>
+                      <h1
+                        style={{
+                          marginBottom: ".25rem !important",
+                        }}
+                      >
+                        {props.doc.currentPage?.title || ""}
+                      </h1>
+                    </MDXWrapper>
+                  </div>
+                  <UI.Separator className="mt-1 mb-3 flex w-full" />
+                  <div className="mb-6 flex flex-row gap-2">
+                    <UI.Button
+                      variant="soft"
+                      color="gray"
+                      size="1"
+                      radius="full"
+                      onClick={handleCopyMarkdown}
+                      className="flex items-center gap-2"
+                    >
+                      <Copy size={"1em"} />
+                      Copy as Markdown
+                    </UI.Button>
+                    <UI.Button
+                      variant="soft"
+                      color="gray"
+                      size="1"
+                      radius="full"
+                      onClick={handleDownloadMarkdown}
+                      className="flex items-center gap-2"
+                    >
+                      <DownloadCloudIcon size={"1em"} />
+                      Download as Markdown
+                    </UI.Button>
+                    <UI.Link
+                      href={AppUrl.githubResource({
+                        id: props.resource.id,
+                        page: props.doc.currentPage?.gitHubId || "",
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 no-underline"
+                    >
+                      <UI.Button
+                        variant="soft"
+                        color="gray"
+                        size="1"
+                        radius="full"
+                        className="flex items-center gap-2"
+                      >
+                        <GitHubLogoIcon width={"1.2em"} height={"1.2em"} />
+                        Edit on GitHub
+                      </UI.Button>
+                    </UI.Link>
+                  </div>
+                </div>
+                {props.children}
+                {MDXContent && (
+                  <MDXWrapper>
+                    <MDXContent
+                      components={{
+                        ...getMdxComponents({}),
+                      }}
+                    />
+                  </MDXWrapper>
+                )}
+                {renderPreviousAndNextButtons()}
+                {renderEditButton()}
+              </div>
+              <Footer />
             </div>
-            <Footer></Footer>
           </div>
         </div>
         <UI.Dialog.Root
@@ -176,11 +244,7 @@ export function ResourceRoute(props: {
               <UI.Dialog.Description className="hidden">
                 Menu
               </UI.Dialog.Description>
-              <div>
-                {renderSidebar({
-                  withImage: false,
-                })}
-              </div>
+              <div>{renderSidebar({ withImage: false })}</div>
               <div className="flex justify-end">
                 <UI.Dialog.Close>
                   <UI.Button
@@ -742,4 +806,8 @@ export function ResourceRoute(props: {
       </>
     );
   }
+}
+
+function renderSidebar(arg0: { withImage: boolean }): React.ReactNode {
+  throw new Error("Function not implemented.");
 }

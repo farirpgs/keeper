@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Hash } from "lucide-react";
 import type React from "react";
 import { UI } from "../../ui/ui";
 import { getSurfaceStyle } from "../Surface/getSurfaceStyle";
@@ -23,14 +24,14 @@ export const TEXT_CLASSES = "text-[1.2rem] leading-[1.5em] tracking-normal";
 
 export function MDXWrapper(props: { children: React.ReactNode }) {
   return (
-    <div className="prose prose-xl dark:prose-invert w-full max-w-full">
+    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
       {props.children}
     </div>
   );
 }
 export function MDXSheetWrapper(props: { children: React.ReactNode }) {
   return (
-    <div className="prose prose-xl dark:prose-invert w-full max-w-full">
+    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
       {props.children}
     </div>
   );
@@ -44,15 +45,43 @@ export function Fields(props: { children: React.ReactNode }) {
   );
 }
 
+function getHeadingWithAnchor(Component: React.ElementType) {
+  return (props: {
+    className?: string;
+    id?: string;
+    children: React.ReactNode;
+  }) => (
+    <Component
+      data-mdx-type={"data-mdx-type-" + props.className}
+      {...props}
+      className={clsx(props.className, props.className)}
+    >
+      {props.id ? (
+        <>
+          <a href={`#${props.id}`} className="group relative no-underline">
+            {props.children}
+            <Hash
+              className="absolute top-1/2 -right-7 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-50"
+              size=".75em"
+            />
+          </a>
+        </>
+      ) : (
+        <>{props.children}</>
+      )}
+    </Component>
+  );
+}
+
 export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
   const allowH1s = arg.allowH1s ?? true;
   return {
-    h1: allowH1s ? "h1" : "h2",
-    h2: allowH1s ? "h2" : "h3",
-    h3: allowH1s ? "h3" : "h4",
-    h4: allowH1s ? "h4" : "h5",
-    h5: allowH1s ? "h5" : "h6",
-    h6: allowH1s ? "h6" : "h6",
+    h1: allowH1s ? getHeadingWithAnchor("h1") : getHeadingWithAnchor("h2"),
+    h2: allowH1s ? getHeadingWithAnchor("h2") : getHeadingWithAnchor("h3"),
+    h3: allowH1s ? getHeadingWithAnchor("h3") : getHeadingWithAnchor("h4"),
+    h4: allowH1s ? getHeadingWithAnchor("h4") : getHeadingWithAnchor("h5"),
+    h5: allowH1s ? getHeadingWithAnchor("h5") : getHeadingWithAnchor("h6"),
+    h6: allowH1s ? getHeadingWithAnchor("h6") : getHeadingWithAnchor("h6"),
     Fields: Fields,
     blockquote: MDXBlockquote as any,
     Divider: MDXDivider as any,

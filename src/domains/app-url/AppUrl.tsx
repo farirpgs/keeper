@@ -70,6 +70,28 @@ export const AppUrl = {
     id: CollectionEntry<"resources">["id"];
     page: string;
   }) {
-    return `https://github.com/farirpgs/keeper/tree/main/src/content/resources/${props.id}/index.mdx#${props.page}/`;
+    const [creatorSegment, resourceSegment, languageSegment] =
+      props.id.split("/");
+    let filePath;
+    if (languageSegment && languageSegment !== "en") {
+      // Non-English locale: point to .../{locale}.mdx
+      filePath = `${creatorSegment}/${resourceSegment}/${languageSegment}.mdx`;
+    } else {
+      // English or no locale: point to .../index.mdx
+      filePath = `${creatorSegment}/${resourceSegment}/index.mdx`;
+    }
+    const hash = props.page ? `#${props.page}` : "";
+    return `https://github.com/farirpgs/keeper/blob/main/src/content/resources/${filePath}${hash}`;
+  },
+  ogImage(props: { origin: string; pathname: string }) {
+    return (
+      props.origin +
+      "/" +
+      ["og", props.pathname, "image.png"]
+        .join("/")
+        .split("/")
+        .filter((part) => part !== "")
+        .join("/")
+    );
   },
 };

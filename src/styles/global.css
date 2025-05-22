@@ -99,5 +99,7 @@ html.dark {
 }
 
 iframe {
+  width: 100%;
   max-width: 100%;
+  border: none;
 }

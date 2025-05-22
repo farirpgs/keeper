@@ -89,6 +89,7 @@ export async function getStaticPaths() {
     theme={theme}
     doc={doc}
     pathname={Astro.url.pathname}
+    origin={Astro.url.origin}
     content={doc.currentPage?.content}
   >
     {

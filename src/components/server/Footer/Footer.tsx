@@ -28,9 +28,7 @@ export function Footer(props: {
     },
   };
   if (props.ogImageUrl) {
-    links["Debug"] = {
-      "OG Image": props.ogImageUrl,
-    };
+    links.Miscellaneous["Social Media Image"] = props.ogImageUrl;
   }
 
   useEffect(function initializeTheme() {
