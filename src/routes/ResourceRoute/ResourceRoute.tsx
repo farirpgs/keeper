@@ -117,102 +117,96 @@ export function ResourceRoute(props: {
 
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
-      <Toaster></Toaster>
+      <Toaster />
       <CampaignContext.Provider value={campaignManager}>
         <div>
-          <div className="flex gap-9">
+          <div className="flex flex-row gap-9">
             <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
               <div
                 className="sticky top-6"
                 style={{ maxHeight: "calc(100vh - 32px)" }}
               >
                 <div className="relative h-full overflow-y-scroll pb-[10rem]">
-                  {renderSidebar({
-                    withImage: true,
-                  })}
+                  {renderSidebar({ withImage: true })}
                 </div>
               </div>
             </div>
-            <div className="block w-full">
-              <div className="">
-                <div className="flex flex-row items-center justify-between gap-2">
-                  <MDXWrapper>
-                    <h1
-                      style={{
-                        marginBottom: ".25rem !important",
-                      }}
-                    >
-                      {props.doc.currentPage?.title || ""}
-                    </h1>
-                  </MDXWrapper>
-                </div>
-                <UI.Separator className="mt-1 mb-3 flex w-full"></UI.Separator>
-                <div className="mb-6 flex flex-row gap-2">
-                  <UI.Button
-                    variant="soft"
-                    color="gray"
-                    size="1"
-                    radius="full"
-                    onClick={handleCopyMarkdown}
-                    className="flex items-center gap-2"
-                  >
-                    <Copy size={"1em"} />
-                    Copy as Markdown
-                  </UI.Button>
-                  <UI.Button
-                    variant="soft"
-                    color="gray"
-                    size="1"
-                    radius="full"
-                    onClick={handleDownloadMarkdown}
-                    className="flex items-center gap-2"
-                  >
-                    <DownloadCloudIcon size={"1em"} />
-                    Download as Markdown
-                  </UI.Button>
-                  <UI.Link
-                    href={AppUrl.githubResource({
-                      id: props.resource.id,
-                      page: props.doc.currentPage?.gitHubId || "",
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 no-underline"
-                  >
+            <div className="flex flex-col">
+              <div className="block w-full">
+                <div className="">
+                  <div className="flex flex-row items-center justify-between gap-2">
+                    <MDXWrapper>
+                      <h1
+                        style={{
+                          marginBottom: ".25rem !important",
+                        }}
+                      >
+                        {props.doc.currentPage?.title || ""}
+                      </h1>
+                    </MDXWrapper>
+                  </div>
+                  <UI.Separator className="mt-1 mb-3 flex w-full" />
+                  <div className="mb-6 flex flex-row gap-2">
                     <UI.Button
                       variant="soft"
                       color="gray"
                       size="1"
                       radius="full"
+                      onClick={handleCopyMarkdown}
                       className="flex items-center gap-2"
                     >
-                      <GitHubLogoIcon width={"1.2em"} height={"1.2em"} />
-                      Edit on GitHub
+                      <Copy size={"1em"} />
+                      Copy as Markdown
                     </UI.Button>
-                  </UI.Link>
+                    <UI.Button
+                      variant="soft"
+                      color="gray"
+                      size="1"
+                      radius="full"
+                      onClick={handleDownloadMarkdown}
+                      className="flex items-center gap-2"
+                    >
+                      <DownloadCloudIcon size={"1em"} />
+                      Download as Markdown
+                    </UI.Button>
+                    <UI.Link
+                      href={AppUrl.githubResource({
+                        id: props.resource.id,
+                        page: props.doc.currentPage?.gitHubId || "",
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 no-underline"
+                    >
+                      <UI.Button
+                        variant="soft"
+                        color="gray"
+                        size="1"
+                        radius="full"
+                        className="flex items-center gap-2"
+                      >
+                        <GitHubLogoIcon width={"1.2em"} height={"1.2em"} />
+                        Edit on GitHub
+                      </UI.Button>
+                    </UI.Link>
+                  </div>
                 </div>
+                {props.children}
+                {MDXContent && (
+                  <MDXWrapper>
+                    <MDXContent
+                      components={{
+                        ...getMdxComponents({}),
+                      }}
+                    />
+                  </MDXWrapper>
+                )}
+                {renderPreviousAndNextButtons()}
+                {renderEditButton()}
               </div>
-
-              {props.children}
-              {MDXContent && (
-                <MDXWrapper>
-                  <MDXContent
-                    components={{
-                      ...getMdxComponents({}),
-                    }}
-                  />
-                </MDXWrapper>
-              )}
-              {renderPreviousAndNextButtons()}
-              {renderEditButton()}
+              <Footer />
             </div>
           </div>
-          <Footer
-            ogImageUrl={AppUrl.ogImage({
-              origin: props.origin,
-              pathname: props.pathname,
-            })}
-          ></Footer>
         </div>
         <UI.Dialog.Root
           open={mobileMenuOpen}
@@ -250,11 +244,7 @@ export function ResourceRoute(props: {
               <UI.Dialog.Description className="hidden">
                 Menu
               </UI.Dialog.Description>
-              <div>
-                {renderSidebar({
-                  withImage: false,
-                })}
-              </div>
+              <div>{renderSidebar({ withImage: false })}</div>
               <div className="flex justify-end">
                 <UI.Dialog.Close>
                   <UI.Button
@@ -817,3 +807,4 @@ export function ResourceRoute(props: {
     );
   }
 }
+``;
