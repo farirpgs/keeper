@@ -807,7 +807,4 @@ export function ResourceRoute(props: {
     );
   }
 }
-
-function renderSidebar(arg0: { withImage: boolean }): React.ReactNode {
-  throw new Error("Function not implemented.");
-}
+``;
