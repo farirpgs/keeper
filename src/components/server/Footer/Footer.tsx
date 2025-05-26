@@ -124,41 +124,35 @@ export function Footer(props: {
         <div className="my-[10rem]">
           <MDXDivider />
         </div>
-        <div className="flex flex-col items-start justify-between gap-9 md:flex-row">
+        <div className="flex items-start justify-between gap-9">
           {Object.entries(links).map(([category, links]) => (
             <div className="flex flex-col items-start gap-2" key={category}>
               <Text className="font-bold">{category}</Text>
               {Object.entries(links).map(([link, linkUrl]) => (
                 <Text key={link}>
-                  <Link
-                    href={linkUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link}
-                  </Link>
+                  <Link href={linkUrl}>{link}</Link>
                 </Text>
               ))}
             </div>
           ))}
         </div>
 
-        <div className="my-[5rem] flex flex-col items-center justify-between gap-8 md:flex-row">
-          <div className="flex flex-col items-center gap-5 md:flex-row md:gap-2">
+        <div className="my-[5rem] flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
             <a href="https://www.netlify.com" target="_blank">
               <img
                 src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
                 alt="Deploys by Netlify"
               />
             </a>
-            <Text className="text-center md:text-left">
+            <Text>
               This site is powered by{" "}
               <Link href="https://www.netlify.com" target="_blank">
                 Netlify
               </Link>
             </Text>
           </div>
-          <div>{renderThemeToggleButton()}</div>
+          {renderThemeToggleButton()}
         </div>
       </UI.Container>
     </Theme>
