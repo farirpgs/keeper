@@ -44,6 +44,10 @@ export function ResourceRoute(props: {
   const campaignManager = useCampaign({
     id: "",
   });
+  const ogImageUrl = AppUrl.ogImage({
+    origin: props.origin,
+    pathname: props.pathname,
+  });
 
   const chapterSearchForm = useForm({
     defaultValues: {
@@ -214,7 +218,7 @@ export function ResourceRoute(props: {
                 {renderPreviousAndNextButtons()}
                 {renderEditButton()}
               </div>
-              <Footer />
+              <Footer ogImageUrl={ogImageUrl} />
             </div>
           </div>
         </div>
