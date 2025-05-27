@@ -7,7 +7,7 @@ import type {
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import {
-  MDXWrapper,
+  MDXProseWrapper,
   getMdxComponents,
 } from "../../../../components/client/MDX/MDX";
 import Banner from "../../../../components/server/Banner/Banner.astro";
@@ -86,12 +86,12 @@ export async function getStaticPaths() {
         )
       }
     </div>
-    <MDXWrapper>
+    <MDXProseWrapper>
       <MDXContent
         components={{
           ...getMdxComponents({}),
         }}
       />
-    </MDXWrapper>
+    </MDXProseWrapper>
   </GameRoute>
 </Layout>

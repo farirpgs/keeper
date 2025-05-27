@@ -6,10 +6,13 @@ import {
 import { useForm } from "@tanstack/react-form";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
-import { Copy, DownloadCloudIcon, Search } from "lucide-react";
+import { Copy, DownloadCloudIcon, Heart, Search } from "lucide-react";
 import React from "react";
 import { Card } from "../../components/client/AppCard/AppCard";
-import { getMdxComponents, MDXWrapper } from "../../components/client/MDX/MDX";
+import {
+  getMdxComponents,
+  MDXProseWrapper,
+} from "../../components/client/MDX/MDX";
 import { Footer } from "../../components/server/Footer/Footer";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
@@ -22,6 +25,7 @@ import type { DocType } from "../../domains/document/DocParser";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
 import type { ThemeType } from "../../domains/utils/getTheme";
 
+import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 
 export function ResourceRoute(props: {
@@ -133,19 +137,25 @@ export function ResourceRoute(props: {
             </div>
             <div className="flex flex-col">
               <div className="block w-full">
-                <div className="">
-                  <div className="flex flex-row items-center justify-between gap-2">
-                    <MDXWrapper>
+                <div className="flex flex-col">
+                  <div className="mb-6">{renderPatreonBanner()}</div>
+
+                  <div className="mb-2 flex flex-row items-center justify-between gap-2">
+                    <MDXProseWrapper>
                       <h1
                         style={{
-                          marginBottom: ".25rem !important",
+                          marginBottom: "0 !important",
                         }}
                       >
                         {props.doc.currentPage?.title || ""}
                       </h1>
-                    </MDXWrapper>
+                    </MDXProseWrapper>
                   </div>
-                  <UI.Separator className="mt-1 mb-3 flex w-full" />
+                  <UI.Separator
+                    size="4"
+                    className="mt-0 mb-3 flex w-full opacity-60"
+                    color="gray"
+                  />
                   <div className="mb-6 flex flex-row gap-2">
                     <UI.Button
                       variant="soft"
@@ -193,13 +203,13 @@ export function ResourceRoute(props: {
                 </div>
                 {props.children}
                 {MDXContent && (
-                  <MDXWrapper>
+                  <MDXProseWrapper>
                     <MDXContent
                       components={{
                         ...getMdxComponents({}),
                       }}
                     />
-                  </MDXWrapper>
+                  </MDXProseWrapper>
                 )}
                 {renderPreviousAndNextButtons()}
                 {renderEditButton()}
@@ -264,6 +274,58 @@ export function ResourceRoute(props: {
       </CampaignContext.Provider>
     </UI.Theme>
   );
+
+  function renderPatreonBanner() {
+    return (
+      <UI.Card size="2" variant="ghost">
+        <div className="flex flex-col items-center justify-between gap-4 p-4 sm:flex-row">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+            <div className="relative">
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#FF424D]/10">
+                <motion.span
+                  className="absolute top-[-4px] right-[-4px] inline-flex h-[8px] w-[8px] rounded-full bg-[#FF424D]"
+                  animate={{
+                    scale: [1, 2, 2],
+                    opacity: [1, 0, 0],
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    times: [0, 0.75, 1],
+                    ease: [[0, 0, 0.2, 1], "linear"],
+                  }}
+                />
+                <Heart className="h-5 w-5 text-[#FF424D]" />
+              </div>
+            </div>
+            <div className="flex flex-col text-center sm:text-left">
+              <UI.Text weight="medium" color="gray">
+                Support Keeper
+              </UI.Text>
+              <UI.Text size="2" color="gray">
+                Get exclusive content and help fund development.
+              </UI.Text>
+            </div>
+          </div>
+          <UI.Button
+            asChild
+            color="red"
+            variant="solid"
+            className="w-full sm:w-auto"
+          >
+            <UI.Link
+              href={AppUrl.patreon()}
+              target="_blank"
+              underline="none"
+              color="red"
+            >
+              Become a Patron
+            </UI.Link>
+          </UI.Button>
+        </div>
+      </UI.Card>
+    );
+  }
 
   function renderPreviousAndNextButtons() {
     return (
@@ -390,8 +452,8 @@ export function ResourceRoute(props: {
 
   function renderSidebar(p: { withImage?: boolean }) {
     return (
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2">
+      <UI.Card variant="surface" className="flex flex-col gap-4">
+        <div className="flex flex-col gap-5">
           {props.image && p.withImage && (
             <div className="">
               <UI.Inset
@@ -399,6 +461,7 @@ export function ResourceRoute(props: {
                 side="top"
                 pb="current"
                 className="rounded-md"
+                style={{ marginBottom: "-1rem" }}
               >
                 {props.image}
               </UI.Inset>
@@ -406,7 +469,7 @@ export function ResourceRoute(props: {
           )}
 
           <div>
-            <UI.Text size="5" weight={"bold"} className="mt-2 block">
+            <UI.Text size="5" weight={"bold"} className="block leading-normal">
               {props.resource.data.name}
             </UI.Text>
             <UI.Link
@@ -416,21 +479,22 @@ export function ResourceRoute(props: {
               color="gray"
               className="hover:text-(--accent-12)"
             >
-              <UI.Text size={"3"} className="block">
+              <UI.Text size={"2"} className="block">
                 By {props.creator.data.name}
               </UI.Text>
             </UI.Link>
           </div>
 
-          <UI.Card variant="surface">
+          <div>
             <UI.Heading size="3" className="mb-2">
               Locales
             </UI.Heading>
             {renderLocalesDropdown()}
-          </UI.Card>
-          {props.resource.data.links && (
-            <UI.Card variant="surface">
-              {Object.keys(props.resource.data.links).length > 0 && (
+          </div>
+
+          <div>
+            {props.resource.data.links &&
+              Object.keys(props.resource.data.links).length > 0 && (
                 <>
                   <UI.Heading size="3" className="mb-2">
                     Links
@@ -460,12 +524,11 @@ export function ResourceRoute(props: {
                   </div>
                 </>
               )}
-            </UI.Card>
-          )}
-        </div>
-
-        <UI.Card variant="surface" className="">
+          </div>
           <div className="flex flex-col gap-2">
+            <UI.Heading size="3" className="">
+              Chapters
+            </UI.Heading>
             <chapterSearchForm.Field
               name="query"
               validators={{
@@ -480,9 +543,8 @@ export function ResourceRoute(props: {
             >
               {(field) => (
                 <UI.TextField.Root
-                  variant="soft"
                   size="2"
-                  className={`w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
+                  className={`mb-2 w-full bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)`}
                   color="gray"
                   placeholder="Search chapters..."
                   value={field.state.value}
@@ -495,7 +557,6 @@ export function ResourceRoute(props: {
                 </UI.TextField.Root>
               )}
             </chapterSearchForm.Field>
-
             <chapterSearchForm.Subscribe
               selector={(s) => s.values.debouncedQuery}
             >
@@ -508,7 +569,6 @@ export function ResourceRoute(props: {
                   <>
                     {searchResults ? (
                       <>
-                        <UI.Heading size="3">Search Results</UI.Heading>
                         {searchResults.length === 0 && (
                           <UI.Text size="2" color="gray">
                             No results found.
@@ -591,12 +651,7 @@ export function ResourceRoute(props: {
                             );
                           },
                         )}
-                        {Object.keys(props.doc.sidebar.categories).length ===
-                          0 && (
-                          <>
-                            <UI.Heading size="3">Chapters</UI.Heading>
-                          </>
-                        )}
+
                         {props.doc.sidebar.root.length > 0 && (
                           <div className="flex flex-col">
                             {props.doc.sidebar.root.map((item) => {
@@ -633,8 +688,8 @@ export function ResourceRoute(props: {
               }}
             </chapterSearchForm.Subscribe>
           </div>
-        </UI.Card>
-      </div>
+        </div>
+      </UI.Card>
     );
   }
 
@@ -807,4 +862,3 @@ export function ResourceRoute(props: {
     );
   }
 }
-``;

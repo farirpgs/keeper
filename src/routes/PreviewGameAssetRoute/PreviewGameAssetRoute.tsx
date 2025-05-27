@@ -4,7 +4,7 @@ import { Smartphone } from "lucide-react";
 import {
   MDXH1,
   MDXH5,
-  MDXSheetWrapper,
+  MDXProseSheetWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
@@ -83,7 +83,7 @@ export function PreviewGameAssetRoute(props: {
         </MDXH5>
         <UI.Container size={"1"}>
           {MDXContent && (
-            <MDXSheetWrapper>
+            <MDXProseSheetWrapper>
               <MDXContent
                 components={{
                   ...getMdxComponents({
@@ -91,7 +91,7 @@ export function PreviewGameAssetRoute(props: {
                   }),
                 }}
               ></MDXContent>
-            </MDXSheetWrapper>
+            </MDXProseSheetWrapper>
           )}
         </UI.Container>
       </div>

@@ -2,7 +2,7 @@ import { evaluate } from "@mdx-js/mdx";
 import type { CollectionEntry } from "astro:content";
 import { useEffect, useState } from "react";
 import {
-  MDXWrapper,
+  MDXProseWrapper,
   getMdxComponents,
 } from "../../../components/client/MDX/MDX";
 import { evaluateMdx } from "../../../domains/mdx/evaluateMdx";
@@ -33,7 +33,7 @@ export function GameAsset(props: {
   }, [props.id, props.asset.id]);
 
   return (
-    <MDXWrapper key={keyToForceRerenderOnAssetChange}>
+    <MDXProseWrapper key={keyToForceRerenderOnAssetChange}>
       {MDXContent && (
         <MDXContent
           components={{
@@ -43,6 +43,6 @@ export function GameAsset(props: {
           }}
         />
       )}
-    </MDXWrapper>
+    </MDXProseWrapper>
   );
 }

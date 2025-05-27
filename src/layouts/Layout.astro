@@ -50,7 +50,9 @@ const songsAndSagas = await DLAstro.getGame({
 
 const fontsAsString = [headingFont, bodyFont]
   .filter((font) => font !== undefined)
-  .map((font) => `family=${font!.trim()}`)
+  .map(
+    (font) => `family=${font!.trim()}:wght@100;200;300;400;500;600;700;800;900`
+  )
   .join("&");
 
 const themeProps = getTheme({

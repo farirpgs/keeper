@@ -152,7 +152,7 @@ export function Footer(props: {
               </Link>
             </Text>
           </div>
-          {renderThemeToggleButton()}
+          <div>{renderThemeToggleButton()}</div>
         </div>
       </UI.Container>
     </Theme>

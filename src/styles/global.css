@@ -25,6 +25,7 @@
   --breakpoint-4xl: 3840px;
 
   --animate-blur: blur 2s linear alternate infinite;
+
   @keyframes blur {
     0% {
       filter: blur(48px);

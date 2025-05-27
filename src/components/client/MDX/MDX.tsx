@@ -22,19 +22,22 @@ import { MDXStack } from "./mdx-components/ui/MDXStack";
 
 export const TEXT_CLASSES = "text-[1.2rem] leading-[1.5em] tracking-normal";
 
-export function MDXWrapper(props: { children: React.ReactNode }) {
-  return (
-    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
-      {props.children}
-    </div>
-  );
+const proseClassName = `
+prose prose-base md:prose-lg lg:prose-xl dark:prose-invert 
+w-full max-w-full
+[&_h1>a]:font-bold
+[&_h2>a]:font-bold
+[&_h3>a]:font-bold
+[&_h4>a]:font-bold
+[&_h5>a]:font-bold
+[&_h6>a]:font-bold
+`;
+
+export function MDXProseWrapper(props: { children: React.ReactNode }) {
+  return <div className={proseClassName}>{props.children}</div>;
 }
-export function MDXSheetWrapper(props: { children: React.ReactNode }) {
-  return (
-    <div className="prose prose-base md:prose-lg lg:prose-xl dark:prose-invert w-full max-w-full">
-      {props.children}
-    </div>
-  );
+export function MDXProseSheetWrapper(props: { children: React.ReactNode }) {
+  return <div className={proseClassName}>{props.children}</div>;
 }
 
 export function Fields(props: { children: React.ReactNode }) {
@@ -241,18 +244,6 @@ function MDXH6(props: UI.HeadingProps) {
   );
 }
 
-function MDXA(props: any) {
-  return (
-    <UI.Link
-      data-mdx-type="a"
-      weight={"medium"}
-      underline="always"
-      {...props}
-      className={clsx(props.className, TEXT_CLASSES)}
-    />
-  );
-}
-
 function MDXBlockquote(props: any) {
   return (
     <UI.Blockquote
@@ -263,85 +254,8 @@ function MDXBlockquote(props: any) {
       }}
       {...props}
     >
-      <MDXWrapper>{props.children}</MDXWrapper>
+      <MDXProseWrapper>{props.children}</MDXProseWrapper>
     </UI.Blockquote>
-  );
-}
-
-function MDXEm(props: any) {
-  return (
-    <UI.Em
-      data-mdx-type="em"
-      {...props}
-      className={clsx(props.className, TEXT_CLASSES)}
-    />
-  );
-}
-
-function MDXStrong(props: any) {
-  return (
-    <UI.Strong
-      data-mdx-type="strong"
-      {...props}
-      className={clsx(props.className, TEXT_CLASSES)}
-    />
-  );
-}
-
-function MDXPre(props: any) {
-  return (
-    <UI.Card>
-      <pre
-        data-mdx-type="pre"
-        {...props}
-        className={clsx(
-          props.className,
-          "p-2",
-          TEXT_CLASSES,
-          "whitespace-pre-wrap",
-        )}
-      />
-    </UI.Card>
-  );
-}
-
-function MDXUl(props: any) {
-  return (
-    <ul
-      data-mdx-type="ul"
-      {...props}
-      className={clsx(props.className, "list-disc")}
-    />
-  );
-}
-
-function MDXOl(props: any) {
-  return (
-    <ol
-      data-mdx-type="ol"
-      {...props}
-      className={clsx(props.className, "list-decimal")}
-    />
-  );
-}
-
-function MDXLi(props: any) {
-  return (
-    <li
-      data-mdx-type="li"
-      {...props}
-      className={clsx(props.className, "ml-4")}
-    />
-  );
-}
-
-function MDXCode(props: any) {
-  return (
-    <code
-      data-mdx-type="code"
-      {...props}
-      className={clsx(props.className, TEXT_CLASSES)}
-    />
   );
 }
 
@@ -355,28 +269,4 @@ export function MDXP(props: any) {
       className={clsx(props.className, TEXT_CLASSES)}
     />
   );
-}
-
-function MDXTable(props: any) {
-  return <UI.Table.Root data-mdx-type="table" variant="surface" {...props} />;
-}
-
-function MDXTHead(props: any) {
-  return <UI.Table.Header data-mdx-type="thead" {...props} />;
-}
-
-function MDXTBody(props: any) {
-  return <UI.Table.Body data-mdx-type="tbody" {...props} />;
-}
-
-function MDXTr(props: any) {
-  return <UI.Table.Row data-mdx-type="tr" {...props} />;
-}
-
-function MDXTh(props: any) {
-  return <UI.Table.ColumnHeaderCell data-mdx-type="th" {...props} />;
-}
-
-function MDXTd(props: any) {
-  return <UI.Table.Cell data-mdx-type="td" {...props} />;
 }

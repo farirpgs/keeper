@@ -1,7 +1,7 @@
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import type { CollectionEntry } from "astro:content";
 import clsx from "clsx";
-import { MDXH1, MDXH4, MDXWrapper } from "../../components/client/MDX/MDX";
+import { MDXH1, MDXH4, MDXProseWrapper } from "../../components/client/MDX/MDX";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
@@ -45,7 +45,7 @@ export function GameRoute(props: {
                   </UI.Link>
                 </MDXH4>
 
-                <MDXWrapper>{props.children}</MDXWrapper>
+                <MDXProseWrapper>{props.children}</MDXProseWrapper>
               </div>
             </div>
             <div className="w-full md:w-[40%]">

@@ -3,7 +3,7 @@ import { Card } from "../../components/client/AppCard/AppCard";
 import {
   MDXH1,
   MDXH2,
-  MDXWrapper,
+  MDXProseWrapper,
   getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { AppUrl } from "../../domains/app-url/AppUrl";
@@ -24,13 +24,13 @@ export function CreatorRoute(props: {
     <div className="flex flex-col gap-5">
       <MDXH1>{props.creator.data.name}</MDXH1>
 
-      <MDXWrapper>
+      <MDXProseWrapper>
         <Content
           components={{
             ...getMdxComponents({}),
           }}
         />
-      </MDXWrapper>
+      </MDXProseWrapper>
       {renderResources()}
       {renderGames()}
     </div>

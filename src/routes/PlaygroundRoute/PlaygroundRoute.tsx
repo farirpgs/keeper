@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getMdxComponents,
   MDXH1,
-  MDXWrapper,
+  MDXProseWrapper,
 } from "../../components/client/MDX/MDX";
 import { UI } from "../../components/ui/ui";
 import {
@@ -52,7 +52,7 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
         </div>
         <div className="w-[70%]">
           <CampaignContext.Provider value={campaignManager}>
-            <MDXWrapper>
+            <MDXProseWrapper>
               {MDXContent && (
                 <MDXContent
                   components={{
@@ -60,7 +60,7 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
                   }}
                 />
               )}
-            </MDXWrapper>
+            </MDXProseWrapper>
           </CampaignContext.Provider>
         </div>
       </div>
