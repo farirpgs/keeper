@@ -1,5 +1,5 @@
-import { UI } from "../../../../../components/ui/ui";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -16,7 +16,7 @@ export function MDXLabel(p: Props) {
   });
 
   return (
-    <UI.Text data-mdx-type="label" as="label">
+    <UI.Text data-mdx-type="label" as="label" className="text-lg font-bold">
       {props.children}
     </UI.Text>
   );

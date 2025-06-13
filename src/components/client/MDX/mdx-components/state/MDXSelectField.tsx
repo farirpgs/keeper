@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import {
-  CampaignContext,
   CampaignState,
+  useCampaignManager,
 } from "../../../../../domains/campaign/useCampaign";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
 
@@ -23,7 +23,7 @@ type Props = z.input<typeof propsSchema>;
 
 export function MDXSelectField(p: Props) {
   const props = propsSchema.parse(p);
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
   const name = useName({ name: props.name });
   const [value, setValue] = useState(() => {
     return campaignManager.getCurrentFormValue({ name: name }) || "";

@@ -11,6 +11,7 @@ const theme = getTheme({});
   description={undefined}
   theme={theme}
   withDefaultBanner
+  maxWidth="full"
 >
-  <PlaygroundRoute client:only="react" theme={theme} />
+  <PlaygroundRoute client:load theme={theme} />
 </Layout>

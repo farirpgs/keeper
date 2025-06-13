@@ -16,7 +16,12 @@ import type { ThemeType } from "../../domains/utils/getTheme";
 const logger = getLogger("PlaygroundPage");
 
 export function PlaygroundRoute(props: { theme: ThemeType }) {
-  const [text, setText] = useState("");
+  const searchParams =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search)
+      : new URLSearchParams();
+  const code = searchParams.get("code");
+  const [text, setText] = useState(code || "");
   const campaignManager = useCampaign({
     id: "",
   });
@@ -40,28 +45,32 @@ export function PlaygroundRoute(props: { theme: ThemeType }) {
 
   return (
     <UI.Theme {...props.theme} hasBackground={false}>
-      <MDXH1>Asset Creation Playground</MDXH1>
-      <div className="flex flex-row gap-7">
-        <div className="w-[30%]">
-          <UI.TextArea
-            className="f-full"
-            rows={20}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          ></UI.TextArea>
-        </div>
-        <div className="w-[70%]">
-          <CampaignContext.Provider value={campaignManager}>
-            <MDXProseWrapper>
-              {MDXContent && (
-                <MDXContent
-                  components={{
-                    ...getMdxComponents({}),
-                  }}
-                />
-              )}
-            </MDXProseWrapper>
-          </CampaignContext.Provider>
+      <div className="flex flex-col items-center gap-5">
+        <MDXH1>Asset Creation Playground</MDXH1>
+        <div className="flex flex-row gap-7">
+          <div className="w-[400px]">
+            <UI.TextArea
+              className="h-full font-mono"
+              rows={20}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            ></UI.TextArea>
+          </div>
+          <div className="w-[800px]">
+            <UI.Card className="h-full px-6">
+              <CampaignContext.Provider value={campaignManager}>
+                <MDXProseWrapper>
+                  {MDXContent && (
+                    <MDXContent
+                      components={{
+                        ...getMdxComponents({}),
+                      }}
+                    />
+                  )}
+                </MDXProseWrapper>
+              </CampaignContext.Provider>
+            </UI.Card>
+          </div>
         </div>
       </div>
     </UI.Theme>

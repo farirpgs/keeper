@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import {
-  CampaignContext,
   CampaignState,
+  useCampaignManager,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
@@ -24,7 +24,7 @@ export function MDXCheckboxField(p: Props) {
   });
   const name = useName({ name: props.name });
 
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
   const [value, setValue] = useState<boolean>(() => {
     return (
       campaignManager.getCurrentFormValue({ name: name }) || props.defaultValue
@@ -33,7 +33,7 @@ export function MDXCheckboxField(p: Props) {
 
   return (
     <UI.Text data-mdx-type="text-field" as="label" size="2">
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <UI.Checkbox
           name={name}
           size="3"
