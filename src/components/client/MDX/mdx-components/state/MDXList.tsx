@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
-import { CampaignContext } from "../../../../../domains/campaign/useCampaign";
+import { useCampaignManager } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
 import { MDXStack } from "../ui/MDXStack";
@@ -41,7 +41,7 @@ export function MDXList(p: Props) {
     componentName: "MDXList",
   });
 
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
 
   const [ids, setIds] = useState<Array<string>>([]);
 
@@ -135,8 +135,8 @@ export function MDXList(p: Props) {
               >
                 <UI.ContextMenu.Trigger>
                   <UI.Card size="2" className={"w-full"}>
-                    <div className="flex items-start gap-4">
-                      <MDXStack>{props.children}</MDXStack>
+                    <div className="flex w-full items-start gap-4">
+                      <MDXStack className="w-full">{props.children}</MDXStack>
                       <UI.ContextMenu.Content color="gray">
                         <UI.ContextMenu.Item onClick={() => handleAddBelow(id)}>
                           Add Below

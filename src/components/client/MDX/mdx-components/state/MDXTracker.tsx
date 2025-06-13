@@ -1,11 +1,11 @@
 import { CircleIcon, MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import { CircleCheckBig } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
-  CampaignContext,
   CampaignState,
+  useCampaignManager,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
@@ -28,7 +28,7 @@ export function MDXTracker(p: Props) {
     componentName: "MDXTracker",
   });
   const name = useName({ name: props.name });
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
   const [values, setValues] = useState<Array<boolean>>(() => {
     return campaignManager.getCurrentFormValue({ name: name }) || [];
   });

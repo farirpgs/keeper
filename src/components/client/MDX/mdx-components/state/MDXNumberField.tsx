@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import {
-  CampaignContext,
   CampaignState,
+  useCampaignManager,
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
@@ -28,7 +28,7 @@ export function MDXNumberField(p: Props) {
   });
   const name = useName({ name: props.name });
 
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
   const [value, setValue] = useState(() => {
     return campaignManager.getCurrentFormValue({ name: name }) || "";
   });

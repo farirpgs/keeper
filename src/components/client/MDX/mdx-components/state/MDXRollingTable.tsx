@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { Dices } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
-  CampaignContext,
   CampaignState,
+  useCampaignManager,
 } from "../../../../../domains/campaign/useCampaign";
 import { wait } from "../../../../../domains/utils/wait";
 import { UI } from "../../../../ui/ui";
@@ -14,6 +14,7 @@ import { useName } from "./MDXList";
 const propsSchema = z
   .object({
     name: z.string(),
+    label: z.string().optional(),
     items: z.array(z.string()).optional(),
     groups: z
       .array(z.object({ name: z.string(), items: z.array(z.string()) }))
@@ -35,7 +36,7 @@ const MAX_HISTORY = 5;
 
 export function MDXRollingTable(p: Props) {
   const props = propsSchema.parse(p);
-  const campaignManager = useContext(CampaignContext);
+  const campaignManager = useCampaignManager();
   const name = useName({
     name: props.name,
   });
@@ -100,7 +101,7 @@ export function MDXRollingTable(p: Props) {
             >
               <Dices></Dices>
             </UI.IconButton>
-            <MDXLabel>{props.name}</MDXLabel>{" "}
+            <MDXLabel>{props.label || props.name}</MDXLabel>{" "}
           </div>
           {rollHistory.length > 0 && (
             <div>
