@@ -1,3 +1,4 @@
+import { ArrowDown, ArrowUp, PlusIcon, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { useCampaignManager } from "../../../../../domains/campaign/useCampaign";
@@ -42,7 +43,6 @@ export function MDXList(p: Props) {
   });
 
   const campaignManager = useCampaignManager();
-
   const [ids, setIds] = useState<Array<string>>([]);
 
   useEffect(() => {
@@ -68,8 +68,9 @@ export function MDXList(p: Props) {
     setIds([...idsToSet]);
   }, []);
 
-  function handleAddBelow(id: string) {
+  function handleAddBelow(id?: string) {
     setIds((prev) => {
+      if (!id) return [...prev, crypto.randomUUID()];
       return prev.reduce((acc, currentId) => {
         if (currentId === id) {
           return [...acc, currentId, crypto.randomUUID()];
@@ -90,11 +91,10 @@ export function MDXList(p: Props) {
     setIds((prev) => {
       const newIds = [...prev];
       const fromIndex = newIds.indexOf(id);
-      const toIndex = fromIndex - 1 <= 0 ? 0 : fromIndex - 1;
-      const element = newIds[fromIndex];
-      newIds.splice(fromIndex, 1);
-      newIds.splice(toIndex, 0, element);
-
+      if (fromIndex > 0) {
+        const [removed] = newIds.splice(fromIndex, 1);
+        newIds.splice(fromIndex - 1, 0, removed);
+      }
       return newIds;
     });
   }
@@ -103,83 +103,77 @@ export function MDXList(p: Props) {
     setIds((prev) => {
       const newIds = [...prev];
       const fromIndex = newIds.indexOf(id);
-      const toIndex =
-        fromIndex + 1 >= newIds.length ? newIds.length - 1 : fromIndex + 1;
-      const element = newIds[fromIndex];
-      newIds.splice(fromIndex, 1);
-      newIds.splice(toIndex, 0, element);
-
+      if (fromIndex < newIds.length - 1) {
+        const [removed] = newIds.splice(fromIndex, 1);
+        newIds.splice(fromIndex + 1, 0, removed);
+      }
       return newIds;
     });
   }
 
   return (
-    <div className="flex w-full flex-col gap-2" data-mdx-type="list">
-      {ids.map((id) => {
-        const isFirst = id === ids[0];
-        const isLast = id === ids[ids.length - 1];
-        const shouldRenderDeleteButton = ids.length > props.min;
-        const shouldRenderMoveButtons = !(isFirst && isLast);
+    <div className="mx-auto flex w-full max-w-3xl flex-col items-end gap-3">
+      <div className="flex w-full flex-col gap-4">
+        {ids.map((id, idx) => {
+          const isFirst = idx === 0;
+          const isLast = idx === ids.length - 1;
+          const shouldRenderDeleteButton = ids.length > props.min;
 
-        return (
-          <ListContext.Provider
-            value={{
-              name: props.name,
-              id,
-            }}
-            key={id}
-          >
-            <UI.ContextMenu.Root>
-              <UI.Tooltip
-                content={"Right click the card's background for options..."}
+          return (
+            <ListContext.Provider value={{ name: props.name, id }} key={id}>
+              <UI.Card
+                size="2"
+                className="group flex w-full flex-row items-center gap-2 p-4"
               >
-                <UI.ContextMenu.Trigger>
-                  <UI.Card size="2" className={"w-full"}>
-                    <div className="flex w-full items-start gap-4">
-                      <MDXStack className="w-full">{props.children}</MDXStack>
-                      <UI.ContextMenu.Content color="gray">
-                        <UI.ContextMenu.Item onClick={() => handleAddBelow(id)}>
-                          Add Below
-                        </UI.ContextMenu.Item>
-                        {shouldRenderMoveButtons && (
-                          <>
-                            <UI.ContextMenu.Separator />
-                            {!isFirst && (
-                              <UI.ContextMenu.Item
-                                onClick={() => handleMoveUp(id)}
-                              >
-                                Move Up
-                              </UI.ContextMenu.Item>
-                            )}
-                            {!isLast && (
-                              <UI.ContextMenu.Item
-                                onClick={() => handleMoveDown(id)}
-                              >
-                                Move Down
-                              </UI.ContextMenu.Item>
-                            )}
-                          </>
-                        )}
-                        {shouldRenderDeleteButton && (
-                          <>
-                            <UI.ContextMenu.Separator />
-                            <UI.ContextMenu.Item
-                              color="red"
-                              onClick={() => handleDelete(id)}
-                            >
-                              Delete
-                            </UI.ContextMenu.Item>
-                          </>
-                        )}
-                      </UI.ContextMenu.Content>
-                    </div>
-                  </UI.Card>
-                </UI.ContextMenu.Trigger>
-              </UI.Tooltip>
-            </UI.ContextMenu.Root>
-          </ListContext.Provider>
-        );
-      })}
+                <div className="flex flex-col">
+                  {!isFirst && (
+                    <UI.IconButton
+                      variant="ghost"
+                      color="gray"
+                      aria-label="Move up"
+                      className="mb-1 opacity-30 transition-opacity group-hover:opacity-100"
+                      onClick={() => handleMoveUp(id)}
+                    >
+                      <ArrowUp size={20} />
+                    </UI.IconButton>
+                  )}
+                  {!isLast && (
+                    <UI.IconButton
+                      aria-label="Move down"
+                      variant="ghost"
+                      color="gray"
+                      className="opacity-30 transition-opacity group-hover:opacity-100"
+                      onClick={() => handleMoveDown(id)}
+                    >
+                      <ArrowDown size={20} />
+                    </UI.IconButton>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <MDXStack className="w-full">{props.children}</MDXStack>
+                </div>
+                {shouldRenderDeleteButton && (
+                  <UI.IconButton
+                    aria-label="Delete"
+                    variant="ghost"
+                    color="gray"
+                    className="opacity-30 transition-opacity group-hover:opacity-100"
+                    onClick={() => handleDelete(id)}
+                  >
+                    <Trash2 size={20} />
+                  </UI.IconButton>
+                )}
+              </UI.Card>
+            </ListContext.Provider>
+          );
+        })}
+      </div>
+      <div className="flex-end flex items-center">
+        <UI.Button onClick={() => handleAddBelow()} size="2" variant="soft">
+          <PlusIcon size={16} />
+          Add Item
+        </UI.Button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,80 @@
+---
+name: Character Sheet
+game: fari-rpgs/chronicles-of-the-boundless
+---
+
+<Fields>
+  <Heading>Details</Heading>
+  <Row>
+    <TextField name="name">Name</TextField>
+    <TextField name="pronouns" placeholder="Pronouns...">
+      Pronouns
+    </TextField>
+  </Row>
+</Fields>
+
+<Fields>
+  <Heading>Core Stats</Heading>
+  <Row>
+    <NumberField name="body">Body</NumberField>
+    <NumberField name="mind">Mind</NumberField>
+    <NumberField name="heart">Heart</NumberField>
+  </Row>
+</Fields>
+
+<Fields>
+  <Heading>Stamina</Heading>
+  <Tracker name="stamina" min={6} max={6} />
+</Fields>
+
+<Row>
+<Fields>
+  <Heading>HP</Heading>
+  <Row>
+    <NumberField name="hp" min={0} max={20}>
+      Current
+    </NumberField>
+    <NumberField name="maxHp" min={0} max={20}>
+      Max
+    </NumberField>
+  </Row>
+</Fields>
+
+<Fields>
+  <Heading>Coins</Heading>
+  <NumberField name="coins" min={0} max={99}>
+    Coins
+  </NumberField>
+</Fields>
+</Row>
+
+<Fields>
+  <Heading>Aspects </Heading>
+  <Stack>
+    <List name="aspects" max={5}>
+      <Row>
+        <TextField name="aspect" placeholder="Aspect..." />
+        <CheckboxField name="wounded">Wounded</CheckboxField>
+      </Row>
+    </List>
+  </Stack>
+</Fields>
+
+<Fields>
+  <Heading>Assets</Heading>
+  <Stack>
+    <List name="assets" max={5}>
+      <Row>
+        <TextField name="asset" placeholder="Asset..." />
+        <CheckboxField name="usage1" />
+        <CheckboxField name="usage2" />
+        <CheckboxField name="usage3" />
+      </Row>
+    </List>
+  </Stack>
+</Fields>
+
+<Fields>
+  <Heading>Notes</Heading>
+  <TextAreaField name="notes" placeholder="Notes..." rows={2} />
+</Fields>

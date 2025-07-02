@@ -50,6 +50,7 @@ export function MDXNumberField(p: Props) {
           size="3"
           color="gray"
           variant="soft"
+          name={name}
           value={value}
           disabled={campaignManager.readonly}
           onChange={(e) => {

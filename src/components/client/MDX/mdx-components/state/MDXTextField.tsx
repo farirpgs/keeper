@@ -42,6 +42,7 @@ export function MDXTextField(p: Props) {
         <UI.TextField.Root
           size="3"
           color="gray"
+          name={name}
           variant="soft"
           value={value}
           placeholder={getDefaultPlaceholder({

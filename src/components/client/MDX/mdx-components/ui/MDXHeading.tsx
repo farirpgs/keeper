@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 
 const propsSchema = z.object({
@@ -16,8 +15,8 @@ export function MDXHeading(p: Props) {
   });
 
   return (
-    <UI.Heading data-mdx-type="heading" weight={"bold"} className="text-3xl">
+    <span data-mdx-type="heading" className="text-2xl font-bold">
       {props.children}
-    </UI.Heading>
+    </span>
   );
 }

@@ -9,6 +9,7 @@ import {
 } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
+import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
 
 const propsSchema = z.object({
@@ -32,6 +33,7 @@ export function MDXTracker(p: Props) {
   const [values, setValues] = useState<Array<boolean>>(() => {
     return campaignManager.getCurrentFormValue({ name: name }) || [];
   });
+  const isMinEqualToMax = props.min === props.max;
 
   const canAddItem = props.max ? values.length < props.max : true;
   const canRemoveItem = values.length > props.min;
@@ -65,16 +67,23 @@ export function MDXTracker(p: Props) {
 
   return (
     <UI.Text data-mdx-type="text-field" as="label" size="2">
+      {props.children && (
+        <div className="flex">
+          <MDXDetail>{props.children}</MDXDetail>
+        </div>
+      )}
       <div className="flex items-center gap-2">
-        <UI.IconButton
-          size="1"
-          variant="ghost"
-          color="gray"
-          disabled={!canRemoveItem || campaignManager.readonly}
-          onClick={handleRemoveItem}
-        >
-          <MinusIcon></MinusIcon>
-        </UI.IconButton>
+        {!isMinEqualToMax && (
+          <UI.IconButton
+            size="1"
+            variant="ghost"
+            color="gray"
+            disabled={!canRemoveItem || campaignManager.readonly}
+            onClick={handleRemoveItem}
+          >
+            <MinusIcon></MinusIcon>
+          </UI.IconButton>
+        )}
         {values.map((value, i) => {
           return (
             <div key={i}>
@@ -116,15 +125,17 @@ export function MDXTracker(p: Props) {
             </div>
           );
         })}
-        <UI.IconButton
-          size="1"
-          variant="ghost"
-          color="gray"
-          disabled={!canAddItem || campaignManager.readonly}
-          onClick={handleAddItem}
-        >
-          <PlusIcon></PlusIcon>
-        </UI.IconButton>
+        {!isMinEqualToMax && (
+          <UI.IconButton
+            size="1"
+            variant="ghost"
+            color="gray"
+            disabled={!canAddItem || campaignManager.readonly}
+            onClick={handleAddItem}
+          >
+            <PlusIcon></PlusIcon>
+          </UI.IconButton>
+        )}
       </div>
 
       <CampaignState name={name} value={values}></CampaignState>

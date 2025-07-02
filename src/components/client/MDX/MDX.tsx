@@ -44,7 +44,7 @@ export function MDXProseSheetWrapper(props: { children: React.ReactNode }) {
 
 export function Fields(props: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col gap-4 py-4 [&_*]:m-0">
+    <div className="flex w-full flex-col gap-4 py-2 [&_*]:m-0">
       {props.children}
     </div>
   );
