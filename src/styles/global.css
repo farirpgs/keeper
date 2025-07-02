@@ -49,11 +49,13 @@ blockquote p:first-of-type::after {
 
 /* GLOBAL TAGS */
 html {
-  scroll-behavior: smooth;
-  overflow-y: scroll;
 }
+
 body {
   position: relative;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 /* ASTRO DEBUG */
 .astro-debug {
