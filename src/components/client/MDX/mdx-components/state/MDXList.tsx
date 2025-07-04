@@ -119,51 +119,68 @@ export function MDXList(p: Props) {
           const isLast = idx === ids.length - 1;
           const shouldRenderDeleteButton = ids.length > props.min;
 
+          const canMoveUp = !isFirst;
+          const canMoveDown = !isLast;
+          const canDelete = shouldRenderDeleteButton;
+          const hasActions = canMoveUp || canMoveDown || canDelete;
+
           return (
             <ListContext.Provider value={{ name: props.name, id }} key={id}>
-              <UI.Card
-                size="2"
-                className="group flex w-full flex-row items-center gap-2 p-4"
-              >
-                <div className="flex flex-col">
-                  {!isFirst && (
-                    <UI.IconButton
-                      variant="ghost"
-                      color="gray"
-                      aria-label="Move up"
-                      className="mb-1 opacity-30 transition-opacity group-hover:opacity-100"
-                      onClick={() => handleMoveUp(id)}
+              {hasActions ? (
+                <UI.HoverCard.Root>
+                  <UI.HoverCard.Trigger>
+                    <UI.Card
+                      size="2"
+                      className="group flex w-full flex-row items-center gap-2 p-4"
                     >
-                      <ArrowUp size={20} />
-                    </UI.IconButton>
-                  )}
-                  {!isLast && (
-                    <UI.IconButton
-                      aria-label="Move down"
-                      variant="ghost"
-                      color="gray"
-                      className="opacity-30 transition-opacity group-hover:opacity-100"
-                      onClick={() => handleMoveDown(id)}
-                    >
-                      <ArrowDown size={20} />
-                    </UI.IconButton>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <MDXStack className="w-full">{props.children}</MDXStack>
-                </div>
-                {shouldRenderDeleteButton && (
-                  <UI.IconButton
-                    aria-label="Delete"
-                    variant="ghost"
-                    color="gray"
-                    className="opacity-30 transition-opacity group-hover:opacity-100"
-                    onClick={() => handleDelete(id)}
-                  >
-                    <Trash2 size={20} />
-                  </UI.IconButton>
-                )}
-              </UI.Card>
+                      <div className="flex-1">
+                        <MDXStack className="w-full">{props.children}</MDXStack>
+                      </div>
+                    </UI.Card>
+                  </UI.HoverCard.Trigger>
+                  <UI.HoverCard.Content side="right" size="1">
+                    <div className="flex flex-row gap-2">
+                      {canMoveUp && (
+                        <UI.IconButton
+                          variant="soft"
+                          aria-label="Move up"
+                          onClick={() => handleMoveUp(id)}
+                        >
+                          <ArrowUp size={20} />
+                        </UI.IconButton>
+                      )}
+                      {canMoveDown && (
+                        <UI.IconButton
+                          aria-label="Move down"
+                          variant="soft"
+                          onClick={() => handleMoveDown(id)}
+                        >
+                          <ArrowDown size={20} />
+                        </UI.IconButton>
+                      )}
+                      {canDelete && (
+                        <UI.IconButton
+                          aria-label="Delete"
+                          variant="outline"
+                          color="red"
+                          onClick={() => handleDelete(id)}
+                        >
+                          <Trash2 size={20} />
+                        </UI.IconButton>
+                      )}
+                    </div>
+                  </UI.HoverCard.Content>
+                </UI.HoverCard.Root>
+              ) : (
+                <UI.Card
+                  size="2"
+                  className="group flex w-full flex-row items-center gap-2 p-4"
+                >
+                  <div className="flex-1">
+                    <MDXStack className="w-full">{props.children}</MDXStack>
+                  </div>
+                </UI.Card>
+              )}
             </ListContext.Provider>
           );
         })}
