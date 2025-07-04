@@ -66,7 +66,7 @@ export function MDXTracker(p: Props) {
   }
 
   return (
-    <UI.Text data-mdx-type="text-field" as="label" size="2">
+    <UI.Text data-mdx-type="text-field" size="2">
       {props.children && (
         <div className="flex">
           <MDXDetail>{props.children}</MDXDetail>
