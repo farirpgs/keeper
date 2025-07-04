@@ -25,6 +25,7 @@ export function MDXDetail(p: Props) {
       className={clsx(
         {
           "w-full": props.fullWidth,
+          "[&>p]:m-0": true,
         },
         TEXT_CLASSES,
       )}
