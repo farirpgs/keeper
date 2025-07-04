@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "bun add -g netlify-cli",
+    "postinstall": "npm install -g netlify-cli",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "bun check && astro build",
