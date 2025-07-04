@@ -14,6 +14,7 @@ const propsSchema = z.object({
   name: z.string(),
   min: z.number().optional(),
   max: z.number().optional(),
+  placeholder: z.string().optional().default("0"),
   children: z.any().optional(),
   tooltip: z.string().optional(),
 });
@@ -63,7 +64,7 @@ export function MDXNumberField(p: Props) {
           type="number"
           min={props.min}
           max={props.max}
-          placeholder="0"
+          placeholder={props.placeholder}
           className="w-full text-center text-[1.25rem] [&>input]:indent-0 [&>input]:font-semibold"
         ></UI.TextField.Root>
       </ConditionalWrapper>

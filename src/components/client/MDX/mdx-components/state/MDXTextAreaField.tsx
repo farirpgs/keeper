@@ -8,11 +8,10 @@ import { UI } from "../../../../ui/ui";
 import { ConditionalWrapper } from "../../../ConditionalWrapper/ConditionalWrapper";
 import { MDXDetail } from "../ui/MDXDetail";
 import { useName } from "./MDXList";
-import { getDefaultPlaceholder } from "./MDXTextField";
 
 const propsSchema = z.object({
   name: z.string(),
-  placeholder: z.string().optional(),
+  placeholder: z.string().optional().default(""),
   rows: z.number().optional().default(3),
   children: z.any().optional(),
   tooltip: z.string().optional(),
@@ -51,10 +50,7 @@ export function MDXTextAreaField(p: Props) {
           resize="vertical"
           value={value}
           disabled={campaignManager.readonly}
-          placeholder={getDefaultPlaceholder({
-            children: props.children,
-            placeholder: props.placeholder,
-          })}
+          placeholder={props.placeholder}
           onChange={(e) => {
             if (campaignManager.readonly) {
               return;

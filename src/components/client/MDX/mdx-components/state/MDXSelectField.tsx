@@ -12,7 +12,7 @@ import { useName } from "./MDXList";
 
 const propsSchema = z.object({
   name: z.string(),
-  placeholder: z.string().optional(),
+  placeholder: z.string().optional().default("—"),
   defaultValue: z.string().optional(),
   options: z.array(z.string()),
   children: z.any().optional(),
@@ -57,7 +57,7 @@ export function MDXSelectField(p: Props) {
             <UI.Select.Trigger
               variant="soft"
               color="gray"
-              placeholder={props.placeholder || "—"}
+              placeholder={props.placeholder}
             ></UI.Select.Trigger>
           </>
         </ConditionalWrapper>
