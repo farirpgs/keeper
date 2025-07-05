@@ -114,7 +114,7 @@ function Game(props: {
 
   async function handleAddAsset(p: { asset: CollectionEntry<"assets"> }) {
     setAddingAssetId(p.asset.id);
-    await wait();
+    await wait(250);
     campaignManager.addAsset({ slug: p.asset.id });
     setTab("assets");
     setAddingAssetId(undefined);

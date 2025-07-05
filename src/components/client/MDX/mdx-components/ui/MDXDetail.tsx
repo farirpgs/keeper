@@ -1,6 +1,6 @@
-import { UI } from "../../../../../components/ui/ui";
 import clsx from "clsx";
 import { z } from "zod";
+import { UI } from "../../../../../components/ui/ui";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { TEXT_CLASSES } from "../../MDX";
 
@@ -25,6 +25,7 @@ export function MDXDetail(p: Props) {
       className={clsx(
         {
           "w-full": props.fullWidth,
+          "[&>p]:m-0": true,
         },
         TEXT_CLASSES,
       )}

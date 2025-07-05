@@ -65,29 +65,31 @@ export function GameRoute(props: {
                             )}
                             color="gray"
                           >
-                            Include assets
+                            Included assets
                           </UI.Text>
 
-                          <div className="flex flex-row flex-wrap justify-center gap-2">
-                            {props.assets.map((asset) => (
-                              <div key={asset.id}>
-                                <a href={AppUrl.asset({ id: asset.id })}>
-                                  <UI.Button
-                                    size="2"
-                                    className={clsx(
-                                      "font-bold",
-                                      "transition-all",
-                                    )}
-                                    color="gray"
-                                    variant="soft"
-                                  >
-                                    <ExternalLinkIcon></ExternalLinkIcon>
-                                    {asset.data.name}
-                                  </UI.Button>
-                                </a>
-                              </div>
-                            ))}
-                          </div>
+                          {props.assets.length > 0 && (
+                            <div className="flex flex-row flex-wrap justify-center gap-2">
+                              {props.assets.map((asset) => (
+                                <div key={asset.id}>
+                                  <a href={AppUrl.asset({ id: asset.id })}>
+                                    <UI.Button
+                                      size="2"
+                                      className={clsx(
+                                        "font-bold",
+                                        "transition-all",
+                                      )}
+                                      color="gray"
+                                      variant="soft"
+                                    >
+                                      <ExternalLinkIcon></ExternalLinkIcon>
+                                      {asset.data.name}
+                                    </UI.Button>
+                                  </a>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       </UI.Card>
                     </div>

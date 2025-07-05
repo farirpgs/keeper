@@ -1,0 +1,322 @@
+---
+title: Designing Game Assets
+description: Learn how to design game assets for Keeper
+---
+
+import { MDXCodeBox } from "../../../components/client/MDX/mdx-components/ui/MDXCodeBox";
+
+## State Components
+
+### `<TextField>`
+
+A single-line text input field.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <TextField name="characterName" placeholder="Enter character name...">
+    Character Name
+  </TextField>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the field
+- `placeholder`: Placeholder text (optional, default: "")
+- `children`: Label text for the field
+
+### `<TextAreaField>`
+
+A multi-line text input field.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <TextAreaField
+    name="characterDescription"
+    rows={6}
+    placeholder="Describe your character's appearance, personality, and background..."
+  >
+    Character Description
+  </TextAreaField>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the field
+- `rows`: Number of rows (optional, default: 3)
+- `placeholder`: Placeholder text (optional, default: "")
+- `children`: Label text for the field
+
+### `<NumberField>`
+
+A numeric input field.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <NumberField name="characterAge" min={0} max={120} placeholder="25">
+    Age
+  </NumberField>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the field
+- `min`: Minimum value (optional)
+- `max`: Maximum value (optional)
+- `placeholder`: Placeholder text (optional, default: "0")
+- `children`: Label text for the field
+
+### `<SelectField>`
+
+A dropdown selection field.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <SelectField
+    name="characterClass"
+    options={[
+      "Fighter",
+      "Wizard",
+      "Rogue",
+      "Cleric",
+      "Ranger",
+      "Paladin",
+      "Bard",
+      "Druid",
+    ]}
+    placeholder="Choose a class..."
+    defaultValue="Wizard"
+  >
+    Choose Class
+  </SelectField>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the field
+- `options`: Array of selectable options
+- `placeholder`: Placeholder text (optional, default: "—")
+- `defaultValue`: Default selected value (optional)
+- `children`: Label text for the field
+
+### `<CheckboxField>`
+
+A checkbox input field.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <CheckboxField name="acceptTerms" defaultValue={false}>
+    I accept the terms and conditions
+  </CheckboxField>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the field
+- `defaultValue`: Initial checkbox state (optional, default: false)
+- `children`: Label text for the checkbox
+
+### `<Tracker>`
+
+A visual tracker for counting or tracking states.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Tracker name="healthPoints" min={1} max={10} asClock={false}>
+    Health Points
+  </Tracker>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the tracker
+- `min`: Minimum number of items (optional, default: 1)
+- `max`: Maximum number of items (optional)
+- `asClock`: Whether to display as a clock (optional)
+- `children`: Label text for the tracker
+
+### `<List>`
+
+Creates a list of items that can be added, removed, and reordered.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <List name="inventory" min={1} max={10} addButtonLabel="Add Item">
+    <Row>
+      <TextField name="itemName" placeholder="Item name..." />
+      <NumberField name="quantity" min={1} max={99} />
+      <CheckboxField name="equipped" defaultValue={false}>
+        Equipped
+      </CheckboxField>
+    </Row>
+  </List>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the list
+- `min`: Minimum number of items (optional, default: 1)
+- `max`: Maximum number of items (optional)
+- `addButtonLabel`: Custom text for the add button (optional, default: "Add Item")
+- `children`: The template for list items
+
+### `<RollingTable>`
+
+A table for random rolls with history.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <RollingTable
+    name="lootTable"
+    label="Random Loot"
+    items={[
+      "Gold Coins",
+      "Healing Potion",
+      "Magic Sword",
+      "Scroll of Fireball",
+      "Ring of Protection",
+    ]}
+  />
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `name`: Unique identifier for the table
+- `label`: Display label for the table (optional, defaults to name)
+- `items`: Array of possible outcomes
+- `groups`: Array of groups with their own items (cannot be used with items)
+
+## UI Components
+
+### `<Heading>`
+
+Displays a bold heading.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Heading>This is a heading</Heading>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The heading text
+
+### `<Label>`
+
+Displays a label text.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Label>This is a label</Label>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The label text
+
+### `<Detail>`
+
+Displays text with gray styling.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Detail fullWidth={true}>
+    This is a detail text that spans the full width
+  </Detail>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The text content
+- `fullWidth`: Whether the text should take full width (optional)
+
+### `<Box>`
+
+A wrapper component that groups content together.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Box>
+    <p>Hello, world!</p>
+  </Box>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The content to be wrapped.
+
+### `<Columns>`
+
+Creates a responsive grid layout with multiple columns.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Columns cols={3}>
+    <div>Column 1</div>
+    <div>Column 2</div>
+    <div>Column 3</div>
+  </Columns>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `cols`: Number of columns (optional, default: 2)
+- `children`: The content to be displayed in columns
+
+### `<Divider>`
+
+Creates a horizontal separator line.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Divider />
+  ```
+</MDXCodeBox>
+
+### `<Row>`
+
+Creates a horizontal flex container.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Row align="start">
+    <div>Item 1</div>
+    <div>Item 2</div>
+  </Row>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The content to be displayed in a row
+- `align`: Alignment of items ("start", "center", "end", "baseline", "stretch", optional, default: "center")
+
+### `<Stack>`
+
+Creates a vertical flex container with spacing.
+
+<MDXCodeBox client:load language="mdx">
+  ```mdx
+  <Stack>
+    <div>Item 1</div>
+    <div>Item 2</div>
+  </Stack>
+  ```
+</MDXCodeBox>
+
+#### Properties
+
+- `children`: The content to be stacked vertically
+
