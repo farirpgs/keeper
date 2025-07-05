@@ -8,13 +8,10 @@ import { MDXStack } from "../ui/MDXStack";
 
 const propsSchema = z.object({
   name: z.string(),
-  min: z
-    .number()
-    .optional()
-    .default(1)
-    .refine((v) => v >= 1),
+  min: z.number().optional().default(1),
   max: z.number().optional(),
   children: z.any().optional(),
+  addButtonLabel: z.string().optional().default("Add Item"),
 });
 
 type Props = z.input<typeof propsSchema>;
@@ -70,6 +67,7 @@ export function MDXList(p: Props) {
 
   function handleAddBelow(id?: string) {
     setIds((prev) => {
+      debugger;
       if (!id) return [...prev, crypto.randomUUID()];
       return prev.reduce((acc, currentId) => {
         if (currentId === id) {
@@ -114,9 +112,9 @@ export function MDXList(p: Props) {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col items-end gap-3">
       <div className="flex w-full flex-col gap-4">
-        {ids.map((id, idx) => {
-          const isFirst = idx === 0;
-          const isLast = idx === ids.length - 1;
+        {ids.map((id, index) => {
+          const isFirst = index === 0;
+          const isLast = index === ids.length - 1;
           const shouldRenderDeleteButton = ids.length > props.min;
 
           const canMoveUp = !isFirst;
@@ -188,7 +186,7 @@ export function MDXList(p: Props) {
       <div className="flex-end flex items-center">
         <UI.Button onClick={() => handleAddBelow()} size="2" variant="soft">
           <PlusIcon size={16} />
-          Add Item
+          {props.addButtonLabel}
         </UI.Button>
       </div>
     </div>

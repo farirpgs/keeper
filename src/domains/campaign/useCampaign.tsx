@@ -14,7 +14,7 @@ export function PlaygroundCampaignProvider(props: {
   children: React.ReactNode;
 }) {
   const campaignManager = useCampaign({
-    id: "playground",
+    id: "",
     readonly: true,
   });
   return (
@@ -27,7 +27,7 @@ export function PlaygroundCampaignProvider(props: {
 export function useCampaignManager() {
   const context = useContext(CampaignContext);
   const playgroundCampaign = useCampaign({
-    id: "playground",
+    id: "",
     readonly: true,
   });
   if (!context) {
