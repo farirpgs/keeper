@@ -160,7 +160,7 @@ export function ResourceRoute(props: {
                     className="mt-0 mb-3 flex w-full opacity-60"
                     color="gray"
                   />
-                  <div className="mb-6 flex flex-row gap-2">
+                  <div className="mb-6 flex flex-col gap-2 sm:flex-row">
                     <UI.Button
                       variant="soft"
                       color="gray"
