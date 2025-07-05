@@ -13,16 +13,17 @@ A single-line text input field.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <TextField name="name">Character Name</TextField>
+  <TextField name="characterName" placeholder="Enter character name...">
+    Character Name
+  </TextField>
   ```
 </MDXCodeBox>
 
 #### Properties
 
 - `name`: Unique identifier for the field
-- `placeholder`: Placeholder text (optional)
+- `placeholder`: Placeholder text (optional, default: "")
 - `children`: Label text for the field
-- `tooltip`: Tooltip text (optional)
 
 ### `<TextAreaField>`
 
@@ -30,8 +31,12 @@ A multi-line text input field.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <TextAreaField name="description" rows={4}>
-    Description
+  <TextAreaField
+    name="characterDescription"
+    rows={6}
+    placeholder="Describe your character's appearance, personality, and background..."
+  >
+    Character Description
   </TextAreaField>
   ```
 </MDXCodeBox>
@@ -39,10 +44,9 @@ A multi-line text input field.
 #### Properties
 
 - `name`: Unique identifier for the field
-- `rows`: Number of rows (default: 3)
-- `placeholder`: Placeholder text (optional)
+- `rows`: Number of rows (optional, default: 3)
+- `placeholder`: Placeholder text (optional, default: "")
 - `children`: Label text for the field
-- `tooltip`: Tooltip text (optional)
 
 ### `<NumberField>`
 
@@ -50,7 +54,7 @@ A numeric input field.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <NumberField name="age" min={0} max={120}>
+  <NumberField name="characterAge" min={0} max={120} placeholder="25">
     Age
   </NumberField>
   ```
@@ -61,8 +65,8 @@ A numeric input field.
 - `name`: Unique identifier for the field
 - `min`: Minimum value (optional)
 - `max`: Maximum value (optional)
+- `placeholder`: Placeholder text (optional, default: "0")
 - `children`: Label text for the field
-- `tooltip`: Tooltip text (optional)
 
 ### `<SelectField>`
 
@@ -70,7 +74,21 @@ A dropdown selection field.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <SelectField name="class" options={["Fighter", "Wizard", "Rogue"]}>
+  <SelectField
+    name="characterClass"
+    options={[
+      "Fighter",
+      "Wizard",
+      "Rogue",
+      "Cleric",
+      "Ranger",
+      "Paladin",
+      "Bard",
+      "Druid",
+    ]}
+    placeholder="Choose a class..."
+    defaultValue="Wizard"
+  >
     Choose Class
   </SelectField>
   ```
@@ -80,10 +98,9 @@ A dropdown selection field.
 
 - `name`: Unique identifier for the field
 - `options`: Array of selectable options
-- `placeholder`: Placeholder text (optional)
+- `placeholder`: Placeholder text (optional, default: "—")
 - `defaultValue`: Default selected value (optional)
 - `children`: Label text for the field
-- `tooltip`: Tooltip text (optional)
 
 ### `<CheckboxField>`
 
@@ -91,8 +108,8 @@ A checkbox input field.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <CheckboxField name="myCheckbox" defaultValue={false}>
-    Accept terms
+  <CheckboxField name="acceptTerms" defaultValue={false}>
+    I accept the terms and conditions
   </CheckboxField>
   ```
 </MDXCodeBox>
@@ -100,7 +117,7 @@ A checkbox input field.
 #### Properties
 
 - `name`: Unique identifier for the field
-- `defaultValue`: Initial checkbox state (default: false)
+- `defaultValue`: Initial checkbox state (optional, default: false)
 - `children`: Label text for the checkbox
 
 ### `<Tracker>`
@@ -109,7 +126,7 @@ A visual tracker for counting or tracking states.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <Tracker name="health" min={1} max={10} asClock={false}>
+  <Tracker name="healthPoints" min={1} max={10} asClock={false}>
     Health Points
   </Tracker>
   ```
@@ -118,7 +135,7 @@ A visual tracker for counting or tracking states.
 #### Properties
 
 - `name`: Unique identifier for the tracker
-- `min`: Minimum number of items (default: 1)
+- `min`: Minimum number of items (optional, default: 1)
 - `max`: Maximum number of items (optional)
 - `asClock`: Whether to display as a clock (optional)
 - `children`: Label text for the tracker
@@ -129,8 +146,14 @@ Creates a list of items that can be added, removed, and reordered.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <List name="myList" min={1} max={5}>
-    <TextField name="item" />
+  <List name="inventory" min={1} max={10} addButtonLabel="Add Item">
+    <Row>
+      <TextField name="itemName" placeholder="Item name..." />
+      <NumberField name="quantity" min={1} max={99} />
+      <CheckboxField name="equipped" defaultValue={false}>
+        Equipped
+      </CheckboxField>
+    </Row>
   </List>
   ```
 </MDXCodeBox>
@@ -138,8 +161,9 @@ Creates a list of items that can be added, removed, and reordered.
 #### Properties
 
 - `name`: Unique identifier for the list
-- `min`: Minimum number of items (default: 1)
+- `min`: Minimum number of items (optional, default: 1)
 - `max`: Maximum number of items (optional)
+- `addButtonLabel`: Custom text for the add button (optional, default: "Add Item")
 - `children`: The template for list items
 
 ### `<RollingTable>`
@@ -150,8 +174,14 @@ A table for random rolls with history.
   ```mdx
   <RollingTable
     name="lootTable"
-    label="Loot"
-    items={["Gold", "Potion", "Sword"]}
+    label="Random Loot"
+    items={[
+      "Gold Coins",
+      "Healing Potion",
+      "Magic Sword",
+      "Scroll of Fireball",
+      "Ring of Protection",
+    ]}
   />
   ```
 </MDXCodeBox>
@@ -159,6 +189,7 @@ A table for random rolls with history.
 #### Properties
 
 - `name`: Unique identifier for the table
+- `label`: Display label for the table (optional, defaults to name)
 - `items`: Array of possible outcomes
 - `groups`: Array of groups with their own items (cannot be used with items)
 
@@ -198,7 +229,9 @@ Displays text with gray styling.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <Detail>This is a detail text</Detail>
+  <Detail fullWidth={true}>
+    This is a detail text that spans the full width
+  </Detail>
   ```
 </MDXCodeBox>
 
@@ -229,16 +262,17 @@ Creates a responsive grid layout with multiple columns.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <Columns cols={2}>
+  <Columns cols={3}>
     <div>Column 1</div>
     <div>Column 2</div>
+    <div>Column 3</div>
   </Columns>
   ```
 </MDXCodeBox>
 
 #### Properties
 
-- `cols`: Number of columns (default: 2)
+- `cols`: Number of columns (optional, default: 2)
 - `children`: The content to be displayed in columns
 
 ### `<Divider>`
@@ -257,7 +291,7 @@ Creates a horizontal flex container.
 
 <MDXCodeBox client:load language="mdx">
   ```mdx
-  <Row align="center">
+  <Row align="start">
     <div>Item 1</div>
     <div>Item 2</div>
   </Row>
@@ -267,7 +301,7 @@ Creates a horizontal flex container.
 #### Properties
 
 - `children`: The content to be displayed in a row
-- `align`: Alignment of items ("start", "center", "end", "baseline", "stretch", default: "center")
+- `align`: Alignment of items ("start", "center", "end", "baseline", "stretch", optional, default: "center")
 
 ### `<Stack>`
 
@@ -285,3 +319,4 @@ Creates a vertical flex container with spacing.
 #### Properties
 
 - `children`: The content to be stacked vertically
+
