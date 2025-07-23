@@ -28,5 +28,8 @@
     "**/src/content/creators/*.mdx": "Creators ${filename}.${extname}",
     "**/src/content/docs/**/*.md": "Docs ${filename}.${extname}",
     "**/src/content/docs/**/*.mdx": "Docs ${filename}.${extname}"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
