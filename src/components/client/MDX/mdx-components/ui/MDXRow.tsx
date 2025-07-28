@@ -20,7 +20,10 @@ export function MDXRow(p: Props) {
 
   const alignClass = `items-${props.align}`;
   return (
-    <div data-mdx-type="row" className={`flex w-full gap-4 ${alignClass}`}>
+    <div
+      data-mdx-type="row"
+      className={`flex w-full flex-1 gap-4 ${alignClass}`}
+    >
       {props.children}
     </div>
   );

@@ -1,5 +1,5 @@
 ---
-name: Character Folio
+name: Folio
 game: pandion-games/substratum-protocol
 ---
 
@@ -19,13 +19,11 @@ game: pandion-games/substratum-protocol
             name="skills.make.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.make.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Trap, Repair, Build</Detail>
@@ -37,13 +35,11 @@ game: pandion-games/substratum-protocol
             name="skills.break.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.break.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Pummel, Wreck, Destroy</Detail>
@@ -55,13 +51,11 @@ game: pandion-games/substratum-protocol
             name="skills.dash.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.dash.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Run, Jump, Flee</Detail>
@@ -73,13 +67,11 @@ game: pandion-games/substratum-protocol
             name="skills.evade.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.evade.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Hide, Shield, Obscure</Detail>
@@ -91,13 +83,11 @@ game: pandion-games/substratum-protocol
             name="skills.think.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.think.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Observe, Hypothesize, Analyze</Detail>
@@ -109,13 +99,11 @@ game: pandion-games/substratum-protocol
             name="skills.sway.max"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Max"
           ></SelectField>
           <SelectField
             name="skills.sway.current"
             options={["d4", "d6", "d8", "d10", "d12"]}
             defaultValue="d4"
-            tooltip="Current"
           ></SelectField>
         </Row>
         <Detail>Charm, Manipulate, Intimidate</Detail>
@@ -187,5 +175,5 @@ game: pandion-games/substratum-protocol
 
 <Fields>
   <Heading>Anomaly Notes</Heading>
-  <TextAreaField name="anomaly.notes" rows={10} />
+  <TextAreaField name="anomaly.notes" rows={10} placeholder="Notes..." />
 </Fields>

@@ -1,18 +1,17 @@
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 import type { CollectionEntry } from "astro:content";
 import { Smartphone } from "lucide-react";
 import {
-  MDXH1,
-  MDXH5,
-  MDXProseSheetWrapper,
-  getMdxComponents,
+    MDXH1,
+    MDXH5,
+    MDXProseSheetWrapper,
+    getMdxComponents,
 } from "../../components/client/MDX/MDX";
 import { NothingToShowHere } from "../../components/client/NothingToShowHere/NothingToShowHere";
 import { UI } from "../../components/ui/ui";
 import { AppUrl } from "../../domains/app-url/AppUrl";
 import {
-  CampaignContext,
-  useCampaign,
+    CampaignContext,
+    useCampaign,
 } from "../../domains/campaign/useCampaign";
 import { evaluateMdxSync } from "../../domains/mdx/evaluateMdx";
 import type { ThemeType } from "../../domains/utils/getTheme";
@@ -31,8 +30,8 @@ export function PreviewGameAssetRoute(props: {
   });
   const MDXContent = props.currentAsset
     ? evaluateMdxSync({
-        mdx: props.currentAsset.body!,
-      })
+      mdx: props.currentAsset.body!,
+    })
     : null;
 
   return (
@@ -60,15 +59,25 @@ export function PreviewGameAssetRoute(props: {
   function renderContent() {
     return (
       <div className="flex flex-col gap-4">
-        <UI.Callout.Root color="blue">
-          <UI.Callout.Icon>
-            <InfoCircledIcon />
-          </UI.Callout.Icon>
-          <UI.Callout.Text>
+        <div className="flex flex-col items-center justify-center gap-4 rounded-md border-gray-9 bg-gray-3 py-3 px-4 text-center">
+          <span className="text-gray-11">
             This sheet is <b>read-only</b>. If you want to make changes, you can
-            create a new campaign.
-          </UI.Callout.Text>
-        </UI.Callout.Root>
+            start a new campaign.
+          </span>
+          <UI.Button
+            asChild
+            size="3"
+          >
+            <UI.Link
+              underline="none"
+              href={AppUrl.game({
+                id: props.game.id,
+              })}
+            >
+              Start a new campaign
+            </UI.Link>
+          </UI.Button>
+        </div>
         <MDXH1>{props.currentAsset?.data.name}</MDXH1>
         <MDXH5 className="mt-[-0.5rem]">
           <UI.Link

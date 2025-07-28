@@ -3,6 +3,7 @@ import { Hash } from "lucide-react";
 import type React from "react";
 import { UI } from "../../ui/ui";
 import { getSurfaceStyle } from "../Surface/getSurfaceStyle";
+
 import { MDXCheckboxField } from "./mdx-components/state/MDXCheckboxField";
 import { MDXList } from "./mdx-components/state/MDXList";
 import { MDXNumberField } from "./mdx-components/state/MDXNumberField";
@@ -12,6 +13,7 @@ import { MDXTextAreaField } from "./mdx-components/state/MDXTextAreaField";
 import { MDXTextField } from "./mdx-components/state/MDXTextField";
 import { MDXTracker } from "./mdx-components/state/MDXTracker";
 import { MDXBox } from "./mdx-components/ui/MDXBox";
+import { MDXCodeBox } from "./mdx-components/ui/MDXCodeBox";
 import { MDXColumns } from "./mdx-components/ui/MDXColumns";
 import { MDXDetail } from "./mdx-components/ui/MDXDetail";
 import { MDXDivider } from "./mdx-components/ui/MDXDivider";
@@ -42,7 +44,7 @@ export function MDXProseSheetWrapper(props: { children: React.ReactNode }) {
 
 export function Fields(props: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col gap-4 py-4 [&_*]:m-0">
+    <div className="flex w-full flex-col gap-4 py-2 [&_*]:m-0">
       {props.children}
     </div>
   );
@@ -91,6 +93,7 @@ export function getMdxComponents(arg: { allowH1s?: boolean } = {}) {
     Row: MDXRow as any,
     Columns: MDXColumns as any,
     Box: MDXBox as any,
+    CodeBox: MDXCodeBox as any,
     Stack: MDXStack as any,
     Heading: MDXHeading as any,
     Label: MDXLabel as any,

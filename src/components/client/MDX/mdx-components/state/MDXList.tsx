@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import { ArrowDown, ArrowUp, PlusIcon, Trash2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
-import { CampaignContext } from "../../../../../domains/campaign/useCampaign";
+import { useCampaignManager } from "../../../../../domains/campaign/useCampaign";
 import { parseProps } from "../../../../../domains/utils/parseProps";
 import { UI } from "../../../../ui/ui";
 import { MDXStack } from "../ui/MDXStack";
 
 const propsSchema = z.object({
   name: z.string(),
-  min: z
-    .number()
-    .optional()
-    .default(1)
-    .refine((v) => v >= 1),
+  min: z.number().optional().default(1),
   max: z.number().optional(),
   children: z.any().optional(),
+  addButtonLabel: z.string().optional().default("Add Item"),
 });
 
 type Props = z.input<typeof propsSchema>;
@@ -41,8 +39,7 @@ export function MDXList(p: Props) {
     componentName: "MDXList",
   });
 
-  const campaignManager = useContext(CampaignContext);
-
+  const campaignManager = useCampaignManager();
   const [ids, setIds] = useState<Array<string>>([]);
 
   useEffect(() => {
@@ -68,8 +65,10 @@ export function MDXList(p: Props) {
     setIds([...idsToSet]);
   }, []);
 
-  function handleAddBelow(id: string) {
+  function handleAddBelow(id?: string) {
     setIds((prev) => {
+      debugger;
+      if (!id) return [...prev, crypto.randomUUID()];
       return prev.reduce((acc, currentId) => {
         if (currentId === id) {
           return [...acc, currentId, crypto.randomUUID()];
@@ -90,11 +89,10 @@ export function MDXList(p: Props) {
     setIds((prev) => {
       const newIds = [...prev];
       const fromIndex = newIds.indexOf(id);
-      const toIndex = fromIndex - 1 <= 0 ? 0 : fromIndex - 1;
-      const element = newIds[fromIndex];
-      newIds.splice(fromIndex, 1);
-      newIds.splice(toIndex, 0, element);
-
+      if (fromIndex > 0) {
+        const [removed] = newIds.splice(fromIndex, 1);
+        newIds.splice(fromIndex - 1, 0, removed);
+      }
       return newIds;
     });
   }
@@ -103,83 +101,94 @@ export function MDXList(p: Props) {
     setIds((prev) => {
       const newIds = [...prev];
       const fromIndex = newIds.indexOf(id);
-      const toIndex =
-        fromIndex + 1 >= newIds.length ? newIds.length - 1 : fromIndex + 1;
-      const element = newIds[fromIndex];
-      newIds.splice(fromIndex, 1);
-      newIds.splice(toIndex, 0, element);
-
+      if (fromIndex < newIds.length - 1) {
+        const [removed] = newIds.splice(fromIndex, 1);
+        newIds.splice(fromIndex + 1, 0, removed);
+      }
       return newIds;
     });
   }
 
   return (
-    <div className="flex w-full flex-col gap-2" data-mdx-type="list">
-      {ids.map((id) => {
-        const isFirst = id === ids[0];
-        const isLast = id === ids[ids.length - 1];
-        const shouldRenderDeleteButton = ids.length > props.min;
-        const shouldRenderMoveButtons = !(isFirst && isLast);
+    <div className="mx-auto flex w-full max-w-3xl flex-col items-end gap-3">
+      <div className="flex w-full flex-col gap-4">
+        {ids.map((id, index) => {
+          const isFirst = index === 0;
+          const isLast = index === ids.length - 1;
+          const shouldRenderDeleteButton = ids.length > props.min;
 
-        return (
-          <ListContext.Provider
-            value={{
-              name: props.name,
-              id,
-            }}
-            key={id}
-          >
-            <UI.ContextMenu.Root>
-              <UI.Tooltip
-                content={"Right click the card's background for options..."}
-              >
-                <UI.ContextMenu.Trigger>
-                  <UI.Card size="2" className={"w-full"}>
-                    <div className="flex items-start gap-4">
-                      <MDXStack>{props.children}</MDXStack>
-                      <UI.ContextMenu.Content color="gray">
-                        <UI.ContextMenu.Item onClick={() => handleAddBelow(id)}>
-                          Add Below
-                        </UI.ContextMenu.Item>
-                        {shouldRenderMoveButtons && (
-                          <>
-                            <UI.ContextMenu.Separator />
-                            {!isFirst && (
-                              <UI.ContextMenu.Item
-                                onClick={() => handleMoveUp(id)}
-                              >
-                                Move Up
-                              </UI.ContextMenu.Item>
-                            )}
-                            {!isLast && (
-                              <UI.ContextMenu.Item
-                                onClick={() => handleMoveDown(id)}
-                              >
-                                Move Down
-                              </UI.ContextMenu.Item>
-                            )}
-                          </>
-                        )}
-                        {shouldRenderDeleteButton && (
-                          <>
-                            <UI.ContextMenu.Separator />
-                            <UI.ContextMenu.Item
-                              color="red"
-                              onClick={() => handleDelete(id)}
-                            >
-                              Delete
-                            </UI.ContextMenu.Item>
-                          </>
-                        )}
-                      </UI.ContextMenu.Content>
+          const canMoveUp = !isFirst;
+          const canMoveDown = !isLast;
+          const canDelete = shouldRenderDeleteButton;
+          const hasActions = canMoveUp || canMoveDown || canDelete;
+
+          return (
+            <ListContext.Provider value={{ name: props.name, id }} key={id}>
+              {hasActions ? (
+                <UI.HoverCard.Root>
+                  <UI.HoverCard.Trigger>
+                    <UI.Card
+                      size="2"
+                      className="group flex w-full flex-row items-center gap-2 p-4"
+                    >
+                      <div className="flex-1">
+                        <MDXStack className="w-full">{props.children}</MDXStack>
+                      </div>
+                    </UI.Card>
+                  </UI.HoverCard.Trigger>
+                  <UI.HoverCard.Content side="right" size="1">
+                    <div className="flex flex-row gap-2">
+                      {canMoveUp && (
+                        <UI.IconButton
+                          variant="soft"
+                          aria-label="Move up"
+                          onClick={() => handleMoveUp(id)}
+                        >
+                          <ArrowUp size={20} />
+                        </UI.IconButton>
+                      )}
+                      {canMoveDown && (
+                        <UI.IconButton
+                          aria-label="Move down"
+                          variant="soft"
+                          onClick={() => handleMoveDown(id)}
+                        >
+                          <ArrowDown size={20} />
+                        </UI.IconButton>
+                      )}
+                      {canDelete && (
+                        <UI.IconButton
+                          aria-label="Delete"
+                          variant="outline"
+                          color="red"
+                          onClick={() => handleDelete(id)}
+                        >
+                          <Trash2 size={20} />
+                        </UI.IconButton>
+                      )}
                     </div>
-                  </UI.Card>
-                </UI.ContextMenu.Trigger>
-              </UI.Tooltip>
-            </UI.ContextMenu.Root>
-          </ListContext.Provider>
-        );
-      })}
+                  </UI.HoverCard.Content>
+                </UI.HoverCard.Root>
+              ) : (
+                <UI.Card
+                  size="2"
+                  className="group flex w-full flex-row items-center gap-2 p-4"
+                >
+                  <div className="flex-1">
+                    <MDXStack className="w-full">{props.children}</MDXStack>
+                  </div>
+                </UI.Card>
+              )}
+            </ListContext.Provider>
+          );
+        })}
+      </div>
+      <div className="flex-end flex items-center">
+        <UI.Button onClick={() => handleAddBelow()} size="2" variant="soft">
+          <PlusIcon size={16} />
+          {props.addButtonLabel}
+        </UI.Button>
+      </div>
     </div>
   );
 }

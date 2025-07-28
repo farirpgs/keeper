@@ -1,5 +1,5 @@
 import isEqual from "lodash/isEqual";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { UI } from "../../components/ui/ui";
 import { DLStorage, schemas, type CampaignType } from "../dl/DLStorage";
 import { getLogger } from "../utils/getLogger";
@@ -9,6 +9,32 @@ const logger = getLogger("useGameState");
 export const CampaignContext = createContext<ReturnType<typeof useCampaign>>(
   undefined as any,
 );
+
+export function PlaygroundCampaignProvider(props: {
+  children: React.ReactNode;
+}) {
+  const campaignManager = useCampaign({
+    id: "",
+    readonly: true,
+  });
+  return (
+    <CampaignContext.Provider value={campaignManager}>
+      {props.children}
+    </CampaignContext.Provider>
+  );
+}
+
+export function useCampaignManager() {
+  const context = useContext(CampaignContext);
+  const playgroundCampaign = useCampaign({
+    id: "",
+    readonly: true,
+  });
+  if (!context) {
+    return playgroundCampaign;
+  }
+  return context;
+}
 
 const debug = false;
 const AUTO_SAVE_INTERVAL = 2000;

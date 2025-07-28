@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
-    "source.organizeImports": "always"
+    "source.organizeImports": "explicit"
   },
   "astro.content-intellisense": true,
   "yaml.schemas": {
@@ -12,6 +12,9 @@
   },
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[mdx]": {
+    "editor.defaultFormatter": "unifiedjs.vscode-mdx"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.editor.customLabels.patterns": {
@@ -25,5 +28,8 @@
     "**/src/content/creators/*.mdx": "Creators ${filename}.${extname}",
     "**/src/content/docs/**/*.md": "Docs ${filename}.${extname}",
     "**/src/content/docs/**/*.mdx": "Docs ${filename}.${extname}"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
