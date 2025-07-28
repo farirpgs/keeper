@@ -13,6 +13,7 @@ import { Colors } from "../domains/colors/colors";
 import { DLAstro } from "../domains/dl/DLAstro";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import PostHog from "../components/server/PostHog/PostHog.astro";
+import TinyAnalytics from "../components/server/TinyAnalytics/TinyAnalytics.astro";
 import "../styles/global.css";
 import { UI } from "../components/ui/ui";
 import { AppUrl } from "../domains/app-url/AppUrl";
@@ -218,6 +219,7 @@ const ogImageUrl = AppUrl.ogImage({
       </UI.Container>
 
       <PostHog />
+      <TinyAnalytics />
     </body>
 
     <style
