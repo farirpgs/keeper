@@ -17,6 +17,7 @@ export default defineConfig({
   output: "static",
   prefetch: {
     prefetchAll: true,
+    defaultStrategy: 'viewport'
   },
   site: constants.site({
     localhost: process.env.NODE_ENV === "development",
