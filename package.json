@@ -13,6 +13,7 @@
     "alpha": "netlify build && netlify deploy",
     "prod": "netlify build && netlify deploy --prod",
     "content": "bun ./scripts/content.ts",
+    "codex": "bun install -g @openai/codex@latest && codex",
     "knip": "knip"
   },
   "dependencies": {

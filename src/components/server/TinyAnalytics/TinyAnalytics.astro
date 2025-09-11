@@ -1,6 +1,65 @@
 ---
-
 ---
 
-<script src="https://tinylytics.app/embed/-VTUbs6KP1RTrgeepgoh.js" defer></script>
+<div class="fixed bottom-4 inset-x-0 z-40 w-full flex justify-center pointer-events-none">
+  <div
+    aria-label="Page analytics and like"
+    class="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur px-3.5 py-2 shadow-lg"
+  >
+    <span
+      class="views-chip inline-flex items-center rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/10 px-3 py-1.5 text-xs leading-none text-neutral-800 dark:text-neutral-200"
+    >
+      <span class="tinylytics_hits tabular-nums">–</span>
+    </span>
+    <button
+      class="tinylytics_kudos tabular-nums cursor-pointer relative inline-flex items-center rounded-full bg-gradient-to-r from-rose-500 to-orange-500 px-3 py-1.5 text-white text-xs leading-none font-medium shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-neutral-900"
+      type="button"
+      aria-label="Like this page"
+    >
+      -
+    </button>
+  </div>
+  
+</div>
 
+
+<style is:global>
+  /* CSS-only icons for Tinylytics widgets */
+  .tinylytics_kudos {
+    line-height: 1;
+  }
+  .tinylytics_kudos::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21s-6.716-4.632-9.428-7.344A5.25 5.25 0 0 1 10.5 6.75l1.5 1.5 1.5-1.5A5.25 5.25 0 0 1 21.428 13.656C18.716 16.368 12 21 12 21Z'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21s-6.716-4.632-9.428-7.344A5.25 5.25 0 0 1 10.5 6.75l1.5 1.5 1.5-1.5A5.25 5.25 0 0 1 21.428 13.656C18.716 16.368 12 21 12 21Z'/></svg>");
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    vertical-align: text-bottom;
+    margin-right: 0.35em;
+  }
+  .views-chip::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: currentColor;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z' /><circle cx='12' cy='12' r='3' fill='currentColor' /></svg>");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z' /><circle cx='12' cy='12' r='3' fill='currentColor' /></svg>");
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    vertical-align: text-bottom;
+    margin-right: 0.35em;
+  }
+</style>

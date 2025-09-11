@@ -1,6 +1,5 @@
 ---
 import "@radix-ui/themes/styles.css";
-import { ClientRouter, fade } from "astro:transitions";
 
 import { Debug } from "astro:components";
 import { Graphic } from "../components/client/Graphic/Graphic";
@@ -73,7 +72,7 @@ const ogImageUrl = AppUrl.ogImage({
 ---
 
 <!doctype html>
-<html lang="en" transition:animate={fade({ duration: ".150s" })}>
+<html lang="en" >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -147,8 +146,13 @@ const ogImageUrl = AppUrl.ogImage({
       }
     </script>
 
-    <!-- Animation -->
-    <ClientRouter />
+
+
+    <!-- Tinylytics embed with custom hits/kudos UI enabled -->
+    <script
+    src="https://tinylytics.app/embed/-VTUbs6KP1RTrgeepgoh.js?hits&kudos=custom"
+    defer
+    ></script>
   </head>
   <UI.Theme {...themeProps} className="">
     <body>

@@ -128,18 +128,18 @@ export function ResourceRoute(props: {
       <Toaster />
       <CampaignContext.Provider value={campaignManager}>
         <div>
-          <div className="flex flex-row gap-9">
-            <div className="hidden w-[300px] flex-shrink-0 flex-grow basis-[300px] lg:flex">
-              <div
-                className="sticky top-6"
-                style={{ maxHeight: "calc(100vh - 32px)" }}
-              >
-                <div className="relative h-full overflow-y-scroll pb-[10rem]">
+          <div className="lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-9">
+            <div className="hidden lg:block min-w-0">
+              <div className="sticky top-6">
+                <div
+                  className="relative overflow-y-auto overflow-x-hidden pb-[10rem]"
+                  style={{ maxHeight: "calc(100vh - 32px)" }}
+                >
                   {renderSidebar({ withImage: true })}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <div className="block w-full">
                 <div className="flex flex-col">
                   <div className="mb-6">{renderPatreonBanner()}</div>
