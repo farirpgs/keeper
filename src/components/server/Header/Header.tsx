@@ -34,9 +34,6 @@ import { wait } from "../../../domains/utils/wait";
 import { getSurfaceStyle } from "../../client/Surface/getSurfaceStyle";
 import { NameLogo } from "./Logo";
 
-const fontFamily =
-  "-apple-system, BlinkMacSystemFont, 'Segoe UI (Custom)', Roboto, 'Helvetica Neue', 'Open Sans (Custom)', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'";
-
 export function Header(props: { theme: ThemeType; pathname: string }) {
   const [open, setOpen] = useState(false);
 
@@ -191,7 +188,6 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
         className="bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
         color="gray"
         highContrast
-        style={{ fontFamily }}
       >
         {params.icon}
       </Button>
@@ -202,7 +198,6 @@ export function Header(props: { theme: ThemeType; pathname: string }) {
         className="bg-transparent hover:bg-(--accent-3) dark:hover:bg-(--accent-6)"
         color="gray"
         highContrast
-        style={{ fontFamily }}
       >
         {params.label}
       </Button>

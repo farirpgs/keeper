@@ -12,7 +12,6 @@ import { Colors } from "../domains/colors/colors";
 import { DLAstro } from "../domains/dl/DLAstro";
 import { getTheme, type ThemeType } from "../domains/utils/getTheme";
 import PostHog from "../components/server/PostHog/PostHog.astro";
-import TinyAnalytics from "../components/server/TinyAnalytics/TinyAnalytics.astro";
 import "../styles/global.css";
 import { UI } from "../components/ui/ui";
 import { AppUrl } from "../domains/app-url/AppUrl";
@@ -223,30 +222,13 @@ const ogImageUrl = AppUrl.ogImage({
       </UI.Container>
 
       <PostHog />
-      <TinyAnalytics />
     </body>
 
-    <style
-      is:global
-      define:vars={{
-        headingFont,
-        bodyFont,
-      }}
-    >
+    <style is:global define:vars={{ headingFont, bodyFont }}>
+      /* Prose-only custom variables. Do not override Radix font variables. */
       .radix-themes {
-        /* FONTS  */
-        /* Your custom heading font */
-        --heading-font-family: var(--headingFont);
-        /* Your custom default font */
-        --default-font-family: var(--bodyFont);
-        /* Your custom font for <Code> components */
-        --code-font-family: var(--bodyFont);
-        /* Your custom font for <Strong> components */
-        --strong-font-family: var(--bodyFont);
-        /* Your custom font for <Em> components */
-        --em-font-family: var(--bodyFont);
-        /* Your custom font for <Quote> components */
-        --quote-font-family: var(--bodyFont);
+        --prose-body-font-family: var(--bodyFont);
+        --prose-heading-font-family: var(--headingFont);
 
         /* CURSORS */
         --cursor-button: pointer;

@@ -139,7 +139,7 @@ export function ResourceRoute(props: {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col min-w-0">
+            <div className="flex flex-col min-w-0 relative">
               <div className="block w-full">
                 <div className="flex flex-col">
                   <div className="mb-6">{renderPatreonBanner()}</div>
@@ -161,24 +161,24 @@ export function ResourceRoute(props: {
                     color="gray"
                   />
                   <div className="mb-6 flex flex-col gap-2 sm:flex-row">
-                    <UI.Button
+                  <UI.Button
                       variant="soft"
                       color="gray"
-                      size="1"
+                      size="3"
                       radius="full"
                       onClick={handleCopyMarkdown}
-                      className="flex items-center gap-2"
+                      className="flex w-full items-center justify-center gap-2 sm:w-auto"
                     >
                       <Copy size={"1em"} />
                       Copy as Markdown
                     </UI.Button>
-                    <UI.Button
+                  <UI.Button
                       variant="soft"
                       color="gray"
-                      size="1"
+                      size="3"
                       radius="full"
                       onClick={handleDownloadMarkdown}
-                      className="flex items-center gap-2"
+                      className="flex w-full items-center justify-center gap-2 sm:w-auto"
                     >
                       <DownloadCloudIcon size={"1em"} />
                       Download as Markdown
@@ -190,14 +190,14 @@ export function ResourceRoute(props: {
                       })}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 no-underline"
+                      className="flex w-full items-center gap-2 no-underline sm:w-auto"
                     >
                       <UI.Button
                         variant="soft"
                         color="gray"
-                        size="1"
+                        size="3"
                         radius="full"
-                        className="flex items-center gap-2"
+                        className="flex w-full items-center justify-center gap-2 sm:w-auto"
                       >
                         <GitHubLogoIcon width={"1.2em"} height={"1.2em"} />
                         Edit on GitHub
@@ -218,7 +218,7 @@ export function ResourceRoute(props: {
                 {renderPreviousAndNextButtons()}
                 {renderEditButton()}
               </div>
-              <Footer ogImageUrl={ogImageUrl} />
+              <Footer ogImageUrl={ogImageUrl} fluid />
             </div>
           </div>
         </div>
@@ -281,7 +281,7 @@ export function ResourceRoute(props: {
 
   function renderPatreonBanner() {
     return (
-      <UI.Card size="2" variant="ghost">
+      <UI.Card size="2" variant="ghost" style={{ fontFamily: "var(--default-font-family)" }}>
         <div className="flex flex-col items-center justify-between gap-4 p-4 sm:flex-row">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
             <div className="relative">
@@ -456,7 +456,11 @@ export function ResourceRoute(props: {
 
   function renderSidebar(p: { withImage?: boolean }) {
     return (
-      <UI.Card variant="surface" className="flex flex-col gap-4">
+      <UI.Card
+        variant="surface"
+        className="flex flex-col gap-4"
+        style={{ fontFamily: "var(--default-font-family)" }}
+      >
         <div className="flex flex-col gap-5">
           {props.image && p.withImage && (
             <div className="">

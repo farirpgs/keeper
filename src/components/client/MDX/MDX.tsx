@@ -36,10 +36,24 @@ w-full max-w-full
 `;
 
 export function MDXProseWrapper(props: { children: React.ReactNode }) {
-  return <div className={proseClassName}>{props.children}</div>;
+  return (
+    <div
+      className={proseClassName}
+      style={{ fontFamily: "var(--prose-body-font-family)" }}
+    >
+      {props.children}
+    </div>
+  );
 }
 export function MDXProseSheetWrapper(props: { children: React.ReactNode }) {
-  return <div className={proseClassName}>{props.children}</div>;
+  return (
+    <div
+      className={proseClassName}
+      style={{ fontFamily: "var(--prose-body-font-family)" }}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 export function Fields(props: { children: React.ReactNode }) {
